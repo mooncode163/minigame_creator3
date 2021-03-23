@@ -14,11 +14,20 @@ export class AppScene extends AppSceneBase {
     // [2]
     // @property
     // serializableDummy = 0;
-
+    onLoad () {
+        // [3]
+        super.onLoad();
+        console.log("AppScene onLoad");
+    }
     start () {
         // [3]
+        super.start();
+        console.log("AppScene start");
     }
+    RunApp () {
+        console.log("AppScene RunApp");
 
+    } 
     // update (deltaTime: number) {
     //     // [4]
     // }

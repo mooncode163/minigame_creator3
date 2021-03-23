@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Canvas, Size } from 'cc'; 
+import { _decorator, Component, Node, Canvas,View, Size, director, size } from 'cc'; 
 const { ccclass, property, integer, float, boolean, string, type } = _decorator;
 import { UIViewController } from "../../Common/UIKit/ViewController/UIViewController";
 import { LoadItemInfo } from "./LoadItemInfo";
@@ -20,7 +20,7 @@ export class AppSceneBase extends Component {
 
     @type(Node) 
     rootNode: Node | null = null;
-    
+
     sizeCanvas:Size| null = null;
 
 
@@ -29,13 +29,35 @@ export class AppSceneBase extends Component {
 
     isHasRunApp = false;
     
+    onLoad () {
+        // [3]
+    console.log("AppSceneBase onLoad");
+    this.isHasRunApp = false;
+    this.InitValue();
+
+    this.RunApp();
+    }
     start () {
         // [3]
+    console.log("AppSceneBase start");
     }
-
     // update (deltaTime: number) {
     //     // [4]
     // }
+
+    InitValue () {
+        // [3]
+    console.log("AppSceneBase InitValue");
+    let screenSize = Size.ZERO;
+    screenSize = director.getWinSizeInPixels();//屏幕分辨率
+    console.log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
+
+    }
+
+    RunApp () {
+        console.log("AppSceneBase RunApp");
+
+    } 
 }
 
 /**
