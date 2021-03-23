@@ -1,6 +1,8 @@
 
-import { _decorator, Component, Node } from 'cc';
-const { ccclass, property } = _decorator;
+import { _decorator, Component, Node, Canvas, Size } from 'cc'; 
+const { ccclass, property, integer, float, boolean, string, type } = _decorator;
+import { UIViewController } from "../../Common/UIKit/ViewController/UIViewController";
+import { LoadItemInfo } from "./LoadItemInfo";
 
 @ccclass('AppSceneBase')
 export class AppSceneBase extends Component {
@@ -11,7 +13,22 @@ export class AppSceneBase extends Component {
     // @property
     // serializableDummy = 0;
 
-    // rootViewController:UIViewController
+    rootViewController: UIViewController | null = null;
+
+    @type(Canvas) // Declare that the cc type of the attribute _targetNode is Node
+    canvasMain: Canvas | null = null;
+
+    @type(Node) 
+    rootNode: Node | null = null;
+    
+    sizeCanvas:Size| null = null;
+
+
+    @type([Node]) // declare the cc type of the attribute _children as a Node array
+    private listProLoad: LoadItemInfo[] = [];
+
+    isHasRunApp = false;
+    
     start () {
         // [3]
     }
