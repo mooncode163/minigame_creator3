@@ -58,6 +58,17 @@ export class AppSceneBase extends Component {
         console.log("AppSceneBase RunApp");
 
     } 
+
+    SetRootViewController (controller:UIViewController) {
+
+        if (this.rootViewController != null) {
+            this.rootViewController.DestroyObjController();
+        }
+        this.rootViewController = controller;
+        this.rootViewController.SetViewParent(this.rootNode);//this.rootNode  this.canvasMain.node
+
+
+    }
 }
 
 /**

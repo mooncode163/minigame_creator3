@@ -16,7 +16,8 @@ export class AppScene extends AppSceneBase {
     // serializableDummy = 0;
     onLoad () {
         // [3]
-        super.onLoad();
+        // super.onLoad(); 
+        // this.super();
         console.log("AppScene onLoad");
     }
     start () {
@@ -25,6 +26,7 @@ export class AppScene extends AppSceneBase {
         console.log("AppScene start");
     }
     RunApp () {
+        super.RunApp();
         console.log("AppScene RunApp");
 
     } 

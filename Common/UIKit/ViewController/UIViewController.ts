@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, CCObject,CCInteger } from 'cc';
+import { _decorator, Component, Node, CCObject, CCInteger } from 'cc';
 const { ccclass, property, integer, float, boolean, string, type } = _decorator;
 
 import { UIView } from "./UIView";
@@ -13,19 +13,59 @@ export class UIViewController extends CCObject {
     // @property
     // serializableDummy = 0;
 
-    @type(Node) // Declare that the cc type of the attribute _targetNode is Node
-    private objController: Node | null = null;
- 
-    
+    // @type(Node) // Declare that the cc type of the attribute _targetNode is Node
+      objController: Node | null = null;
+
+
     private view: UIView | null = null;
-    
-    start () {
-        // [3]
+    CreateObjController () {
+
+        if (this.objController == null) {
+            this.objController = new Node('Controller');
+           // this.objController.setContentSize(cc.Common.appSceneMain.sizeCanvas);
+
+        }
+        this.ViewDidLoad();
+
+
+    }
+    DestroyObjController() {
+        this.ViewDidUnLoad();
+        if (this.objController != null) {
+            this.objController.destroy();
+            this.objController = null;
+        }
+    }
+
+    //SetViewParent
+    SetViewParent(node: Node | null) {
+
+         console.log("SetViewParent node");
+        if (node == null) {
+            console.log("SetViewParent node is null");
+        }
+        if (this.objController == null) {
+            this.CreateObjController();
+        }
+        if (this.objController == null) {
+            console.log("objController is null");
+        }else{
+            this.objController.setParent(node);
+        }  
     }
 
     // update (deltaTime: number) {
     //     // [4]
     // }
+
+        //virtual
+        LayOutView () {
+        }
+        ViewDidLoad () {
+        }
+    
+        ViewDidUnLoad () {
+        }
 }
 
 /**
