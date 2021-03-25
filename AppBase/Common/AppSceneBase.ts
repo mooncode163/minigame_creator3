@@ -33,7 +33,7 @@ export class AppSceneBase extends Component {
         // [3]
     console.log("AppSceneBase onLoad");
     this.isHasRunApp = false;
-    this.InitValue();
+    // this.InitValue();
 
     this.RunApp();
     }

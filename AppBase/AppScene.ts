@@ -1,10 +1,12 @@
 
 import { _decorator, Component, Node } from 'cc';
+import { MainViewController } from '../Apps/Base/MainViewController';
 const { ccclass, property } = _decorator;
 // import AppSceneBase = require("AppSceneBase");
  
 // import {  AppSceneBase } ;
 import { AppSceneBase } from "./Common/AppSceneBase";
+import { UIViewController } from '../Common/UIKit/ViewController/UIViewController';
 
 @ccclass('AppScene')
 export class AppScene extends AppSceneBase {
@@ -16,7 +18,7 @@ export class AppScene extends AppSceneBase {
     // serializableDummy = 0;
     onLoad () {
         // [3]
-        // super.onLoad(); 
+        super.onLoad(); 
         // this.super();
         console.log("AppScene onLoad");
     }
@@ -28,6 +30,9 @@ export class AppScene extends AppSceneBase {
     RunApp () {
         super.RunApp();
         console.log("AppScene RunApp");
+        var p = MainViewController.Main(); 
+        console.log("AppScene RunApp Main");
+        this.SetRootViewController(p);
 
     } 
     // update (deltaTime: number) {

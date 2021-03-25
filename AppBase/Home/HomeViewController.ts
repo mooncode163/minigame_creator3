@@ -1,11 +1,11 @@
 
-import { _decorator, Component, Node } from 'cc';
-import { UIHomeBase } from '../../../../AppBase/Home/UIHomeBase'; 
+import { _decorator, Component, Node } from 'cc'; 
+import { UIViewController } from '../../Common/UIKit/ViewController/UIViewController';
 const { ccclass, property } = _decorator;
  
 
-@ccclass('UIHomeMerge')
-export class UIHomeMerge extends UIHomeBase {
+@ccclass('HomeViewController')
+export class HomeViewController extends UIViewController {
  
   
     start () {
