@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node } from 'cc'; 
+import { _decorator, Component, Node, director, instantiate, Prefab, resources } from 'cc'; 
 import { UIViewController } from '../../Common/UIKit/ViewController/UIViewController';
 const { ccclass, property } = _decorator;
  
@@ -20,6 +20,14 @@ export class MainViewController extends UIViewController {
         super.ViewDidLoad();
         console.log("MainViewController ViewDidLoad");
   
+
+        // https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
+        // load Prefab
+        resources.load("App/Prefab/Home/UIHomeMerge", Prefab, (err, prefab) => {
+            const newNode = instantiate(prefab);
+            // director.getScene().addChild(newNode);
+            this.objController?.addChild(newNode);
+        });
 
     } 
     
