@@ -1,5 +1,6 @@
 
-import { _decorator, Component, Node, director, instantiate, Prefab, resources } from 'cc'; 
+import { _decorator, Component, Node, director, instantiate, Prefab, resources, SpriteFrame } from 'cc'; 
+import { TextureCache } from '../../Common/Cache/TextureCache';
 import { UIViewController } from '../../Common/UIKit/ViewController/UIViewController';
 const { ccclass, property } = _decorator;
  
@@ -29,6 +30,8 @@ export class MainViewController extends UIViewController {
             this.objController?.addChild(newNode);
         });
 
+
+     
     } 
     
     
