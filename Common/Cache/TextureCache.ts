@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, CCObject, resources, Prefab, Texture2D } from 'cc';
+import { _decorator, Component, Node, CCObject, resources, Prefab, Texture2D, SpriteFrame } from 'cc';
 
 const { ccclass, property } = _decorator;
 // 动态加载资源文档
@@ -21,6 +21,7 @@ export class TextureCache extends CCObject {
         /*
         {
             filepath:"",
+            bind:any,
             success: function (tex:Texture2D) {
             },
             fail: function (res) {
@@ -32,11 +33,39 @@ export class TextureCache extends CCObject {
         */
     Load(obj:any) {
         console.log("TextureCache Load");        // load a texture
-        resources.load(obj.filepath, Texture2D, (err: any, texture: Texture2D) => {
-            console.log("TextureCache callback Load");   
+        // obj.filepath = "test"
+        //  resources.load(obj.filepath, Texture2D, (err: any, texture: Texture2D) 会失败
+        resources.load(obj.filepath, (err: any, texture: Texture2D) => {
+            console.log("TextureCache callback Load obj.filepath=",obj.filepath," err=",err);   
             // spriteFrame.texture = texture;
+            if(texture!=null)
+            {
+                console.log("TextureCache texture is not null");
+            }else{
+                console.log("TextureCache texture is  null");
+            }
             if (obj.success != null) {
-                obj.success(texture);
+                obj.success(obj.bind,texture);
+            }
+
+        });
+    }
+
+    LoadFrame(obj:any) {
+        console.log("TextureCache Load");        // load a texture
+        // obj.filepath = "test"
+        //  resources.load(obj.filepath, Texture2D, (err: any, texture: Texture2D) 会失败
+        resources.load(obj.filepath, (err: any, frame: SpriteFrame) => {
+            console.log("TextureCache callback Load obj.filepath=",obj.filepath," err=",err);   
+            // spriteFrame.texture = texture;
+            if(frame!=null)
+            {
+                console.log("TextureCache frame is not null");
+            }else{
+                console.log("TextureCache frame is  null");
+            }
+            if (obj.success != null) {
+                obj.success(obj.bind,frame);
             }
 
         });

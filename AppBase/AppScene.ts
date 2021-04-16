@@ -1,6 +1,6 @@
 
-import { _decorator, Component, Node } from 'cc';
-import { MainViewController } from '../Apps/Base/MainViewController';
+import { _decorator, Component, Node, Texture2D, resources, SpriteFrame } from 'cc';
+import { MainViewController } from '../Apps/Main/MainViewController';
 const { ccclass, property } = _decorator;
 // import AppSceneBase = require("AppSceneBase");
  
@@ -25,7 +25,8 @@ export class AppScene extends AppSceneBase {
     start () {
         // [3]
         super.start();
-        console.log("AppScene start");
+        console.log("AppScene start"); 
+
     }
     RunApp () {
         super.RunApp();

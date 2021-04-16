@@ -1,20 +1,29 @@
 
-import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc'; 
-
+import { _decorator, Component, Node } from 'cc';
 const { ccclass, property } = _decorator;
 
+// TypeScript自动引入脚本插件
+// https://blog.csdn.net/u011004567/article/details/78507236
+// VS Code的插件-TypeScript Importer
+ 
 
-@ccclass('PrefabCache')
-export class PrefabCache extends CCObject {
-    
-    start () {
+@ccclass('LayOutSize')
+export class LayOutSize extends Component {
+    // [1]
+    // dummy = '';
+
+    // [2]
+    // @property
+    // serializableDummy = 0;
   
-        // load Prefab
-        resources.load("App/Prefab/Home/UIHomeMerge", Prefab, (err, prefab) => {
-            // const newNode = instantiate(prefab);
-        
-        });
-    } 
+
+    start () {
+        // [3]
+    }
+
+    // update (deltaTime: number) {
+    //     // [4]
+    // }
 }
 
 /**
