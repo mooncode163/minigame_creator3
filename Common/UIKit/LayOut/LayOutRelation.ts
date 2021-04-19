@@ -1,5 +1,6 @@
 
 import { _decorator, Component, Node } from 'cc';
+import { LayOutBase } from './LayOutBase';
 const { ccclass, property } = _decorator;
 
 // TypeScript自动引入脚本插件
@@ -8,7 +9,37 @@ const { ccclass, property } = _decorator;
  
 
 @ccclass('LayOutRelation')
-export class LayOutRelation extends Component {
+
+// const RelationType = LayOutRelation.RelationType;
+enum RelationType {
+    NONE,// 
+    PARENT,//相对父窗口 
+    TARGET,//相对目标 
+    ALL,
+}
+
+// enum CustomerState {
+//     NONE,
+//     GREETING,
+//     GOODBYE,
+// }
+
+// enum EventName {
+//     GREETING = 'greeting',
+//     GOODBYE = 'goodbye', 
+// }
+
+export class LayOutRelation extends LayOutBase {
+    public static RelationType = RelationType;
+	private _tpye = RelationType.NONE;
+	//get 的用法
+	get tpye(): number{           // 函数后(): string 这个的意思是 要求函数返回的类型必须是 string
+		return this._tpye;
+	}
+    // set 的用法
+    set tpye(value: number) { 
+		this._tpye = value;
+	} 
     // [1]
     // dummy = '';
 
@@ -19,6 +50,7 @@ export class LayOutRelation extends Component {
 
     start () {
         // [3]
+        // this.tpye = RelationType.NONE;
     }
 
     // update (deltaTime: number) {

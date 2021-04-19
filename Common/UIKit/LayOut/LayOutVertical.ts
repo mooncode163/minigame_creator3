@@ -1,5 +1,6 @@
 
 import { _decorator, Component, Node } from 'cc';
+import { LayOutBase } from './LayOutBase';
 const { ccclass, property } = _decorator;
 
 // TypeScript自动引入脚本插件
@@ -7,7 +8,7 @@ const { ccclass, property } = _decorator;
 // VS Code的插件-TypeScript Importer
  
 @ccclass('LayOutVertical')
-export class LayOutVertical extends Component {
+export class LayOutVertical extends LayOutBase {
     // [1]
     // dummy = '';
 

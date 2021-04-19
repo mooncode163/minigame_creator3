@@ -1,5 +1,6 @@
 
 import { _decorator, Component, Node } from 'cc';
+import { LayOutBase } from './LayOutBase';
 const { ccclass, property } = _decorator;
 
 // TypeScript自动引入脚本插件
@@ -8,7 +9,7 @@ const { ccclass, property } = _decorator;
  
 
 @ccclass('LayOutScale')
-export class LayOutScale extends Component {
+export class LayOutScale extends LayOutBase {
     // [1]
     // dummy = '';
 
