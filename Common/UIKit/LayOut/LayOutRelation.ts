@@ -1,22 +1,17 @@
 
 import { _decorator, Component, Node, UITransform, Vec2 } from 'cc';
+import { AppSceneBase } from '../../../AppBase/Common/AppSceneBase';
 import { Debug } from '../../Debug';
 import { LayOutBase } from './LayOutBase';
 import { LayOutUtil } from './LayOutUtil';
-const { ccclass, property } = _decorator;
+const { ccclass, property,type } = _decorator;
 
 // TypeScript自动引入脚本插件
 // https://blog.csdn.net/u011004567/article/details/78507236
 // VS Code的插件-TypeScript Importer
 
 const Align = LayOutUtil.Align;
-
-enum RelationType {
-    NONE,// 
-    PARENT,//相对父窗口 
-    TARGET,//相对目标 
-    ALL,
-}
+const RelationType = LayOutUtil.RelationType;
 
 
 
@@ -32,17 +27,18 @@ enum RelationType {
 //     GOODBYE = 'goodbye', 
 // }
 @ccclass('LayOutRelation')
-export class LayOutRelation extends LayOutBase {
-    public static RelationType = RelationType;
+export class LayOutRelation extends LayOutBase { 
 
-    @property
+   
     private _type = RelationType.PARENT;
+
+    @type(RelationType)
     //get 的用法
-    get type(): number {           // 函数后(): string 这个的意思是 要求函数返回的类型必须是 string
+    get type() {           // 函数后(): string 这个的意思是 要求函数返回的类型必须是 string
         return this._type;
     }
     // set 的用法
-    set type(value: number) {
+    set type(value) {
         this._type = value;
     }
 
@@ -108,6 +104,8 @@ export class LayOutRelation extends LayOutBase {
                     }
                     if (this.align == Align.DOWN) {
                         y = - h_parent / 2 + h / 2 + this.offset.y;
+                        // var sizeCanvas = AppSceneBase.Main().sizeCanvas;
+                        // y = - sizeCanvas.height/2  + this.offset.y;
                     }
 
 

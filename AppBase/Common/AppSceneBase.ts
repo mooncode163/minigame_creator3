@@ -88,14 +88,14 @@ export class AppSceneBase extends Component {
         }
         // let screenSize = view.getFrameSize()
         // screenSize = director.getWinSizeInPixels();
-        //var str = "sizeCanvas w=" + this.sizeCanvas.width + ",h=" + this.sizeCanvas.height;
+        var str = "sizeCanvas w=" + this.sizeCanvas.width + ",h=" + this.sizeCanvas.height;
         // Debug.Log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
         // Debug.Log(str);
 
 
 
 
-        // this.textTitle.string = str;
+        this.textTitle.string = str;
         // this.sizeCanvas.width = screenSize.width * this.sizeCanvas.height / screenSize.height;
         // cc.Debug.Log("sizeCanvas size=" + this.sizeCanvas);
         // var framesize = cc.view.getFrameSize();

@@ -27,6 +27,13 @@ enum Align {
 //必须Enum设置才能在编辑器里设置enum的值
 Enum(Align);
 
+enum RelationType {
+    NONE,// 
+    PARENT,//相对父窗口 
+    TARGET,//相对目标 
+    ALL,
+}
+Enum(RelationType);
 
 
 enum DispLayVertical {
@@ -97,6 +104,8 @@ export class LayOutUtil extends CCObject {
     public static Direction = Direction;
     public static SizeType = SizeType;
     public static SideType = SideType;
+    public static RelationType = RelationType;
+    
 
 
 
