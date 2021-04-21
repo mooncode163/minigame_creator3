@@ -1,56 +1,22 @@
 
 import { _decorator, Component, Node, Vec2 } from 'cc';
 import { Device } from '../../Device';
+import { LayOutUtil } from './LayOutUtil';
 const { ccclass, property } = _decorator;
 
 // TypeScript自动引入脚本插件
 // https://blog.csdn.net/u011004567/article/details/78507236
 // VS Code的插件-TypeScript Importer
+const Align = LayOutUtil.Align;
+const Direction = LayOutUtil.Direction;
 
-enum DispLayVertical {
-    TOP_TO_BOTTOM = 0,
-    BOTTOM_TO_TOP,
-}
-
-enum DispLayHorizontal {
-    LEFT_TO_RIGHT = 0,
-    RIGHT_TO_LEFT,
-}
-
-
-enum Align {
-    UP = 0,
-    DOWN,
-    LEFT,
-    RIGHT,
-    CENTER,
-    UP_LEFT,
-    UP_RIGHT,
-    DOWN_LEFT,
-    DOWN_RIGHT,
-    Horizontal,
-    Vertical,
-    SAME_POSTION,
-}
-
-
-enum Direction {
-    //区分大小写
-    TOP_TO_BOTTOM=0,
-    BOTTOM_TO_TOP,
-    LEFT_TO_RIGHT,
-    RIGHT_TO_LEFT,
-
-}
 
 @ccclass('LayOutBase')
 export class LayOutBase extends Component {
-    public static Align = Align;
-    public static DispLayVertical = DispLayVertical;
-    public static DispLayHorizontal = DispLayHorizontal;
-    public static Direction = Direction;
+
     
     target: Node | null = null;
+    target2: Node | null = null; 
 
 
 
@@ -93,11 +59,14 @@ export class LayOutBase extends Component {
     set offsetMax(value: Vec2) {
         this._offsetMax = value;
     }
-
+    onLoad () {   
+    }
     start() {
         // [3]
     }
 
+    LayOut () { 
+    }
 
     IsUseLandscape() {
         var ret = false;

@@ -1,32 +1,282 @@
 
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, Node, UITransform, Size } from 'cc';
+const { ccclass, property, integer, float, boolean, string } = _decorator;
+import { Debug } from '../../Debug';
 import { LayOutBase } from './LayOutBase';
-const { ccclass, property } = _decorator;
+import { LayOutUtil } from './LayOutUtil'; 
 
 // TypeScript自动引入脚本插件
 // https://blog.csdn.net/u011004567/article/details/78507236
 // VS Code的插件-TypeScript Importer
- 
+const Align = LayOutUtil.Align;
+const SideType = LayOutUtil.SideType;
+const SizeType = LayOutUtil.SizeType;
 
 @ccclass('LayOutSize')
 export class LayOutSize extends LayOutBase {
+
+    @property
+    ratio = 1.0;
+    @property
+    ratioW = 1.0;
+    @property
+    ratioH = 1.0;
+    @property
+    widthH = 1.0;//宽
+    @property
+    heightH = 1.0;//高  
+
+    @property
+    _sideType = 0; 
+    get sideType(): number {
+        return this._sideType;
+    } 
+    set sideType(value: number) {
+        this._sideType = value;
+        this.LayOut();
+    }
+
+
+    private _width = 1.0;
+    //get 的用法
+    get width(): number {
+        return this._width;
+    }
+    // set 的用法
+    set width(value: number) {
+        this._width = value;
+        this.LayOut();
+    }
+
+    private _height = 1.0;
+    //get 的用法
+    get height(): number {
+        return this._height;
+    }
+    // set 的用法
+    set height(value: number) {
+        this._height = value;
+        this.LayOut();
+    }
+
+    // @property
+    // @property({ type: number })
+    
+    @property({type:SizeType})
+    private typeX = SizeType.MATCH_PARENT;
+    // get typeX(): number {
+    //     return this.typeX;
+    // }
+    // set typeX(value: number) {
+    //     this.typeX = value;
+    //     this.LayOut();
+    // }
+    private _typeY = SizeType.MATCH_PARENT;
+    get typeY(): number {
+        return this._typeY;
+    }
+    set typeY(value: number) {
+        this._typeY = value;
+        this.LayOut();
+    }
+
+
     // [1]
     // dummy = '';
 
     // [2]
     // @property
     // serializableDummy = 0;
-  
 
-    start () {
+
+    start() {
         // [3]
     }
 
     // update (deltaTime: number) {
     //     // [4]
     // }
+
+    UpdateSizeX() {
+        var x, y, w, h; 
+        var size = this.node.getComponent(UITransform).contentSize;
+        var sizeParent = this.node.parent.getComponent(UITransform).contentSize; 
+        w = size.width;
+        h = size.height; 
+        var w_parent = sizeParent.width;
+        var h_parent = sizeParent.height;
+        w_parent -= (this.offsetMin.x + this.offsetMax.x);
+        h_parent -= (this.offsetMin.y + this.offsetMax.y); 
+
+
+        switch (this.typeX) {
+            case SizeType.MATCH_CONTENT:
+                {
+                    w = size.width;
+                }
+                break;
+            case SizeType.MATCH_VALUE:
+                {
+                    w = this.width;
+                }
+                break;
+            case SizeType.MATCH_VALUE_Canvas:
+                {
+                    w = this.width;
+                    //  if (IsSprite())
+                    // {
+                    //     w= Common.CanvasToWorldWidth(AppSceneBase.main.mainCamera, AppSceneBase.main.sizeCanvas, width);
+                    // }
+                    //    x = rctran.anchoredPosition.x;
+                }
+                break;
+
+            case SizeType.MATCH_PARENT:
+                {
+                    w = w_parent * this.ratioW;
+                }
+                break;
+            case SizeType.MATCH_PARENT_MIN:
+                {
+                    w = Math.min(w_parent, h_parent) * this.ratioW;
+
+                }
+                break;
+            case SizeType.MATCH_PARENT_MAX:
+                {
+                    w = Math.max(w_parent, h_parent) * this.ratioW;
+                }
+                break;
+            case SizeType.MATCH_TARGET:
+                {
+                    if (this.target != null) { 
+                        w = this.target.getComponent(UITransform).contentSize.width * this.ratioW;
+
+                    }
+
+                }
+                break;
+            case SizeType.MATCH_HEIGHT:
+                {
+                    w = size.height;
+                }
+                break;
+
+            case SizeType.BETWEEN_SIDE_TARGET:
+                {
+
+                    if ((this.sideType == SideType.LEFT) || (this.sideType == SideType.RIGHT)) {
+                        w = LayOutUtil.Main().GetBetweenSideAndTargetSize(this.target, this.sideType) * this.ratioW;
+                    }
+
+                }
+                break;
+            case SizeType.BETWEEN_TWO_TARGET:
+                {
+                    w = LayOutUtil.Main().GetBetweenTwoTargetSize(this.target, this.target2, false);
+
+                }
+                break;
+        }
+        Debug.Log("UpdateSizeX w=" + w + " h=" + h); 
+        this.node?.getComponent(UITransform)?.setContentSize(new Size(w,h));
+    }
+
+
+    UpdateSizeY() {
+        var x, y, w, h;
+        var size = this.node.getComponent(UITransform).contentSize;
+        var sizeParent = this.node.parent.getComponent(UITransform).contentSize; 
+        w = size.width;
+        h = size.height; 
+
+        var w_parent = sizeParent.width;
+        var h_parent = sizeParent.height;
+        w_parent -= (this.offsetMin.x + this.offsetMax.x);
+        h_parent -= (this.offsetMin.y + this.offsetMax.y); 
+
+        switch (this.typeY) {
+            case SizeType.MATCH_CONTENT:
+                {
+                    h = size.height;
+                }
+                break;
+            case SizeType.MATCH_VALUE:
+                {
+                    h = this.height;
+                }
+                break;
+            case SizeType.MATCH_VALUE_Canvas:
+                {
+                    h = this.height;
+                    //  if (IsSprite())
+                    // {
+                    //     w= Common.CanvasToWorldWidth(AppSceneBase.main.mainCamera, AppSceneBase.main.sizeCanvas, width);
+                    // }
+                    //    x = rctran.anchoredPosition.x;
+                }
+                break;
+
+            case SizeType.MATCH_PARENT:
+                {
+                    h = h_parent * this.ratioH;
+                }
+                break;
+            case SizeType.MATCH_PARENT_MIN:
+                {
+                    h = Math.min(w_parent, h_parent) * this.ratioH;
+
+                }
+                break;
+            case SizeType.MATCH_PARENT_MAX:
+                {
+                    h = Math.max(w_parent, h_parent) * this.ratioH;
+                }
+                break;
+            case SizeType.MATCH_TARGET:
+                {
+                    if (this.target != null) { 
+                        h = this.target.getComponent(UITransform).contentSize.height * this.ratioH;
+
+                    }
+
+                }
+                break;
+            case SizeType.MATCH_WIDTH:
+                {
+                    h = size.width;
+                }
+                break;
+
+            case SizeType.BETWEEN_SIDE_TARGET:
+                {
+
+                    if ((this.sideType == SideType.UP) || (this.sideType == SideType.DOWN)) {
+                        h = LayOutUtil.Main().GetBetweenSideAndTargetSize(this.target, this.sideType) * this.ratioH;
+                    }
+
+                }
+                break;
+            case SizeType.BETWEEN_TWO_TARGET:
+                {
+                    h = LayOutUtil.Main().GetBetweenTwoTargetSize(this.target, this.target2, true);
+
+                }
+                break;
+        } 
+        Debug.Log("UpdateSizeY w=" + w + " h=" + h); 
+        this.node?.getComponent(UITransform)?.setContentSize(new Size(w,h));
+    }
+    UpdateSize() {
+        this.UpdateSizeX();
+        this.UpdateSizeY();
+    }
 }
 
+
+function type(number: any) {
+    throw new Error('Function not implemented.');
+}
 /**
  * [1] Class member could be defined like this.
  * [2] Use `property` decorator if your want the member to be serializable.

@@ -1,43 +1,27 @@
 
 import { _decorator, Component, Node } from 'cc';
+import { UIView } from '../ViewController/UIView';
 const { ccclass, property } = _decorator;
-
-// vscode 插件开发 typescript部分报错 Object is possibly 'undefined'.
-/*
-在tsconfig.js中:
-
-strict设置false状态
-
-{
-    "compilerOptions": {
-        "strict": false,
-        //...
-    }
-
-    */
-
 
 // TypeScript自动引入脚本插件
 // https://blog.csdn.net/u011004567/article/details/78507236
 // VS Code的插件-TypeScript Importer
-
-import { UIViewController } from "./UIViewController";
-
-@ccclass('UIView')
-export class UIView extends Component {
+ 
+@ccclass('UIImage')
+export class UIImage extends UIView {
     // [1]
     // dummy = '';
 
     // [2]
     // @property
     // serializableDummy = 0;
+  
 
-    rootViewController: UIViewController | null = null;
-
-    onLoad() {
+    onLoad () {   
+        super.onLoad();
     }
-
-    start() {
+    
+    start () {
         // [3]
     }
 
