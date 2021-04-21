@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, CCObject, CCInteger } from 'cc';
+import { _decorator, Component, Node, CCObject, CCInteger, UITransform } from 'cc';
 const { ccclass, property, integer, float, boolean, string, type } = _decorator;
 
 import { UIView } from "./UIView";
@@ -22,7 +22,7 @@ export class UIViewController extends CCObject {
 
         if (this.objController == null) {
             this.objController = new Node('Controller');
-           // this.objController.setContentSize(cc.Common.appSceneMain.sizeCanvas);
+         
 
         }
         this.ViewDidLoad();
@@ -51,6 +51,9 @@ export class UIViewController extends CCObject {
             console.log("objController is null");
         }else{
             this.objController.setParent(node);
+            var size = node.getComponent(UITransform).contentSize;
+            this.objController.addComponent(UITransform);
+            this.objController?.getComponent(UITransform)?.setContentSize(size);
         }  
     }
 

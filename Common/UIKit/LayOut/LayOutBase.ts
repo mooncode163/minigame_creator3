@@ -2,7 +2,7 @@
 import { _decorator, Component, Node, Vec2 } from 'cc';
 import { Device } from '../../Device';
 import { LayOutUtil } from './LayOutUtil';
-const { ccclass, property } = _decorator;
+const { ccclass, property,type } = _decorator;
 
 // TypeScript自动引入脚本插件
 // https://blog.csdn.net/u011004567/article/details/78507236
@@ -19,8 +19,9 @@ export class LayOutBase extends Component {
     target2: Node | null = null; 
 
 
-
+    @property
     enableLayout = true;
+    @property
     enableHide = true; //是否包含Hide true 包含 false  不包含
 
     // 选择横屏配置参数
@@ -30,7 +31,9 @@ export class LayOutBase extends Component {
     isOnlyForLandscape = false;
 
     space = Vec2.ZERO;
-    align = Align.Horizontal;
+    @type(Align)
+    align = Align.LEFT;
+
     directionVertical = Direction.TOP_TO_BOTTOM;
     directionHorizontal = Direction.LEFT_TO_RIGHT;
 
@@ -60,9 +63,11 @@ export class LayOutBase extends Component {
         this._offsetMax = value;
     }
     onLoad () {   
+        this.LayOut();
     }
     start() {
         // [3]
+        this.LayOut();
     }
 
     LayOut () { 
@@ -104,7 +109,7 @@ export class LayOutBase extends Component {
     //     // [4]
     // }
 }
-
+ 
 /**
  * [1] Class member could be defined like this.
  * [2] Use `property` decorator if your want the member to be serializable.

@@ -256,9 +256,7 @@
     "btnUpRight": {
       "__id__": 26
     },
-    "textTitle": {
-      "__id__": 67
-    },
+    "textTitle": null,
     "listProLoad": [],
     "_id": "e1GmZlcxxH67N5E3P9Mirw"
   },

@@ -34,7 +34,9 @@ enum RelationType {
 @ccclass('LayOutRelation')
 export class LayOutRelation extends LayOutBase {
     public static RelationType = RelationType;
-    private _type = RelationType.NONE;
+
+    @property
+    private _type = RelationType.PARENT;
     //get 的用法
     get type(): number {           // 函数后(): string 这个的意思是 要求函数返回的类型必须是 string
         return this._type;
@@ -62,12 +64,13 @@ export class LayOutRelation extends LayOutBase {
     // serializableDummy = 0;
     onLoad() {
         super.onLoad();
+        this._type = RelationType.PARENT;
+        this.LayOut();
     }
 
     start() {
         super.start();
-        // [3]
-        // this.tpye = RelationType.NONE;
+        this.LayOut();
     }
     LayOut() {
         if (!this.Enable()) {

@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, CCObject, UITransform } from 'cc'; 
+import { _decorator, Component, Node, CCObject, UITransform, Enum } from 'cc'; 
 import { AppSceneBase } from '../../../AppBase/Common/AppSceneBase';
 import { LayOutElement } from './LayOutElement';
 const { ccclass, property } = _decorator;
@@ -11,10 +11,10 @@ const { ccclass, property } = _decorator;
 
 
 enum Align {
-    UP = 0,
-    DOWN,
-    LEFT,
-    RIGHT,
+    UP = 0,//0
+    DOWN,//1
+    LEFT,//2
+    RIGHT,//3
     CENTER,
     UP_LEFT,
     UP_RIGHT,
@@ -24,6 +24,8 @@ enum Align {
     Vertical,
     SAME_POSTION,
 }
+//必须Enum设置才能在编辑器里设置enum的值
+Enum(Align);
 
 
 
@@ -31,11 +33,15 @@ enum DispLayVertical {
     TOP_TO_BOTTOM = 0,
     BOTTOM_TO_TOP,
 }
+//必须Enum设置才能在编辑器里设置enum的值
+Enum(DispLayVertical);
 
 enum DispLayHorizontal {
     LEFT_TO_RIGHT = 0,
     RIGHT_TO_LEFT,
 }
+//必须Enum设置才能在编辑器里设置enum的值
+Enum(DispLayHorizontal);
 
 
 
@@ -48,7 +54,8 @@ enum Direction {
     RIGHT_TO_LEFT,
 
 }
-
+//必须Enum设置才能在编辑器里设置enum的值
+Enum(Direction);
 
 enum SizeType {
     MATCH_CONTENT = 0,//按内容设置
@@ -67,12 +74,19 @@ enum SizeType {
     // 和widht height同步 canvas大小
     MATCH_VALUE_Canvas,
 }
+//必须Enum设置才能在编辑器里设置enum的值
+Enum(SizeType);
+
+
 enum SideType {
-    LEFT = 0,// 
-    RIGHT,
-    UP,
-    DOWN,
+LEFT = 0,// 
+RIGHT,
+UP,
+DOWN,
 }
+//必须Enum设置才能在编辑器里设置enum的值
+Enum(SideType);
+
 
 @ccclass('LayOutUtil')
 export class LayOutUtil extends CCObject {
