@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Sprite } from 'cc';
+import { _decorator, Component, Node, Sprite, Label } from 'cc';
 import { UIView } from '../ViewController/UIView';
 const { ccclass, property,type } = _decorator;
 
@@ -7,18 +7,11 @@ const { ccclass, property,type } = _decorator;
 // https://blog.csdn.net/u011004567/article/details/78507236
 // VS Code的插件-TypeScript Importer
  
-@ccclass('UIImage')
-export class UIImage extends UIView { 
-    
-    @type(Sprite)
-    image: Sprite | null = null;
-
-    // [1]
-    // dummy = '';
-
-    // [2]
-    // @property
-    // serializableDummy = 0;
+@ccclass('UIText')
+export class UIText extends UIView { 
+     
+    @type(Label)
+    title: Label | null = null; 
   
 
     onLoad () {   

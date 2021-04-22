@@ -7,8 +7,8 @@ const { ccclass, property,type } = _decorator;
 // https://blog.csdn.net/u011004567/article/details/78507236
 // VS Code的插件-TypeScript Importer
  
-@ccclass('UIImage')
-export class UIImage extends UIView { 
+@ccclass('UIButton')
+export class UIButton extends UIView { 
     
     @type(Sprite)
     image: Sprite | null = null;

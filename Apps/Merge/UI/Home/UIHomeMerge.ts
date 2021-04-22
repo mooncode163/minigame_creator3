@@ -4,12 +4,17 @@ const { ccclass, property, integer, float, boolean, string, type } = _decorator;
 
 import { UIHomeBase } from '../../../../AppBase/Home/UIHomeBase';
 import { TextureCache } from '../../../../Common/Cache/TextureCache';
+import { UIImage } from '../../../../Common/UIKit/UIImage/UIImage';
 
 
 @ccclass('UIHomeMerge')
 export class UIHomeMerge extends UIHomeBase {
     @type(Node)
     nodeBg: Node | null = null;
+
+    @type(UIImage)
+    imageBg: UIImage = null;
+    // imageBg: UIImage | null = null;
 
     start() {
         // [3] 
