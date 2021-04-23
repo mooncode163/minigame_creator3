@@ -5,8 +5,8 @@ const { ccclass, property } = _decorator;
 // 动态加载资源文档
 // https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
 
-@ccclass('LoadTexture')
-export class LoadTexture extends CCObject {
+@ccclass('UICloudRes')
+export class UICloudRes extends CCObject {
     
     start () {
   

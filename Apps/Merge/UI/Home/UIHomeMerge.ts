@@ -4,7 +4,11 @@ const { ccclass, property, integer, float, boolean, string, type } = _decorator;
 
 import { UIHomeBase } from '../../../../AppBase/Home/UIHomeBase';
 import { TextureCache } from '../../../../Common/Cache/TextureCache';
+import { Config } from '../../../../Common/Config/Config';
 import { UIImage } from '../../../../Common/UIKit/UIImage/UIImage';
+import { Debug } from '../../../../Common/Debug';
+import { Luna } from './Luna';
+import { TestCallAndThis } from './TestCallAndThis';
 
 
 @ccclass('UIHomeMerge')
@@ -14,11 +18,39 @@ export class UIHomeMerge extends UIHomeBase {
 
     @type(UIImage)
     imageBg: UIImage = null;
-    // imageBg: UIImage | null = null;
 
+    // imageBg: UIImage | null = null;
+    test() {
+        Debug.Log("test 2 bind");
+    }
+    success() {
+        Debug.Log("success bind");
+        this.test();
+    }
     start() {
         // [3] 
-       
+        // this.success().bind(this);
+        // TestCallAndThis.callBackTest(1, this.success.bind(this));
+        // var p = new Luna();
+        // p.testbind();
+        // var fc = this.success.bind(this);
+        Config.Main().LoadTest({
+            filepath: "App/UI/Bg/GameBg",
+            bind: this,
+            // this.success.bind(this),
+            // success:(p: any) {
+            //     this.test();
+
+            // },
+            // success:this.success.bind(this),
+
+            success: (p:any) => {
+                this.test();
+            },
+        }
+        );
+
+
         // default GameBg
         // TextureCache.Main().Load({
         //     filepath: "App/UI/Bg/GameBg",
@@ -47,43 +79,43 @@ export class UIHomeMerge extends UIHomeBase {
         //     },
         // });
         // App/UI/Bg/GameBg default_pannel
-//         resources.load("default_pannel",SpriteFrame, (err, spriteFrame) => {
-//             if (spriteFrame== null) 
-//             {
-// console.log("spriteFrame is null err=",err);
-//             }
-//             // if (this.nodeBg != null) 
-//             {
-//                 this.nodeBg.getComponent(Sprite).spriteFrame = spriteFrame;
-//             } 
-//         });
+        //         resources.load("default_pannel",SpriteFrame, (err, spriteFrame) => {
+        //             if (spriteFrame== null) 
+        //             {
+        // console.log("spriteFrame is null err=",err);
+        //             }
+        //             // if (this.nodeBg != null) 
+        //             {
+        //                 this.nodeBg.getComponent(Sprite).spriteFrame = spriteFrame;
+        //             } 
+        //         });
 
-    //    var pic = "/Users/moon/sourcecode/cocos/product/minigame/minigameCreator/assets/resources/App/UI/Bg/GameBg.png" 
-    //    pic = "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1942783278,2082140028&fm=26&gp=0.jpg";
-    //     var p = this;
-    //     assetManager.loadRemote(pic, function (err:any, texture:Texture2D) {
-    //         // Use texture to create sprite frame
-    //         if (texture == null) {
-    //             console.log("Test loadRemote is null err=", err);
+        //    var pic = "/Users/moon/sourcecode/cocos/product/minigame/minigameCreator/assets/resources/App/UI/Bg/GameBg.png" 
+        //    pic = "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1942783278,2082140028&fm=26&gp=0.jpg";
+        //     var p = this;
+        //     assetManager.loadRemote(pic, function (err:any, texture:Texture2D) {
+        //         // Use texture to create sprite frame
+        //         if (texture == null) {
+        //             console.log("Test loadRemote is null err=", err);
 
-    //             // Bundle resources doesn't contain 1
-    //             // console.log("Test loadRemote err:" + err.message || err);
-    //         } else {
-    //             console.log("Test loadRemote is not null");
-    //             const spriteFrame = new SpriteFrame();
-    //             spriteFrame.texture = texture;
-    //             p.nodeBg.getComponent(Sprite).spriteFrame = spriteFrame;
-    //         }
-    //     }.bind(this));
+        //             // Bundle resources doesn't contain 1
+        //             // console.log("Test loadRemote err:" + err.message || err);
+        //         } else {
+        //             console.log("Test loadRemote is not null");
+        //             const spriteFrame = new SpriteFrame();
+        //             spriteFrame.texture = texture;
+        //             p.nodeBg.getComponent(Sprite).spriteFrame = spriteFrame;
+        //         }
+        //     }.bind(this));
 
- 
+
 
         // TextureCache.Main().LoadFrame({
         //     filepath: "App/UI/Bg/GameBg",
         //     bind:this,
         //     success(bind:any,frame: SpriteFrame) {
         //         console.log("TextureCache success");
-               
+
         //         if (frame != null) {
         //             console.log("TextureCache success frame is not null");
         //         } else {

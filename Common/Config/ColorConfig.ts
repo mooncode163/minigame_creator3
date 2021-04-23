@@ -8,14 +8,7 @@ const { ccclass, property } = _decorator;
 @ccclass('ColorConfig')
 export class ColorConfig extends CCObject {
     
-    start () {
-  
-        // load Prefab
-        resources.load("App/Prefab/Home/UIHomeMerge", Prefab, (err, prefab) => {
-            // const newNode = instantiate(prefab);
-        
-        });
-    } 
+   
 }
 
 /**

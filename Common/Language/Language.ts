@@ -6,8 +6,8 @@ const { ccclass, property } = _decorator;
 // 动态加载资源文档
 // https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
 
-@ccclass('ResManager')
-export class ResManager extends CCObject {
+@ccclass('Language')
+export class Language extends CCObject {
 
     
     /*

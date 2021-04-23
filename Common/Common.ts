@@ -1,21 +1,28 @@
 
-import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc'; 
+import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc';
 
 const { ccclass, property } = _decorator;
 // 动态加载资源文档
 // https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
 
-@ccclass('LoadTexture')
-export class LoadTexture extends CCObject {
-    
-    start () {
-  
-        // load Prefab
-        resources.load("App/Prefab/Home/UIHomeMerge", Prefab, (err, prefab) => {
-            // const newNode = instantiate(prefab);
-        
-        });
-    } 
+@ccclass('Common')
+export class Common extends CCObject {
+    public static GAME_DATA_DIR = "GameData";//streamingAssetsPath下的游戏配置等数据
+    public static GAME_DATA_DIR_COMMON = "GameData/common";
+    public static GAME_RES_DIR = "GameRes";//streamingAssetsPath 下的游戏图片等资源
+    public static CLOUD_RES_DIR_NAME = "CloudRes";//放在云端的资源
+    public static CLOUD_RES_DIR = "GameRes/CloudRes";//放在云端的资源
+    public static RES_CONFIG_DATA = "ConfigData";
+    public static RES_CONFIG_DATA_COMMON = "ConfigDataCommon";
+    public static THUMB_SUFFIX = "_thumb";
+    public static TOUCH_MOVE_STEP_MIN = 3.0;//6.0f
+    static IsBlankString(str: string) {
+        if (typeof str == "undefined" || str == null || str == "") {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 /**

@@ -1,5 +1,7 @@
 
-import { _decorator, Component, Node, CCObject, resources, Texture2D } from 'cc';
+import { _decorator, Component, Node, CCObject, resources, Texture2D, assetManager } from 'cc';
+import { FileUtil } from '../File/FileUtil';
+import { LoadTexture } from '../File/LoadTexture';
 
 const { ccclass, property } = _decorator;
 
@@ -8,13 +10,38 @@ const { ccclass, property } = _decorator;
 
 @ccclass('ResManager')
 export class ResManager extends CCObject {
-
-    
     /*
       {
-          filepath:"",
-          bind:any,
-          success: function (tex:Texture2D) {
+          filepath:"", 
+          success: function (p:any,data:any) {
+          },
+          fail: function (p) {
+          }, 
+      }
+      */
+    public static Load(obj: any) {
+        var key = FileUtil.GetFileBeforeExtWithOutDot(obj.filepath);
+        resources.load(key, (err: any, data: any) => {
+            if (data == null) {
+                // Bundle resources doesn't contain 1
+                console.log("ResManager Load err:" + err.message || err);
+                if (obj.fail != null) {
+                    obj.fail(this);
+                }
+            } else {
+                console.log("ResManager Load is not null");
+                if (obj.success != null) {
+                    obj.success(this, data);
+                }
+            }
+
+        });
+
+    }
+    /*
+      {
+          filepath:"", 
+          success: function (p,tex:Texture2D) {
           },
           fail: function (p) {
           },
@@ -23,42 +50,62 @@ export class ResManager extends CCObject {
         
       }
       */
-    Load(obj: any) {
-        console.log("TextureCache Load");        // load a texture
-        var pic = obj.filepath+"/texture";
+
+
+    public static LoadTexture(obj: any) {
+        // texture spriteFrame
+        var pic = FileUtil.GetFileBeforeExtWithOutDot(obj.filepath) + "/texture";
         resources.load(pic, Texture2D, (err: any, texture: Texture2D) => {
-            if (texture == null) { 
+            if (texture == null) {
                 // Bundle resources doesn't contain 1
-                console.log("Test texture err:" + err.message || err);
+                console.log("ResManager texture err:" + err.message || err);
                 if (obj.fail != null) {
-                    obj.fail(obj.bind);
+                    obj.fail(this);
                 }
             } else {
-                console.log("Test texture is not null");
+                console.log("ResManager texture is not null");
                 if (obj.success != null) {
-                    obj.success(obj.bind, texture);
+                    obj.success(this, texture);
                 }
             }
 
         });
-
-        //   pic = "AlertBoard/spriteFrame"
-        // obj.filepath = "test"
-        //  resources.load(obj.filepath, Texture2D, (err: any, texture: Texture2D) 会失败
-        // resources.load(obj.filepath, (err: any, texture: Texture2D) => {
-        //     console.log("TextureCache callback Load obj.filepath=", obj.filepath, " err=", err);
-        //     // spriteFrame.texture = texture;
-        //     if (texture != null) {
-        //         console.log("TextureCache texture is not null");
-        //     } else {
-        //         console.log("TextureCache texture is  null");
-        //     }
-        //     if (obj.success != null) {
-        //         obj.success(obj.bind, texture);
-        //     }
-
-        // });
     }
+
+    /*
+  {
+      url:"", 
+      success: function (p:any,data:any) {
+      },
+      fail: function (p) {
+      }, 
+    
+  }
+  */
+
+    public static LoadUrl(obj: any) {
+        // var pic = "/Users/moon/sourcecode/cocos/product/minigame/minigameCreator/assets/resources/App/UI/Bg/GameBg.png" 
+        //    pic = "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1942783278,2082140028&fm=26&gp=0.jpg";
+        // var p = this;
+        assetManager.loadRemote(obj.url, function (err: any, data: any) {
+            if (data == null) {
+                console.log("ResManager LoadUrl is null err=", err);
+                if (obj.fail != null) {
+                    obj.fail(this);
+                }
+            } else {
+                console.log("ResManager LoadUrl is not null");
+                if (obj.success != null) {
+                    obj.success(this, data);
+                }
+                // const spriteFrame = new SpriteFrame();
+                // spriteFrame.texture = texture;
+                // p.nodeBg.getComponent(Sprite).spriteFrame = spriteFrame;
+            }
+        });
+    }
+
+
 }
 
 /**

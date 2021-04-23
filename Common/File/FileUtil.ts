@@ -1,21 +1,21 @@
 
-import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc'; 
+import { _decorator, CCObject } from 'cc';
+const { ccclass, property, integer, float, boolean, string, type } = _decorator;
 
-const { ccclass, property } = _decorator;
-// 动态加载资源文档
-// https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
 
-@ccclass('LoadTexture')
-export class LoadTexture extends CCObject {
-    
-    start () {
-  
-        // load Prefab
-        resources.load("App/Prefab/Home/UIHomeMerge", Prefab, (err, prefab) => {
-            // const newNode = instantiate(prefab);
-        
-        });
-    } 
+@ccclass('FileUtil')
+export class FileUtil extends CCObject {
+
+    //除去文件后缀  并去除.
+    static  GetFileBeforeExtWithOutDot(filepath: string) {
+        var ret = filepath;
+        var idx = filepath.lastIndexOf(".");
+        if (idx >= 0) {
+            ret = filepath.substr(0, idx);
+        }
+        return ret;
+    }
+
 }
 
 /**
