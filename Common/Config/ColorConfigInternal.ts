@@ -1,14 +1,22 @@
 
-import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc'; 
+import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc';
+import { Debug } from '../Debug';
+import { FileUtil } from '../File/FileUtil';
+import { JsonUtil } from '../File/JsonUtil';
+import { ResManager } from '../Res/ResManager';
+import { LayOutGrid } from '../UIKit/LayOut/LayOutGrid';
+import { ConfigBase } from './ConfigBase';
+import { ConfigInternalBase } from './ConfigInternalBase';
 
 const { ccclass, property } = _decorator;
 // 动态加载资源文档
 // https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
 
 @ccclass('ColorConfigInternal')
-export class ColorConfigInternal extends CCObject {
-    
-     
+export class ColorConfigInternal extends ConfigInternalBase {
+
+ 
+
 }
 
 /**

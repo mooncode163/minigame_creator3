@@ -5,21 +5,17 @@ import { Device } from '../Device';
 import { Platform } from '../Platform';
 import { Source } from '../Source';
 import { ConfigInternal } from './ConfigInternal';
+import { ConfigBase } from './ConfigBase';
 
 const { ccclass, property } = _decorator;
 // 动态加载资源文档
 // https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
 
 @ccclass('Config')
-export class Config extends CCObject {
+export class Config extends ConfigBase {
     configApp: ConfigInternal = null;
     configCommon: ConfigInternal = null;
-    countLoad = 0;
-    countMax = 2;
-
-    listItem: ConfigInternal[] = [];
-
-
+  
     static _main: Config;
     //静态方法
     static Main() {
@@ -67,45 +63,7 @@ export class Config extends CCObject {
 
     }
 
-    LoadTest(obj: any) {
-        if (obj.success != null) {
-            obj.success(this);
-        }
-    }
-
-    /*
-{  
-success: function (p) {
-},
-fail: function () {
-}, 
-}
-*/
-    Load(obj: any) {
-        this.countLoad = 0;
-        this.listItem.forEach((item) => {
-            item.Load(
-                {
-                    success: (p: any) => {
-                        this.OnFinish(obj);
-                    },
-                    fail: () => {
-                        // this.OnFinish(obj);
-                    },
-                });
-        });
-
-    }
-
-    OnFinish(obj: any) {
-        this.countLoad++;
-        this.countMax = this.listItem.length;
-        if (this.countLoad >= this.countMax) {
-            if (obj.success != null) {
-                obj.success(this);
-            }
-        }
-    }
+  
 }
 
 /**

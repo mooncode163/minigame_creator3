@@ -1,14 +1,26 @@
 
-import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc'; 
+import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc';
+import { ColorConfigInternal } from './ColorConfigInternal';
+import { ConfigBase } from './ConfigBase';
 
 const { ccclass, property } = _decorator;
 // 动态加载资源文档
 // https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
 
 @ccclass('ColorConfig')
-export class ColorConfig extends CCObject {
-    
-   
+export class ColorConfig extends ConfigBase {
+    static _main: ColorConfig;
+    //静态方法
+    static Main() {
+        if (this._main == null) {
+            this._main = new ColorConfig();
+            this._main.Init();
+        }
+        return this._main;
+    }
+    Init() {
+    }
+
 }
 
 /**

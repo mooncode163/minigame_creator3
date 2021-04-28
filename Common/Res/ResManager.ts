@@ -12,11 +12,13 @@ const { ccclass, property } = _decorator;
 export class ResManager extends CCObject {
     /*
       {
-          filepath:"", 
-          success: function (p:any,data:any) {
-          },
-          fail: function (p) {
-          }, 
+        filepath:"", 
+        success: (p:any) => {
+            
+        }, 
+        fail: (p:any) => {
+            
+        },
       }
       */
     public static Load(obj: any) {

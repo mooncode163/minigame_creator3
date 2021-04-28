@@ -1,17 +1,20 @@
 
-import { _decorator, Component, Node, CCObject, resources, Texture2D } from 'cc';
-import { LanguageInternal } from './LanguageInternal';
+import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc';
+import { ConfigInternalBase } from './ConfigInternalBase';
+ 
 
 const { ccclass, property } = _decorator;
-
 // 动态加载资源文档
 // https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
 
-@ccclass('Language')
-export class Language extends CCObject {
+@ccclass('ConfigBase')
+export class ConfigBase extends CCObject {
     countLoad = 0;
-    listItem: LanguageInternal[] = [];
-      /*
+    listItem: ConfigInternalBase[] = [];
+    rootJson: any = null;
+    fileJson = "";
+
+    /*
        { 
          success: (p:any) => {
              
@@ -21,7 +24,7 @@ export class Language extends CCObject {
          },
        }
        */
-       Load(obj: any) {
+    Load(obj: any) {
         this.countLoad = 0;
         this.listItem.forEach((item) => {
             item.Load(
@@ -45,6 +48,7 @@ export class Language extends CCObject {
             }
         }
     }
+
 }
 
 /**

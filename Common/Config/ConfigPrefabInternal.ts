@@ -1,21 +1,15 @@
 
 import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc'; 
+import { ConfigInternalBase } from './ConfigInternalBase';
 
 const { ccclass, property } = _decorator;
 // 动态加载资源文档
 // https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
 
 @ccclass('ConfigPrefabInternal')
-export class ConfigPrefabInternal extends CCObject {
+export class ConfigPrefabInternal extends ConfigInternalBase {
     
-    start () {
-  
-        // load Prefab
-        resources.load("App/Prefab/Home/UIHomeMerge", Prefab, (err, prefab) => {
-            // const newNode = instantiate(prefab);
-        
-        });
-    } 
+   
 }
 
 /**
