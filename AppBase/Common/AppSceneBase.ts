@@ -5,6 +5,7 @@ import { UIViewController } from "../../Common/UIKit/ViewController/UIViewContro
 import { LoadItemInfo } from "./LoadItemInfo";
 import { Debug } from '../../Common/Debug';
 import { Device } from '../../Common/Device';
+import { AppPreLoad } from '../../Common/AppPreLoad';
 
 
 // typescript 提示 Object is possibly ‘null‘ 的N种解决方法
@@ -12,12 +13,11 @@ import { Device } from '../../Common/Device';
 
 @ccclass('AppSceneBase')
 export class AppSceneBase extends Component {
-    static _main:AppSceneBase;
+    static _main: AppSceneBase;
     //静态方法
-    static   Main(){ 
-        if(this._main==null)
-        {
-            
+    static Main() {
+        if (this._main == null) {
+
         }
         return this._main;
     }
@@ -56,8 +56,16 @@ export class AppSceneBase extends Component {
         Debug.Log("AppSceneBase onLoad");
         this.isHasRunApp = false;
         this.InitValue();
+        AppPreLoad.Main().Load(
+            {
+                success: (p: any) => {
+                    this.RunApp();
+                },
+                fail: () => {
+                    // this.OnFinish(obj);
+                },
+            });
 
-        this.RunApp();
     }
     start() {
         // [3]
@@ -82,8 +90,7 @@ export class AppSceneBase extends Component {
 
         // this.sizeCanvas = this.canvasMain?.getComponent(UITransform)?.contentSize;
         var size = this.canvasMain?.getComponent(UITransform)?.contentSize;
-        if (size != null) 
-        {
+        if (size != null) {
             this.sizeCanvas = size;
         }
         // let screenSize = view.getFrameSize()

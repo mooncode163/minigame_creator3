@@ -1,6 +1,8 @@
 
 import { _decorator, Component, Node, CCObject, resources, Texture2D } from 'cc';
 import { LanguageInternal } from './LanguageInternal';
+import { ConfigBase } from '../Config/ConfigBase';
+import { Common } from '../Common';
 
 const { ccclass, property } = _decorator;
 
@@ -8,9 +10,32 @@ const { ccclass, property } = _decorator;
 // https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
 
 @ccclass('Language')
-export class Language extends CCObject {
+export class Language extends ConfigBase {
     countLoad = 0;
-    listItem: LanguageInternal[] = [];
+    listItem: LanguageInternal[] = []; 
+    static _main: Language;
+    //静态方法
+    static Main() {
+        if (this._main == null) {
+            this._main = new Language();
+            this._main.Init();
+        }
+        return this._main;
+    }
+    Init() {
+
+        var strDir = Common.RES_CONFIG_DATA + "/config";
+        var fileName = "config_android";
+        
+        {
+            // this.configCommon = new LanguageInternal();
+            // fileName = "config_common";
+            // this.configCommon.fileJson = strDir + "/" + fileName;
+            // this.listItem.push(this.configCommon);
+        }
+
+    }
+
       /*
        { 
          success: (p:any) => {

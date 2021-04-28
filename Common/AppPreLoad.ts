@@ -7,6 +7,8 @@ import { ConfigPrefab } from './Config/ConfigPrefab';
 import { ImageRes } from './Config/ImageRes';
 import { Debug } from './Debug';
 import { Language } from './Language/Language';
+import { ConfigBase } from './Config/ConfigBase';
+import { ConfigAd } from './Config/ConfigAd';
 const { ccclass, property } = _decorator;
 // 动态加载资源文档
 // https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
@@ -16,18 +18,28 @@ export class AppPreLoad extends CCObject {
     countLoad = 0;
     countMax = 2;
 
-    listItem: CCObject[] = [];
-
+    listItem: ConfigBase[] = [];
 
     static _main: AppPreLoad;
     //静态方法
     static Main() {
         if (this._main == null) {
             this._main = new AppPreLoad();
+            this._main.Init();
         }
         return this._main;
     }
+    Init() {
 
+        this.listItem.push(Config.Main());
+        this.listItem.push(ColorConfig.Main());
+        this.listItem.push(Language.Main());
+        this.listItem.push(ImageRes.Main());
+        this.listItem.push(ConfigPrefab.Main());
+        this.listItem.push(ConfigAudio.Main());
+        this.listItem.push(ConfigAd.Main());
+
+    }
     /*
        { 
          success: (p:any) => {
@@ -38,102 +50,26 @@ export class AppPreLoad extends CCObject {
          },
        }
        */
-    Load(obj: any) {
+    Load(obj: any) { 
         this.countLoad = 0;
-        Config.Main().Load(
-            {
-                success: (p: any) => {
-                    Debug.Log("AppPreLoad Config success");
-                    this.OnFinish(obj);
-                },
-                fail: () => {
-                    // this.OnFinish(obj);
-                    Debug.Log("AppPreLoad Config fail");
-                },
+        this.listItem.forEach((item) => {
+            item.Load(
+                {
+                    success: (p: any) => {
+                        this.OnFinish(obj);
+                    },
+                    fail: () => {
+                        // this.OnFinish(obj);
+                    },
+                });
+        });
 
-            });
+     
 
-        ColorConfig.Main().Load(
-            {
-                success: (p: any) => {
-                    Debug.Log("AppPreLoad ColorConfig success");
-                    this.OnFinish(obj);
-                },
-                fail: () => {
-                    // this.OnFinish(obj);
-                    Debug.Log("AppPreLoad ColorConfig fail");
-                },
-            });
+    
 
-
-        //language
-        // this.countMax++;
-        Language.Main().Load(
-            {
-                success: (p: any) => {
-                    Debug.Log("AppPreLoad Language success");
-                    this.OnFinish(obj);
-                },
-                fail: () => {
-                    // this.OnFinish(obj);
-                    Debug.Log("AppPreLoad Language fail");
-                },
-            });
-        // {
-        //     var info = new cc.LoadItemInfo();
-        //     info.id = cc.LoadItemInfo.LANGUAGE;
-        //     info.isLoad = false;
-        //     this.listProLoad.push(info);
-
-        //     var lan = cc.Language.main();
-        //     lan.SetLoadFinishCallBack(this.AppPreLoadDidFinish.bind(this), info);
-        // }
-
-
-        //image
-        // this.countMax++;
-        ImageRes.Main().Load(
-            {
-                success: (p: any) => {
-                    Debug.Log("AppPreLoad ImageRes success");
-                    this.OnFinish(obj);
-                },
-                fail: () => {
-                    // this.OnFinish(obj);
-                    Debug.Log("AppPreLoad ImageRes fail");
-                },
-            });
-
-        // prefab
-        // this.countMax++;
-        ConfigPrefab.Main().Load(
-            {
-                success: (p: any) => {
-                    Debug.Log("AppPreLoad ConfigPrefab success");
-                    this.OnFinish(obj);
-                },
-                fail: () => {
-                    // this.OnFinish(obj);
-                    Debug.Log("AppPreLoad ConfigPrefab fail");
-                },
-
-            });
-
-
-        // Audio
-        // this.countMax++;
-        ConfigAudio.Main().Load(
-            {
-                success: (p: any) => {
-                    Debug.Log("AppPreLoad ConfigAudio success");
-                    this.OnFinish(obj);
-                },
-                fail: () => {
-                    // this.OnFinish(obj);
-                    Debug.Log("AppPreLoad ConfigAudio fail");
-                },
-            });
-
+  
+  
 
     }
 
