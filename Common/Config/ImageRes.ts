@@ -1,5 +1,7 @@
 
-import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc'; 
+import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc';
+import { Common } from '../Common';
+import { ImageResInternal } from './ImageResInternal';
 import { ConfigBase } from './ConfigBase';
 
 const { ccclass, property } = _decorator;
@@ -8,9 +10,11 @@ const { ccclass, property } = _decorator;
 
 @ccclass('ImageRes')
 export class ImageRes extends ConfigBase {
+    imageResApp: ImageResInternal = null;
+
     static _main: ImageRes;
     //静态方法
-    static Main() {
+    static get main() {
         if (this._main == null) {
             this._main = new ImageRes();
             this._main.Init();
@@ -18,7 +22,18 @@ export class ImageRes extends ConfigBase {
         return this._main;
     }
     Init() {
+
+        var strDir = Common.RES_CONFIG_DATA + "Image";
+        var fileName = "imageResApp.json";
+        { 
+            this.imageResApp = new ImageResInternal();
+            this.imageResApp.fileJson = strDir + "/" + fileName;
+            this.listItem.push(this.imageResApp);
+        }
+   
+
     }
+
 }
 
 /**

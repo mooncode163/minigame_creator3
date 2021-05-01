@@ -75,7 +75,7 @@ export class LayOutBase extends Component {
 
     IsUseLandscape() {
         var ret = false;
-        if (Device.Main().isLandscape&&this.enableLandscape)
+        if (Device.main.isLandscape&&this.enableLandscape)
         {
             ret = true;
         }
@@ -90,14 +90,14 @@ export class LayOutBase extends Component {
         }
         if (this.isOnlyForLandscape)
         {
-            if (!Device.Main().isLandscape)
+            if (!Device.main.isLandscape)
             {
                 ret = false;
             }
         }
         if (this.isOnlyForPortrait)
         {
-            if (Device.Main().isLandscape)
+            if (Device.main.isLandscape)
             {
                 ret = false;
             }

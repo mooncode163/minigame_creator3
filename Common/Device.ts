@@ -1,5 +1,5 @@
 
-import { _decorator, CCObject, director } from 'cc';
+import { _decorator, CCObject, director, Vec2, view, Size } from 'cc';
 import { Debug } from './Debug';
 
 const { ccclass, property } = _decorator;
@@ -11,7 +11,7 @@ const { ccclass, property } = _decorator;
 export class Device extends CCObject { 
     static _main:Device;
     //静态方法
-    static Main(){ 
+    static get main(){ 
         if(this._main==null)
         {
             this._main = new Device();
@@ -20,14 +20,21 @@ export class Device extends CCObject {
     }
     //get 的用法
     get isLandscape(): boolean {           
-        var sz = director.getWinSizeInPixels();//屏幕分辨率
-        Debug.Log("sz=" + sz);
+        var sz = this.screenSize;//屏幕分辨率
+        Debug.Log("screen sz=" + sz);
         if (sz.width > sz.height) {
             return true;
         }
         return false;
     }
-     
+    get screenSize(): Size {           
+        let frameSize = view.getFrameSize()
+        let screenSize = director.getWinSizeInPixels(); 
+        Debug.Log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
+        return screenSize;
+    }
+
+ 
      
 }
 

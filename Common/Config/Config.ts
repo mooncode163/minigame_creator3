@@ -18,7 +18,7 @@ export class Config extends ConfigBase {
   
     static _main: Config;
     //静态方法
-    static Main() {
+    static get main() {
         if (this._main == null) {
             this._main = new Config();
             this._main.Init();
@@ -46,7 +46,7 @@ export class Config extends ConfigBase {
             if (Platform.isWeiXin) {
                 fileName = "config_weixin";
             }
-            if (Device.Main().isLandscape) {
+            if (Device.main.isLandscape) {
                 fileName += "_hd";
             }
 

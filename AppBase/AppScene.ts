@@ -31,7 +31,7 @@ export class AppScene extends AppSceneBase {
     RunApp () {
         super.RunApp();
         console.log("AppScene RunApp");
-        var p = MainViewController.Main(); 
+        var p = MainViewController.main; 
         console.log("AppScene RunApp Main");
         this.SetRootViewController(p);
 

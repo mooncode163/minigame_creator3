@@ -5,7 +5,8 @@ import { UIViewController } from "../../Common/UIKit/ViewController/UIViewContro
 import { LoadItemInfo } from "./LoadItemInfo";
 import { Debug } from '../../Common/Debug';
 import { Device } from '../../Common/Device';
-import { AppPreLoad } from '../../Common/AppPreLoad';
+import { AppPreLoad } from '../../Common/AppPreLoad'; 
+import { Config } from '../../Common/Config/Config';
 
 
 // typescript 提示 Object is possibly ‘null‘ 的N种解决方法
@@ -15,7 +16,7 @@ import { AppPreLoad } from '../../Common/AppPreLoad';
 export class AppSceneBase extends Component {
     static _main: AppSceneBase;
     //静态方法
-    static Main() {
+    static get main() {
         if (this._main == null) {
 
         }
@@ -56,16 +57,19 @@ export class AppSceneBase extends Component {
         Debug.Log("AppSceneBase onLoad");
         this.isHasRunApp = false;
         this.InitValue();
-        AppPreLoad.Main().Load(
+        AppPreLoad.main.Load(
             {
                 success: (p: any) => {
                     this.RunApp();
                 },
-                fail: () => {
+                fail: (p: any) => {
                     // this.OnFinish(obj);
+                    this.RunApp();
                 },
             });
 
+ 
+        // this.RunApp();
     }
     start() {
         // [3]
@@ -93,10 +97,10 @@ export class AppSceneBase extends Component {
         if (size != null) {
             this.sizeCanvas = size;
         }
-        // let screenSize = view.getFrameSize()
-        // screenSize = director.getWinSizeInPixels();
+        let frameSize = view.getFrameSize()
+        let screenSize = director.getWinSizeInPixels();
         var str = "sizeCanvas w=" + this.sizeCanvas.width + ",h=" + this.sizeCanvas.height;
-        // Debug.Log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
+        Debug.Log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
         // Debug.Log(str);
 
 
@@ -133,7 +137,7 @@ export class AppSceneBase extends Component {
         // w = this.canvasMain.designResolutionSize.width;
         // h = this.canvasMain.designResolutionSize.height;
 
-        if (Device.Main().isLandscape) {
+        if (Device.main.isLandscape) {
             // view.setDesignResolutionSize(math.absMax(w,h),math.absMin(w,h),view.getResolutionPolicy());
 
             // this.canvasMain.fitWidth = true;

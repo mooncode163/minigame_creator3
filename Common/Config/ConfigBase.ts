@@ -30,21 +30,29 @@ export class ConfigBase extends CCObject {
             item.Load(
                 {
                     success: (p: any) => {
-                        this.OnFinish(obj);
+                        this.OnFinish(obj,false);
                     },
                     fail: () => {
-                        // this.OnFinish(obj);
+                        this.OnFinish(obj,true);
                     },
                 });
         });
 
     }
 
-    OnFinish(obj: any) {
+    OnFinish(obj: any,isFail:boolean) {
         this.countLoad++;
         if (this.countLoad >= this.listItem.length) {
-            if (obj.success != null) {
-                obj.success(this);
+          
+            if(isFail)
+            {
+                if (obj.fail != null) {
+                    obj.fail(this);
+                }
+            }else{
+                if (obj.success != null) {
+                    obj.success(this);
+                }
             }
         }
     }

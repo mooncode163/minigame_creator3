@@ -1,5 +1,7 @@
 
-import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc'; 
+import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc';
+import { Common } from '../Common';
+import { ConfigPrefabInternal } from './ConfigPrefabInternal';
 import { ConfigBase } from './ConfigBase';
 
 const { ccclass, property } = _decorator;
@@ -8,10 +10,11 @@ const { ccclass, property } = _decorator;
 
 @ccclass('ConfigPrefab')
 export class ConfigPrefab extends ConfigBase {
-    
+    configPrefabApp: ConfigPrefabInternal = null;
+
     static _main: ConfigPrefab;
     //静态方法
-    static Main() {
+    static get main() {
         if (this._main == null) {
             this._main = new ConfigPrefab();
             this._main.Init();
@@ -19,7 +22,18 @@ export class ConfigPrefab extends ConfigBase {
         return this._main;
     }
     Init() {
+
+        var strDir = Common.RES_CONFIG_DATA + "/Prefab";
+        var fileName = "ConfigPrefabApp.json";
+        { 
+            this.configPrefabApp = new ConfigPrefabInternal();
+            this.configPrefabApp.fileJson = strDir + "/" + fileName;
+            this.listItem.push(this.configPrefabApp);
+        }
+   
+
     }
+
 }
 
 /**

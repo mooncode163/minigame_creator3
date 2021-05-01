@@ -10,7 +10,7 @@ export class TextureCache extends CCObject {
     dicItem:any;
     static _main:TextureCache;
     //静态方法
-    static   Main(){
+    static get  main(){
         console.log("TextureCache Main");
         if(this._main==null)
         {

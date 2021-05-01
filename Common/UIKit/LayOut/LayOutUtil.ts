@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, CCObject, UITransform, Enum } from 'cc'; 
+import { _decorator, Component, Node, CCObject, UITransform, Enum } from 'cc';
 import { AppSceneBase } from '../../../AppBase/Common/AppSceneBase';
 import { LayOutElement } from './LayOutElement';
 const { ccclass, property } = _decorator;
@@ -55,7 +55,7 @@ Enum(DispLayHorizontal);
 
 enum Direction {
     //区分大小写
-    TOP_TO_BOTTOM=0,
+    TOP_TO_BOTTOM = 0,
     BOTTOM_TO_TOP,
     LEFT_TO_RIGHT,
     RIGHT_TO_LEFT,
@@ -86,10 +86,10 @@ Enum(SizeType);
 
 
 enum SideType {
-LEFT = 0,// 
-RIGHT,
-UP,
-DOWN,
+    LEFT = 0,// 
+    RIGHT,
+    UP,
+    DOWN,
 }
 //必须Enum设置才能在编辑器里设置enum的值
 Enum(SideType);
@@ -105,15 +105,14 @@ export class LayOutUtil extends CCObject {
     public static SizeType = SizeType;
     public static SideType = SideType;
     public static RelationType = RelationType;
-    
 
 
 
-    static _main:LayOutUtil;
+
+    static _main: LayOutUtil;
     //静态方法
-    static   Main(){ 
-        if(this._main==null)
-        {
+    static get main() {
+        if (this._main == null) {
             this._main = new LayOutUtil();
         }
         return this._main;
@@ -159,7 +158,8 @@ export class LayOutUtil extends CCObject {
     //node和屏幕边界之间的中心位置x或者y
     GetBetweenScreenCenter(node, align) {
         var v1 = 0, v2 = 0;
-        var sizeCanvas = AppSceneBase.Main().sizeCanvas;
+        var sizeCanvas = AppSceneBase.main.sizeCanvas;
+     
         var rctran = node.getComponent(UITransform).contentSize;
         // var rctran = node.getComponent(cc.RectTransform);
         switch (align) {
@@ -237,11 +237,11 @@ export class LayOutUtil extends CCObject {
     //边界和对象之间的宽度或者高度 type SizeType
     GetBetweenSideAndTargetSize(node, type) {
         var v1 = 0, v2 = 0;
-        var size = node.getBoundingBox(); 
+        var size = node.getBoundingBox();
         var pos = node.getPosition();
-        var sizeParent = node.parent.getBoundingBox(); 
+        var sizeParent = node.parent.getBoundingBox();
         var w_parent = sizeParent.width;
-        var h_parent = sizeParent.height; 
+        var h_parent = sizeParent.height;
         switch (type) {
             case SideType.LEFT:
                 {
@@ -315,7 +315,7 @@ export class LayOutUtil extends CCObject {
         return count;
     }
 
-    
+
 }
 
 /**

@@ -34,7 +34,7 @@ export class UIHomeMerge extends UIHomeBase {
         // var p = new Luna();
         // p.testbind();
         // var fc = this.success.bind(this);
-        Config.Main().LoadTest({
+        Config.main.Load({
             filepath: "App/UI/Bg/GameBg",
             bind: this,
             // this.success.bind(this),
@@ -52,7 +52,7 @@ export class UIHomeMerge extends UIHomeBase {
 
 
         // default GameBg
-        // TextureCache.Main().Load({
+        // TextureCache.main.Load({
         //     filepath: "App/UI/Bg/GameBg",
         //     bind:this,
         //     success(bind:any,tex: Texture2D) {
@@ -110,7 +110,7 @@ export class UIHomeMerge extends UIHomeBase {
 
 
 
-        // TextureCache.Main().LoadFrame({
+        // TextureCache.main.LoadFrame({
         //     filepath: "App/UI/Bg/GameBg",
         //     bind:this,
         //     success(bind:any,frame: SpriteFrame) {

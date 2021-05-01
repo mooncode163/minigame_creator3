@@ -1,5 +1,6 @@
 
 import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc';
+import { Common } from '../Common';
 import { ColorConfigInternal } from './ColorConfigInternal';
 import { ConfigBase } from './ConfigBase';
 
@@ -9,9 +10,11 @@ const { ccclass, property } = _decorator;
 
 @ccclass('ColorConfig')
 export class ColorConfig extends ConfigBase {
+    colorApp: ColorConfigInternal = null;
+
     static _main: ColorConfig;
     //静态方法
-    static Main() {
+    static get main() {
         if (this._main == null) {
             this._main = new ColorConfig();
             this._main.Init();
@@ -19,6 +22,16 @@ export class ColorConfig extends ConfigBase {
         return this._main;
     }
     Init() {
+
+        var strDir = Common.RES_CONFIG_DATA + "/color";
+        var fileName = "color.json";
+        { 
+            this.colorApp = new ColorConfigInternal();
+            this.colorApp.fileJson = strDir + "/" + fileName;
+            this.listItem.push(this.colorApp);
+        }
+   
+
     }
 
 }

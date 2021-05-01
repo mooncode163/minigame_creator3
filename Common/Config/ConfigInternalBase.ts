@@ -1,5 +1,6 @@
 
 import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc';
+import { Debug } from '../Debug';
 import { FileUtil } from '../File/FileUtil';
 import { JsonUtil } from '../File/JsonUtil';
 import { ResManager } from '../Res/ResManager';
@@ -30,14 +31,21 @@ export class ConfigInternalBase extends CCObject {
             {
                 filepath: key,
                 success: (p: any, data: any) => {
+                    Debug.Log("ConfigInternalBase success ");
                     // this.OnFinish(obj);
                     this.rootJson = data.json;
+                    this.ParseData();
                     if (obj.success != null) {
                         obj.success(this);
                     }
                 },
                 fail: () => {
+                    Debug.Log("ConfigInternalBase fail ");
                     // this.OnFinish(obj);
+                    if (obj.fail != null) {
+                        // Debug.Log("ConfigInternalBase fail this");
+                        obj.fail(this);
+                    }
                 },
             });
     }
@@ -49,6 +57,9 @@ export class ConfigInternalBase extends CCObject {
         return JsonUtil.ContainsKey(this.rootJson, key);
     }
 
+    ParseData() {
+        
+    }
 }
 
 /**

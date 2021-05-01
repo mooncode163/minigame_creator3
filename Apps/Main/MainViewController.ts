@@ -9,7 +9,7 @@ const { ccclass, property } = _decorator;
 export class MainViewController extends UIViewController {
     static _main:MainViewController;
     //静态方法
-    static   Main(){
+    static get  main(){
         console.log("AppScene MainViewController Main");
         if(this._main==null)
         {

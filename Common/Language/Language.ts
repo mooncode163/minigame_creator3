@@ -11,65 +11,34 @@ const { ccclass, property } = _decorator;
 
 @ccclass('Language')
 export class Language extends ConfigBase {
-    countLoad = 0;
-    listItem: LanguageInternal[] = []; 
+    languageApp: LanguageInternal = null;
+
     static _main: Language;
     //静态方法
-    static Main() {
+    static get main() {
         if (this._main == null) {
             this._main = new Language();
             this._main.Init();
         }
         return this._main;
-    }
+    } 
+
+ 
     Init() {
 
-        var strDir = Common.RES_CONFIG_DATA + "/config";
-        var fileName = "config_android";
-        
-        {
-            // this.configCommon = new LanguageInternal();
-            // fileName = "config_common";
-            // this.configCommon.fileJson = strDir + "/" + fileName;
-            // this.listItem.push(this.configCommon);
+        var strDir = Common.RES_CONFIG_DATA + "/language";
+        var fileName = "language.json";
+        { 
+            this.languageApp = new LanguageInternal();
+            this.languageApp.fileJson = strDir + "/" + fileName;
+            this.listItem.push(this.languageApp);
         }
+   
 
     }
 
-      /*
-       { 
-         success: (p:any) => {
-             
-         }, 
-         fail: (p:any) => {
-             
-         },
-       }
-       */
-       Load(obj: any) {
-        this.countLoad = 0;
-        this.listItem.forEach((item) => {
-            item.Load(
-                {
-                    success: (p: any) => {
-                        this.OnFinish(obj);
-                    },
-                    fail: () => {
-                        // this.OnFinish(obj);
-                    },
-                });
-        });
-
-    }
-
-    OnFinish(obj: any) {
-        this.countLoad++;
-        if (this.countLoad >= this.listItem.length) {
-            if (obj.success != null) {
-                obj.success(this);
-            }
-        }
-    }
+      
+ 
 }
 
 /**
