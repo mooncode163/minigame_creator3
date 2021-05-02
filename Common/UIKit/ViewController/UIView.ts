@@ -25,6 +25,22 @@ import { UIViewController } from "./UIViewController";
 
 @ccclass('UIView')
 export class UIView extends Component {
+    @property
+    keyText: string = "";
+    @property
+    keyColor: string= "";
+
+    @property
+    keyImage: string= "";
+    @property
+    keyImage2: string= "";
+
+    @property
+    keyImageH: string= "";//only for landscap 横屏
+    @property
+    keyImageH2: string= "";
+    index: number;
+    id: string;
     // [1]
     // dummy = '';
 
@@ -40,7 +56,8 @@ export class UIView extends Component {
     start() {
         // [3]
     }
-
+    LayOut() {
+    }
     // update (deltaTime: number) {
     //     // [4]
     // }

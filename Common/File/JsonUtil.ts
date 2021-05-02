@@ -15,6 +15,15 @@ export class JsonUtil extends CCObject {
         } 
         return ret;
     }
+
+    static GetString(data: any, key: string, _default: string) {
+        var ret = _default;
+        if (this.ContainsKey(data, key)) {
+            ret = data[key];
+        } 
+        return ret;
+    }
+ 
     //bool   //JsonData data, string key
     static ContainsKey(data: any, key: string) {
         if (Common.IsBlankString(key)) {

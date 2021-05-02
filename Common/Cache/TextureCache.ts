@@ -1,5 +1,7 @@
 
 import { _decorator, Component, Node, CCObject, resources, Prefab, Texture2D, SpriteFrame } from 'cc';
+import { Debug } from '../Debug';
+import { ResManager } from '../Res/ResManager';
 
 const { ccclass, property } = _decorator;
 // 动态加载资源文档
@@ -7,80 +9,65 @@ const { ccclass, property } = _decorator;
 
 @ccclass('TextureCache')
 export class TextureCache extends CCObject {
-    dicItem:any;
-    static _main:TextureCache;
+    dicItem: any;
+    static _main: TextureCache;
     //静态方法
-    static get  main(){
+    static get main() {
         console.log("TextureCache Main");
-        if(this._main==null)
-        {
+        if (this._main == null) {
             this._main = new TextureCache();
         }
         return this._main;
     }
-        /*
-        {
-            filepath:"",
-            bind:any,
-            success: function (tex:Texture2D) {
-            },
-            fail: function (res) {
-            },
-            progress: function (res) {
-            } ,
-          
-        }
-        */
-    Load(obj:any) {
-        console.log("TextureCache Load");        // load a texture
-        // obj.filepath = "test"
-        //  resources.load(obj.filepath, Texture2D, (err: any, texture: Texture2D) 会失败
-        resources.load(obj.filepath, (err: any, texture: Texture2D) => {
-            console.log("TextureCache callback Load obj.filepath=",obj.filepath," err=",err);   
-            // spriteFrame.texture = texture;
-            if(texture!=null)
-            {
-                console.log("TextureCache texture is not null");
-            }else{
-                console.log("TextureCache texture is  null");
-            }
-            if (obj.success != null) {
-                obj.success(obj.bind,texture);
-            }
 
-        });
+    /*
+{ 
+     filepath:"", 
+  success: (p:any,tex:Texture2D) => {
+      
+  }, 
+  fail: (p:any) => {
+      
+  },
+}
+*/
+    Load(obj: any) {
+        this.LoadNotCache(obj);
     }
 
-    LoadFrame(obj:any) {
-        console.log("TextureCache Load");        // load a texture
-        // obj.filepath = "test"
-        //  resources.load(obj.filepath, Texture2D, (err: any, texture: Texture2D) 会失败
-        resources.load(obj.filepath, (err: any, frame: SpriteFrame) => {
-            console.log("TextureCache callback Load obj.filepath=",obj.filepath," err=",err);   
-            // spriteFrame.texture = texture;
-            if(frame!=null)
-            {
-                console.log("TextureCache frame is not null");
-            }else{
-                console.log("TextureCache frame is  null");
-            }
-            if (obj.success != null) {
-                obj.success(obj.bind,frame);
-            }
+    LoadFrame(obj: any) {
 
-        });
-    }
-    LoadNotCache(filepath:string) {
-
-        // load a texture
-        resources.load(filepath, Texture2D, (err: any, texture: Texture2D) => {
-
-            // spriteFrame.texture = texture;
-
-        });
     }
 
+    /*
+{ 
+   filepath:"", 
+success: (p:any,tex:Texture2D) => {
     
+}, 
+fail: (p:any) => {
+    
+},
+}
+*/
+    LoadNotCache(obj: any) {
+        ResManager.LoadTexture(
+            {
+                filepath: obj.filepath,
+                success: (p: any, tex: any) => {
+                    if (obj.success != null) {
+                        obj.success(this, tex);
+                    }
+                },
+                fail: () => {
+                    if (obj.fail != null) {
+                        obj.fail(this);
+                    }
+                },
+            });
+    }
+
+
 }
 
 /**

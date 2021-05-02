@@ -23,6 +23,10 @@ export class Common extends CCObject {
             return false;
         }
     }
+    static BlankString(str: string) {
+        return this.IsBlankString(str);
+    }
+    
 }
 
 /**
