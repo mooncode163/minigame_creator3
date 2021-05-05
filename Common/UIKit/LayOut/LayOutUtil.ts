@@ -34,6 +34,13 @@ enum RelationType {
     ALL,
 }
 Enum(RelationType);
+ 
+
+enum ScaleType {
+    MIN,
+    MAX 
+}
+Enum(ScaleType);
 
 
 enum DispLayVertical {
@@ -105,8 +112,8 @@ export class LayOutUtil extends CCObject {
     public static SizeType = SizeType;
     public static SideType = SideType;
     public static RelationType = RelationType;
-
-
+    public static ScaleType = ScaleType;
+    
 
 
     static _main: LayOutUtil;

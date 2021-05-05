@@ -44,14 +44,24 @@ export class LanguageInternal extends ConfigInternalBase {
                 },
             });
     }
-    GetString(key: string, def: string) {
-        return JsonUtil.GetItem(this.rootJson, key, def);
+    GetString(key: string) {
+        return JsonUtil.GetItem(this.rootJson, key, "def");
     }
 
     IsHaveKey(key: string) {
         return JsonUtil.ContainsKey(this.rootJson, key);
     }
+    SetLanguage (lan:any) { 
+        
+    }
+    GetLanguage() {
+     
+    }
+    
+    IsContainsKey(key:string) { 
 
+        return true;
+    }
 }
 
 /**

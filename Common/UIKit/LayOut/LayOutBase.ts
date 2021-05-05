@@ -44,6 +44,7 @@ export class LayOutBase extends Component {
     // public ali: Align = null!;
  
     private _offsetMin = Vec2.ZERO;
+    @type(Vec2)
     //get 的用法
     get offsetMin(): Vec2 {           // 函数后(): string 这个的意思是 要求函数返回的类型必须是 string
         return this._offsetMin;
@@ -54,6 +55,7 @@ export class LayOutBase extends Component {
     }
 
     private _offsetMax = Vec2.ZERO;
+    @type(Vec2)
     //get 的用法
     get offsetMax(): Vec2 {           // 函数后(): string 这个的意思是 要求函数返回的类型必须是 string
         return this._offsetMax;

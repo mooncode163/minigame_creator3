@@ -2,11 +2,12 @@
 import { _decorator, Component, Node, director, instantiate, Prefab, resources, SpriteFrame } from 'cc'; 
 import { TextureCache } from '../../Common/Cache/TextureCache';
 import { UIViewController } from '../../Common/UIKit/ViewController/UIViewController';
+import { NaviViewController } from '../../Common/UIKit/NaviBar/NaviViewController';
 const { ccclass, property } = _decorator;
  
 
 @ccclass('MainViewController')
-export class MainViewController extends UIViewController {
+export class MainViewController extends NaviViewController {
     static _main:MainViewController;
     //静态方法
     static get  main(){

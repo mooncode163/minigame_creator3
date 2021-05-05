@@ -9,6 +9,7 @@ import { UIImage } from '../../../../Common/UIKit/UIImage/UIImage';
 import { Debug } from '../../../../Common/Debug';
 import { Luna } from './Luna';
 import { TestCallAndThis } from './TestCallAndThis';
+import { DEBUG } from 'cc/env';
 
 
 @ccclass('UIHomeMerge')
@@ -44,7 +45,7 @@ export class UIHomeMerge extends UIHomeBase {
             // },
             // success:this.success.bind(this),
 
-            success: (p:any) => {
+            success: (p: any) => {
                 this.test();
             },
         }
@@ -137,7 +138,25 @@ export class UIHomeMerge extends UIHomeBase {
         // });
     }
 
+    OnBtnClickPlay(event: Event, customEventData: string) {
+        Debug.Log("OnBtnClickPlay");
+        this.GotoGame();
+    }
 
+    GotoGame() {
+        this.GotoGameByModeInteranl();
+        // cc.LevelManager.main().StartParsePlace(function () {
+
+        // }.bind(this)
+        // );
+    }
+
+    GotoGameByModeInteranl() {
+        if (this.controller != null) {
+            var navi = this.controller.naviController;
+            navi.Push(GameViewController.main());
+        }
+    }
 }
 
 /**

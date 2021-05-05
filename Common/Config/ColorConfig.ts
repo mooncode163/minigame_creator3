@@ -34,6 +34,11 @@ export class ColorConfig extends ConfigBase {
 
     }
 
+    GetColor(key:string, def: string="0, 0, 0, 255") {
+        return this.colorApp.GetColor(key,def);
+     }
+ 
+
 }
 
 /**

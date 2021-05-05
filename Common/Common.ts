@@ -1,5 +1,7 @@
 
-import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc';
+import { _decorator, Component, Node, CCObject, resources, Prefab, Label, UITransform, director, sys } from 'cc';
+import { Debug } from './Debug';
+import { Platform } from './Platform';
 
 const { ccclass, property } = _decorator;
 // 动态加载资源文档
@@ -26,7 +28,111 @@ export class Common extends CCObject {
     static BlankString(str: string) {
         return this.IsBlankString(str);
     }
-    
+    static GetBestFitScale(w_content, h_content, w_rect, h_rect) {
+        if ((w_rect == 0) || (h_rect == 0)) {
+            return 1;
+        }
+        var scalex = w_rect / w_content;
+        var scaley = h_rect / h_content;
+        var scale = Math.min(scalex, scaley);
+        return scale;
+    }
+
+    static GetMaxFitScale(w_content, h_content, w_rect, h_rect) {
+        if ((w_rect == 0) || (h_rect == 0)) {
+            return 1;
+        }
+        var scalex = w_rect / w_content;
+        var scaley = h_rect / h_content;
+        var scale = Math.max(scalex, scaley);
+        return scale;
+    }
+
+
+    //字符串显示大小
+    static GetTextSize(text: string, fontsize: number) {
+        var node = new Node("GetTextSize");
+        var labelTmp = node.addComponent(Label);
+        labelTmp.fontSize = fontsize;
+        labelTmp.string = text;
+        //labelTmp.overflow = cc.Label.Overflow.NONE; 
+        director.getScene().addChild(node);
+
+        node.active = false;
+
+        var size = labelTmp.node.getComponent(UITransform)?.contentSize;
+
+        //Debug.Log("labelTmp size= " + size + " bd=" + labelTmp.node.getBoundingBox());
+
+
+
+        //labelTmp.string = "A我";
+        // labelTmp.overflow = cc.Label.Overflow.RESIZE_HEIGHT;
+
+        //active 从false变成true 会重新刷新
+        node.active = true;
+        size = labelTmp.node.getComponent(UITransform)?.contentSize;
+        //cc.Debug.Log("labelTmp2 size= " + size + " bd=" + labelTmp.node.getBoundingBox());
+
+        node.removeFromParent();
+        //Common.GetTextHeight(text, fontsize);
+        return size;
+    }
+
+    //判断微信getStorage key是否存在
+    static isKeyExistWeiXin(value: any) {
+        var type = typeof value;
+        if (type == "string") {
+            return !Common.BlankString(value);
+        }
+        if ("boolean" == type) {
+            //微信小程序
+            return true;
+        }
+
+        return true;
+    }
+    static GetBoolOfKey(key: string, default_value: boolean) {
+        if (Platform.isWeiXin) {
+            var v = wx.getStorageSync(key);
+            Debug.Log("GetBoolOfKey wx key=" + key + " value=" + v + " type=" + typeof v);
+            if (!Common.isKeyExistWeiXin(v)) {
+                Debug.Log("GetBoolOfKey key is null:" + key);
+                return default_value;
+            }
+            return v;
+        }
+        else {
+            var v = sys.localStorage.getItem(key);
+            //微信小程序key不存在的时候返回""而非null
+            if (Common.BlankString(v)) {
+                Debug.Log("GetBoolOfKey key is null:" + key);
+                return default_value;
+            }
+            Debug.Log("GetBoolOfKey key is :" + key + " v=" + v + " typeof=" + typeof v);
+            // if (cc.Common.main().isWeiXin) {
+            //     return v;
+            // }
+            //cc.sys.localStorage.setItem 保存 bool变量的时候有一些平台实际保存的是"true"和“false"字符串
+            var type = typeof v;
+            if ("boolean" == type) {
+                //微信小程序
+                return v;
+            }
+
+            if ("string" == type) {
+                if (v == "true") {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            return v;
+        }
+
+    }
+
 }
 
 /**

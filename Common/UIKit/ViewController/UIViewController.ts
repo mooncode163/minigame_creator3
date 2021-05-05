@@ -13,16 +13,23 @@ export class UIViewController extends CCObject {
     // @property
     // serializableDummy = 0;
 
+    index: number;
+    id: string;
+    title: string;
+
+
+
     // @type(Node) // Declare that the cc type of the attribute _targetNode is Node
-      objController: Node | null = null;
+    objController: Node | null = null;
 
+    naviController: UIViewController | null = null;
 
-    private view: UIView | null = null;
-    CreateObjController () {
+    view: UIView | null = null;
+    CreateObjController() {
 
         if (this.objController == null) {
             this.objController = new Node('Controller');
-         
+
 
         }
         this.ViewDidLoad();
@@ -40,7 +47,7 @@ export class UIViewController extends CCObject {
     //SetViewParent
     SetViewParent(node: Node | null) {
 
-         console.log("SetViewParent node");
+        console.log("SetViewParent node");
         if (node == null) {
             console.log("SetViewParent node is null");
         }
@@ -49,26 +56,48 @@ export class UIViewController extends CCObject {
         }
         if (this.objController == null) {
             console.log("objController is null");
-        }else{
+        } else {
             this.objController.setParent(node);
             var size = node.getComponent(UITransform).contentSize;
             this.objController.addComponent(UITransform);
             this.objController?.getComponent(UITransform)?.setContentSize(size);
-        }  
+        }
     }
 
     // update (deltaTime: number) {
     //     // [4]
     // }
 
-        //virtual
-        LayOutView () {
+    //virtual
+    LayOutView() {
+    }
+    ViewDidLoad() {
+    }
+
+    ViewDidUnLoad() {
+    }
+
+    //UIView view
+    AddView(view: UIView) {
+    }
+
+
+
+
+    UpdateLanguage() {
+        if (this.view == null) {
+            return;
         }
-        ViewDidLoad () {
+        //child
+        var children = this.objController._children;
+        for (var i = 0; i < children.length; i++) {
+            var child = children[i];
+            var viewchild = child.getComponent(cc.UIView);
+            if (viewchild != null) {
+                viewchild.UpdateLanguage();
+            }
         }
-    
-        ViewDidUnLoad () {
-        }
+    }
 }
 
 /**
