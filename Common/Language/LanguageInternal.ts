@@ -1,10 +1,11 @@
 
-import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc';
+import { _decorator, Component, Node, CCObject, resources, Prefab, sys } from 'cc';
 import { FileUtil } from '../File/FileUtil';
 import { JsonUtil } from '../File/JsonUtil';
 import { ResManager } from '../Res/ResManager'; 
 import { ConfigInternal } from '../Config/ConfigInternal';
 import { ConfigInternalBase } from '../Config/ConfigInternalBase';
+import { LTLocalization } from './LTLocalization';
 
 const { ccclass, property } = _decorator;
 // 动态加载资源文档
@@ -14,7 +15,16 @@ const { ccclass, property } = _decorator;
 export class LanguageInternal extends ConfigInternalBase {
     rootJson: any = null;
     fileJson = "";
-
+    ltLocalization: LTLocalization = null; 
+    //get 的用法
+    get defaultLanId(): string {           // 函数后(): string 这个的意思是 要求函数返回的类型必须是 string
+        var ret = sys.LANGUAGE_CHINESE;
+        if (sys.platform == sys.MOBILE_BROWSER) {
+            ret = sys.LANGUAGE_ENGLISH;
+        }
+        return ret;
+    } 
+ 
     /*
       { 
         success: (p:any) => {
@@ -26,13 +36,14 @@ export class LanguageInternal extends ConfigInternalBase {
       }
       */
     Load(obj: any) {
+        this.ltLocalization = new LTLocalization();
         var key = FileUtil.GetFileBeforeExtWithOutDot(this.fileJson);
-        ResManager.Load(
+        ResManager.LoadText(
             {
                 filepath: key,
-                success: (p: any, data: any) => {
-                    // this.OnFinish(obj);
-                    this.rootJson = data.json;
+                success: (p: any, data: string) => {
+                    // this.OnFinish(obj); 
+                    this.ltLocalization.ReadData(data);
                     if (obj.success != null) {
                         obj.success(this);
                     }
@@ -44,23 +55,27 @@ export class LanguageInternal extends ConfigInternalBase {
                 },
             });
     }
-    GetString(key: string) {
-        return JsonUtil.GetItem(this.rootJson, key, "def");
+    GetString(key: string) { 
+        var str = "";
+        if (this.IsContainsKey(key)) {
+            // cc.Debug.Log("GetString: IsContainsKey key=" + key);
+            str = this.ltLocalization.GetText(key);
+        }
+        return str;
     }
 
     IsHaveKey(key: string) {
         return JsonUtil.ContainsKey(this.rootJson, key);
     }
-    SetLanguage (lan:any) { 
-        
+    SetLanguage (lan:string) { 
+        this.ltLocalization.SetLanguage(lan);
     }
     GetLanguage() {
-     
+     return this.ltLocalization.GetLanguage();
     }
     
     IsContainsKey(key:string) { 
-
-        return true;
+        return this.ltLocalization.IsContainsKey(key);
     }
 }
 

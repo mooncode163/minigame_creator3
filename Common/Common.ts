@@ -92,6 +92,15 @@ export class Common extends CCObject {
 
         return true;
     }
+    static SetBoolOfKey(key: string, value: boolean) {
+        if (Platform.isWeiXin) {
+            wx.setStorageSync(key, value);
+            Debug.Log("SetBoolOfKey wx key=" + key + " value=" + value);
+        } else {
+            sys.localStorage.setItem(key, value.toString());
+        }
+    }
+
     static GetBoolOfKey(key: string, default_value: boolean) {
         if (Platform.isWeiXin) {
             var v = wx.getStorageSync(key);
@@ -132,7 +141,47 @@ export class Common extends CCObject {
         }
 
     }
+    static GetItemOfKey(key: string, default_value: any) {
+        var v = "";
+        if (Platform.isWeiXin) {
+            v = wx.getStorageSync(key);
+            if (!Common.isKeyExistWeiXin(v)) {
+                //cc.Debug.Log("key is null:" + key);
+                return default_value;
+            }
+            Debug.Log("GetItemOfKey wx key=" + key + " value=" + v);
+        } else {
+            v = sys.localStorage.getItem(key);
+            if (Common.BlankString(v)) {
+                //cc.Debug.Log("key is null:" + key);
+                return default_value;
+            }
+        }
 
+        return v;
+    }
+    static SetItemOfKey(key: string, value: any) {
+        if (Platform.isWeiXin) {
+            wx.setStorageSync(key, value);
+            Debug.Log("SetItemOfKey wx key=" + key + " value=" + value);
+            var v = wx.getStorageSync(key);
+            Debug.Log("SetItemOfKey wx key now =" + key + " v=" + v);
+        } else {
+            sys.localStorage.setItem(key, value);
+        }
+    }
+
+    static GetIntOfKey (key: string, default_value:number) {
+        var v = sys.localStorage.getItem(key);
+        //微信小程序key不存在的时候返回""而非null
+        if (Common.BlankString(v)) {
+            Debug.Log("key is null:" + key);
+            return default_value;
+        }
+        var v_int = parseInt(v);
+        //Debug.Log("GetIntOfKey key=:" + key + " v=" + v + " v_int=" + v_int);
+        return v_int;
+    }
 }
 
 /**

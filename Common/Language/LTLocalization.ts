@@ -37,7 +37,7 @@ export class LTLocalization extends CCObject {
     csvParser: CSVParser = null;
 
 
-    GetLanguageKeyName(lan: any) {
+    GetLanguageKeyName(lan: string) {
         var ret = LTLocalization.CHINESE;
 
         switch (lan) {

@@ -7,6 +7,7 @@ import { Debug } from '../../Debug';
 import { UIImage } from '../UIImage/UIImage';
 import { UIText } from '../UIText/UIText';
 import { UIView } from '../ViewController/UIView';
+ 
 const { ccclass, property, type, string } = _decorator;
 
 // TypeScript自动引入脚本插件
@@ -26,8 +27,8 @@ Enum(ButtonType);
 
 // ui layer 选UI_2D 不然点击没有响应
 @ccclass('UIButton')
-export class UIButton extends UIView { 
-    public static Type = ButtonType;
+export class UIButton extends UIView {
+    public static ButtonType = ButtonType;
 
     @type(UIImage)
     imageBg: UIImage | null = null;
@@ -40,14 +41,17 @@ export class UIButton extends UIView {
 
     enableFitTextSize: boolean = false;
     isSwicthSelect: boolean = false;
-    private _type = UIButton.Type.IMAGE_ICON;
+
+    // 必须设置两个@type 才能在editor里修改
+    @type(ButtonType)
+    private _type = ButtonType.IMAGE;
     @type(ButtonType)
     //get 的用法
     get type() {           // 函数后(): string 这个的意思是 要求函数返回的类型必须是 string
         return this._type;
     }
-     // set 的用法
-     set type(value) {
+    // set 的用法
+    set type(value) {
         this._type = value;
         if (this.imageBg == null) {
             return;
@@ -60,22 +64,22 @@ export class UIButton extends UIView {
         }
         this.imageBg.node.active = true;
         switch (this._type) {
-            case UIButton.Type.IMAGE:
-            case UIButton.Type.IMAGE_SWITCH:
+            case ButtonType.IMAGE:
+            case ButtonType.IMAGE_SWITCH:
                 {
                     this.imageIcon.node.active = false;
                     this.textTitle.node.active = false;
 
                 }
                 break;
-            case UIButton.Type.IMAGE_TEXT:
+            case ButtonType.IMAGE_TEXT:
                 {
                     this.imageIcon.node.active = false;
                     this.textTitle.node.active = true;
                 }
                 break;
-            case UIButton.Type.IMAGE_ICON:
-            case UIButton.Type.IMAGE_ICON_SWITCH:
+            case ButtonType.IMAGE_ICON:
+            case ButtonType.IMAGE_ICON_SWITCH:
                 {
                     this.imageIcon.node.active = true;
                     this.textTitle.node.active = false;
@@ -83,20 +87,21 @@ export class UIButton extends UIView {
                 break;
 
         }
- 
+        // this.textTitle.node.active = true;
+
     }
 
 
 
-    onLoad() { 
+    onLoad() {
         super.onLoad();
-        this.type = this._type;
+        // this.type = this._type;
     }
 
     start() {
         // [3]
         super.start();
-    } 
+    }
 
 
 
@@ -126,8 +131,8 @@ export class UIButton extends UIView {
     set text(value) {
         this.textTitle.text = value;
         if (this.enableFitTextSize) {
-             var w = Common.GetTextSize(value, this.fontSize).width + this.fontSize;
-             var size = this.node.getComponent(UITransform)?.contentSize;
+            var w = Common.GetTextSize(value, this.fontSize).width + this.fontSize;
+            var size = this.node.getComponent(UITransform)?.contentSize;
             var h = size.height;
             // Debug.Log("GetTextSize w = " + w + " h=" + h); 
             this.node?.getComponent(UITransform)?.setContentSize(new Size(w, h));
@@ -155,7 +160,7 @@ export class UIButton extends UIView {
     // @property
     // serializableDummy = 0;
 
- 
+
     LayOut() {
         super.LayOut();
     }

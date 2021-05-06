@@ -40,26 +40,49 @@ export class Language extends ConfigBase {
 
 
     Init() {
-
-        var strDir = Common.RES_CONFIG_DATA + "/language";
-        var fileName = "language.json";
         {
-            this.languageApp = new LanguageInternal();
-            this.languageApp.fileJson = strDir + "/" + fileName;
-            this.listItem.push(this.languageApp);
-        }
-
-
-    }
-
-    GetLoadInfoById(id: string) {
-        for (let info of Language.listLoad) {
-            if (info.id == id) {
-                return info;
+            var strDir = Common.RES_CONFIG_DATA + "/language";
+            var fileName = "language.csv";
+            {
+                this.languageApp = new LanguageInternal();
+                this.languageApp.fileJson = strDir + "/" + fileName;
+                this.listItem.push(this.languageApp);
             }
         }
-        return null;
+
+        {
+            var strDir = Common.RES_CONFIG_DATA + "/language";
+            var fileName = "language.csv";
+            {
+                this.languageAppCommon = new LanguageInternal();
+                this.languageAppCommon.fileJson = strDir + "/" + fileName;
+                this.listItem.push(this.languageAppCommon);
+            }
+        }
+
+        {
+            var strDir = Common.RES_CONFIG_DATA_COMMON + "/language";
+            var fileName = "language.csv";
+            {
+                this.languageCommon = new LanguageInternal();
+                this.languageCommon.fileJson = strDir + "/" + fileName;
+                this.listItem.push(this.languageCommon);
+            }
+        }
+
+        {
+
+            var strDir = Common.GAME_RES_DIR + "/language";
+            var fileName = "language.csv";
+            {
+                this.languageGame = new LanguageInternal();
+                this.languageGame.fileJson = strDir + "/" + fileName;
+                this.listItem.push(this.languageGame);
+            } this.listItem.push(this.languageApp);
+        }
     }
+
+
     SetLanguage(lan: any) {
         if (this.languageApp != null) {
             this.languageApp.SetLanguage(lan);
@@ -80,8 +103,11 @@ export class Language extends ConfigBase {
             return this.languageApp.GetLanguage();
         }
     }
-    GetString(key: string) {
-        var str = this.languageApp.GetString(key);
+    GetString(key: string) { 
+        var str = "";
+        if (this.languageApp != null) {
+            str = this.languageApp.GetString(key);
+        }
         if (str == "") {
             if (this.languageAppCommon != null) {
                 str = this.languageAppCommon.GetString(key);
@@ -106,9 +132,12 @@ export class Language extends ConfigBase {
         // return str;
     }
 
-    IsContainsKey(key: string) {
-
-        var ret = this.languageApp.IsContainsKey(key);
+    IsContainsKey(key: string) { 
+        var ret = true;
+        if (this.languageApp != null) {
+             ret = this.languageApp.IsContainsKey(key);
+        }
+        
         if (!ret) {
             if (this.languageAppCommon != null) {
                 ret = this.languageAppCommon.IsContainsKey(key);

@@ -1,5 +1,6 @@
 
 import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc'; 
+import { ResManager } from '../Res/ResManager';
 
 const { ccclass, property } = _decorator;
 
@@ -7,14 +8,50 @@ const { ccclass, property } = _decorator;
 @ccclass('PrefabCache')
 export class PrefabCache extends CCObject {
     
-    start () {
-  
-        // load Prefab
-        resources.load("App/Prefab/Home/UIHomeMerge", Prefab, (err, prefab) => {
-            // const newNode = instantiate(prefab);
-        
+    static _main: PrefabCache;
+    //静态方法
+    static get main() { 
+        if (this._main == null) {
+            this._main = new PrefabCache();
+        }
+        return this._main;
+    }
+/*
+{ 
+   filepath:"", 
+success: (p:any,data:any) => {
+    
+}, 
+fail: (p:any) => {
+    
+},
+}
+*/
+Load(obj: any) {
+
+    // resources.load("App/Prefab/Home/UIHomeMerge", Prefab, (err, prefab) => {
+    //     const newNode = instantiate(prefab);
+    //     // director.getScene().addChild(newNode);
+    //     this.objController?.addChild(newNode);
+    // });
+
+
+    ResManager.Load(
+        {
+            filepath: obj.filepath,
+            success: (p: any, data: any) => {
+                if (obj.success != null) {
+                    obj.success(this, data);
+                }
+            },
+            fail: () => {
+                if (obj.fail != null) {
+                    obj.fail(this);
+                }
+            },
         });
-    } 
+}
+
 }
 
 /**

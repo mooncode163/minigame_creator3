@@ -23,8 +23,8 @@ export class ColorConfig extends ConfigBase {
     }
     Init() {
 
-        var strDir = Common.RES_CONFIG_DATA + "/color";
-        var fileName = "color.json";
+        var strDir = Common.RES_CONFIG_DATA + "/Color";
+        var fileName = "Color.json";
         { 
             this.colorApp = new ColorConfigInternal();
             this.colorApp.fileJson = strDir + "/" + fileName;

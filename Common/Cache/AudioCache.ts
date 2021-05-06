@@ -8,14 +8,14 @@ const { ccclass, property } = _decorator;
 @ccclass('AudioCache')
 export class AudioCache extends CCObject {
     
-    start () {
-  
-        // load Prefab
-        resources.load("App/Prefab/Home/UIHomeMerge", Prefab, (err, prefab) => {
-            // const newNode = instantiate(prefab);
-        
-        });
-    } 
+    static _main: AudioCache;
+    //静态方法
+    static get main() { 
+        if (this._main == null) {
+            this._main = new AudioCache();
+        }
+        return this._main;
+    }
 }
 
 /**

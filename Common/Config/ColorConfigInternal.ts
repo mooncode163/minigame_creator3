@@ -53,11 +53,14 @@ export class ColorConfigInternal extends ConfigInternalBase {
         if (this.rootJson != null) {
             if (this.rootJson[key] != null) {
                 var str = this.rootJson[key];
+                Debug.Log("ColorConfig key =" + key + " str=" + str);
                 cr = this.RGBString2ColorA(str);
             }
             else {
                 Debug.Log("ColorConfig ContainsKey no key =" + key);
             }
+        } else {
+            Debug.Log("ColorConfig rootJson null key =" + key + " str=" + str);
         }
         return cr;
     }

@@ -10,6 +10,7 @@ import { Debug } from '../../../../Common/Debug';
 import { Luna } from './Luna';
 import { TestCallAndThis } from './TestCallAndThis';
 import { DEBUG } from 'cc/env';
+import { GameViewController } from '../../../../AppBase/Game/GameViewController';
 
 
 @ccclass('UIHomeMerge')
@@ -29,113 +30,7 @@ export class UIHomeMerge extends UIHomeBase {
         this.test();
     }
     start() {
-        // [3] 
-        // this.success().bind(this);
-        // TestCallAndThis.callBackTest(1, this.success.bind(this));
-        // var p = new Luna();
-        // p.testbind();
-        // var fc = this.success.bind(this);
-        Config.main.Load({
-            filepath: "App/UI/Bg/GameBg",
-            bind: this,
-            // this.success.bind(this),
-            // success:(p: any) {
-            //     this.test();
-
-            // },
-            // success:this.success.bind(this),
-
-            success: (p: any) => {
-                this.test();
-            },
-        }
-        );
-
-
-        // default GameBg
-        // TextureCache.main.Load({
-        //     filepath: "App/UI/Bg/GameBg",
-        //     bind:this,
-        //     success(bind:any,tex: Texture2D) {
-        //         console.log("TextureCache success");
-        //         const spriteFrame = new SpriteFrame();
-        //         spriteFrame.texture = tex;
-        //         if (tex != null) {
-        //             console.log("TextureCache success tex is not null");
-        //         } else {
-        //             console.log("TextureCache success tex is  null");
-        //         } 
-        //         if (bind.nodeBg != null) {
-        //             console.log("TextureCache success nodeBg is not null");
-        //             var sp = bind.nodeBg.getComponent(Sprite);
-        //             if (sp != null) {
-        //                 console.log("TextureCache success sp is not null");
-        //                 sp.spriteFrame = spriteFrame;
-        //             } else {
-        //                 console.log("TextureCache success sp is null");
-        //             }
-        //         } else {
-        //             console.log("TextureCache success nodeBg is null");
-        //         }
-        //     },
-        // });
-        // App/UI/Bg/GameBg default_pannel
-        //         resources.load("default_pannel",SpriteFrame, (err, spriteFrame) => {
-        //             if (spriteFrame== null) 
-        //             {
-        // console.log("spriteFrame is null err=",err);
-        //             }
-        //             // if (this.nodeBg != null) 
-        //             {
-        //                 this.nodeBg.getComponent(Sprite).spriteFrame = spriteFrame;
-        //             } 
-        //         });
-
-        //    var pic = "/Users/moon/sourcecode/cocos/product/minigame/minigameCreator/assets/resources/App/UI/Bg/GameBg.png" 
-        //    pic = "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1942783278,2082140028&fm=26&gp=0.jpg";
-        //     var p = this;
-        //     assetManager.loadRemote(pic, function (err:any, texture:Texture2D) {
-        //         // Use texture to create sprite frame
-        //         if (texture == null) {
-        //             console.log("Test loadRemote is null err=", err);
-
-        //             // Bundle resources doesn't contain 1
-        //             // console.log("Test loadRemote err:" + err.message || err);
-        //         } else {
-        //             console.log("Test loadRemote is not null");
-        //             const spriteFrame = new SpriteFrame();
-        //             spriteFrame.texture = texture;
-        //             p.nodeBg.getComponent(Sprite).spriteFrame = spriteFrame;
-        //         }
-        //     }.bind(this));
-
-
-
-        // TextureCache.main.LoadFrame({
-        //     filepath: "App/UI/Bg/GameBg",
-        //     bind:this,
-        //     success(bind:any,frame: SpriteFrame) {
-        //         console.log("TextureCache success");
-
-        //         if (frame != null) {
-        //             console.log("TextureCache success frame is not null");
-        //         } else {
-        //             console.log("TextureCache success frame is  null");
-        //         } 
-        //         if (bind.nodeBg != null) {
-        //             console.log("TextureCache success nodeBg is not null");
-        //             var sp = bind.nodeBg.getComponent(Sprite);
-        //             if (sp != null) {
-        //                 console.log("TextureCache success sp is not null");
-        //                 // sp.spriteFrame = frame;
-        //             } else {
-        //                 console.log("TextureCache success sp is null");
-        //             }
-        //         } else {
-        //             console.log("TextureCache success nodeBg is null");
-        //         }
-        //     },
-        // });
+       super.start();
     }
 
     OnBtnClickPlay(event: Event, customEventData: string) {
@@ -154,7 +49,10 @@ export class UIHomeMerge extends UIHomeBase {
     GotoGameByModeInteranl() {
         if (this.controller != null) {
             var navi = this.controller.naviController;
-            navi.Push(GameViewController.main());
+            Debug.Log("GotoGame GameViewController");
+            navi.Push(GameViewController.main);
+        }else{
+            Debug.Log("GotoGame controller = null");
         }
     }
 }

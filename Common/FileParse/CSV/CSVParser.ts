@@ -21,8 +21,10 @@ export class CSVParser extends CCObject {
         this.SplitAllLine(str);
     }
     SplitAllLine(str: string) {
-        // cc.Debug.Log("SplitAllLine=" + str);
+        Debug.Log("SplitAllLine=" + str); 
         var list = str.split("\n");
+        // var list = str.split("\n");
+        // var list = str.split(",");
         // list.forEach(function (value, index) {
         //     cc.Debug.Log("line "+index+" =" + value);
         // }.bind(this));

@@ -1,41 +1,48 @@
 
-import { _decorator, Component, Node, director, instantiate, Prefab, resources, SpriteFrame } from 'cc'; 
+import { _decorator, Component, Node, director, instantiate, Prefab, resources, SpriteFrame } from 'cc';
 import { TextureCache } from '../../Common/Cache/TextureCache';
 import { UIViewController } from '../../Common/UIKit/ViewController/UIViewController';
 import { NaviViewController } from '../../Common/UIKit/NaviBar/NaviViewController';
+import { PrefabCache } from '../../Common/Cache/PrefabCache';
+import { Language } from '../../Common/Language/Language';
+import { Debug } from '../../Common/Debug';
+import { HomeViewController } from '../../AppBase/Home/HomeViewController';
 const { ccclass, property } = _decorator;
- 
+
 
 @ccclass('MainViewController')
 export class MainViewController extends NaviViewController {
-    static _main:MainViewController;
+    static _main: MainViewController;
     //静态方法
-    static get  main(){
+    static get main() {
         console.log("AppScene MainViewController Main");
-        if(this._main==null)
-        {
+        if (this._main == null) {
             this._main = new MainViewController();
         }
         return this._main;
     }
-    ViewDidLoad () {
+    ViewDidLoad() {
         super.ViewDidLoad();
-        console.log("MainViewController ViewDidLoad");
-  
-
-        // https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
-        // load Prefab
-        resources.load("App/Prefab/Home/UIHomeMerge", Prefab, (err, prefab) => {
-            const newNode = instantiate(prefab);
-            // director.getScene().addChild(newNode);
-            this.objController?.addChild(newNode);
-        });
-
-
+        
+        var str = Language.main.GetString("BtnStartGame");
+        Debug.Log("MainViewController ViewDidLoad str="+str);
+        this.GotoHome();
+        
      
-    } 
-    
-    
+    }
+    GotoCloundRes() {
+      //  CloudResViewController.main().Show(null, this.CloundResDidClose.bind(this));
+    }
+    GotoHome() {
+        // cc.ImageRes.main().GetImage({
+        //     key: "apppreload",
+        //     success: function (image) {
+                
+        //     }.bind(this),
+        // });
+        this.Push(HomeViewController.main);//HomeViewController
+    }
+
 }
 
 /**

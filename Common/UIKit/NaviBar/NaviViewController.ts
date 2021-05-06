@@ -1,10 +1,11 @@
 
-import { _decorator, Component, Node, Sprite, Label, Prefab } from 'cc';
+import { _decorator, Component, Node, Sprite, Label, Prefab, instantiate, UITransform } from 'cc';
 import { PrefabCache } from '../../Cache/PrefabCache';
 import { Debug } from '../../Debug';
 import { UIView } from '../ViewController/UIView';
 import { UIViewController } from '../ViewController/UIViewController';
 import { UINaviBar } from './UINaviBar';
+import { AppSceneBase } from '../../../AppBase/Common/AppSceneBase';
 const { ccclass, property,type,string } = _decorator;
 
 // TypeScript自动引入脚本插件
@@ -21,7 +22,7 @@ export class NaviViewController extends UIViewController {
     uiNaviBar: UINaviBar | null = null;
     rootController: UIViewController | null = null;
 
-      listController: UIViewController[] = []; 
+    listController: UIViewController[] = []; 
 
 
     LoadPrefab () { 
@@ -53,11 +54,15 @@ export class NaviViewController extends UIViewController {
     CreateContent () {
         var classname = "Content";
         this.objContent = new Node();
+        var uitran = this.objContent.addComponent(UITransform);
         this.objContent.parent = this.objController;
+
+        var size = AppSceneBase.main.sizeCanvas;//this.objController.getComponent(UITransform).contentSize; 
+        uitran.setContentSize(size);
 
     }
 
-    Push (controller) {
+    Push (controller:UIViewController) {
 
         if (controller == null) {
             return;

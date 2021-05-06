@@ -40,6 +40,40 @@ export class ResManager extends CCObject {
         });
 
     }
+
+
+     /*
+      {
+        filepath:"", 
+        success: (p:any,data:string) => {
+            
+        }, 
+        fail: (p:any) => {
+            
+        },
+      }
+      */
+      public static LoadText(obj: any) {
+        var key = FileUtil.GetFileBeforeExtWithOutDot(obj.filepath);
+        resources.load(key, (err: any, data: any) => {
+            if (data == null) {
+                // Bundle resources doesn't contain 1
+                console.log("ResManager Load err:" + err.message || err);
+                if (obj.fail != null) {
+                    obj.fail(this);
+                }
+            } else {
+                var type = typeof data;
+                console.log("ResManager Load is not null type="+type);
+                if (obj.success != null) {
+                    obj.success(this, data.text);
+                }
+            }
+
+        });
+
+    }
+
     /*
       {
           filepath:"", 

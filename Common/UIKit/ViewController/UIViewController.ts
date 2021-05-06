@@ -3,6 +3,7 @@ import { _decorator, Component, Node, CCObject, CCInteger, UITransform } from 'c
 const { ccclass, property, integer, float, boolean, string, type } = _decorator;
 
 import { UIView } from "./UIView";
+import { NaviViewController } from '../NaviBar/NaviViewController';
 
 @ccclass('UIViewController')
 export class UIViewController extends CCObject {
@@ -22,7 +23,7 @@ export class UIViewController extends CCObject {
     // @type(Node) // Declare that the cc type of the attribute _targetNode is Node
     objController: Node | null = null;
 
-    naviController: UIViewController | null = null;
+    naviController: NaviViewController | null = null;
 
     view: UIView | null = null;
     CreateObjController() {
@@ -57,7 +58,7 @@ export class UIViewController extends CCObject {
         if (this.objController == null) {
             console.log("objController is null");
         } else {
-            this.objController.setParent(node);
+            this.objController.setParent(node); 
             var size = node.getComponent(UITransform).contentSize;
             this.objController.addComponent(UITransform);
             this.objController?.getComponent(UITransform)?.setContentSize(size);

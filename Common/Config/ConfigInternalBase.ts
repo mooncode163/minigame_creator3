@@ -31,7 +31,7 @@ export class ConfigInternalBase extends CCObject {
             {
                 filepath: key,
                 success: (p: any, data: any) => {
-                    Debug.Log("ConfigInternalBase success ");
+                    Debug.Log("ConfigInternalBase success key="+key);
                     // this.OnFinish(obj);
                     this.rootJson = data.json;
                     this.ParseData();
