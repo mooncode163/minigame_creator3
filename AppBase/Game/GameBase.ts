@@ -6,7 +6,16 @@ const { ccclass, property, type } = _decorator;
 @ccclass('GameBase')
 export class GameBase extends UIView {
     
-
+    onLoad() {
+        super.onLoad(); 
+        this.LayOut();
+    }
+    start() {
+        super.start();
+        this.LayOut();
+    }
+    UpdateLevel (level:number) { 
+    }
 
 }
 

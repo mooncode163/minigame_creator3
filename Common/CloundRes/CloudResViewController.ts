@@ -3,8 +3,8 @@ import { _decorator, Component, Node, Prefab } from 'cc';
 import { UIView } from '../../Common/UIKit/ViewController/UIView'; 
 const { ccclass, property, type } = _decorator;
 
-@ccclass('GameBase')
-export class GameBase extends UIView {
+@ccclass('CloudResViewController')
+export class CloudResViewController extends UIView {
     
 
 

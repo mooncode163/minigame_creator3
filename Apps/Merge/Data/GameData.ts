@@ -26,7 +26,7 @@ export class GameData extends CCObject {
     public static MaxSpeed = 10.0;
     public static MaxBounce = 1.0;
     public static MaxRotation = 360.0;
-    public static ShaderCircle: string = "Moonma/ImageCircle",
+    public static ShaderCircle:string = "Moonma/ImageCircle";
     public static isGameFail = false;
 
     status = GameStatus.Play;

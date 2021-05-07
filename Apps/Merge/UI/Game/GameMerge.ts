@@ -1,14 +1,31 @@
 
-import { _decorator, Component, Node, Prefab } from 'cc'; 
+import { _decorator, Component, Node, Prefab } from 'cc';
 import { GameBase } from '../../../../AppBase/Game/GameBase';
 import { UIView } from '../../../../Common/UIKit/ViewController/UIView';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('GameMerge')
 export class GameMerge extends GameBase {
-    
-
-
+    static _main: GameMerge;
+    //静态方法
+    static get main() {
+        return this._main;
+    }
+    onLoad() {
+        super.onLoad();
+        GameMerge._main = this;
+        this.LayOut();
+    }
+    start() {
+        super.start();
+        this.LayOut();
+    }
+    LayOut() {
+        super.LayOut();
+    }
+    UpdateLevel(level: number) {
+        super.UpdateLevel(level);
+    }
 }
 
 /**

@@ -10,11 +10,7 @@ export class UICloudRes extends CCObject {
     
     start () {
   
-        // load Prefab
-        resources.load("App/Prefab/Home/UIHomeMerge", Prefab, (err, prefab) => {
-            // const newNode = instantiate(prefab);
-        
-        });
+    
     } 
 }
 

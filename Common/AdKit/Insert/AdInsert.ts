@@ -1,5 +1,6 @@
 
 import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject } from 'cc';
+import { AdInsertPlatformWrapper } from './AdInsertPlatformWrapper';
 
 const { ccclass, property, type, string } = _decorator;
 
@@ -9,16 +10,44 @@ const { ccclass, property, type, string } = _decorator;
 
 @ccclass('AdInsert')
 export class AdInsert extends CCObject {
+
+    platform: AdInsertPlatformWrapper = null;
+
     static _main: AdInsert;
     //静态方法
     static get main() {
         if (this._main == null) {
             this._main = new AdInsert();
-            // this._main.Init();
+            this._main.Init();
         }
         return this._main;
     }
  
+    Init () {
+		var p = new AdInsertPlatformWrapper();
+		this.platform = p.GetPlatform();
+	}
+	InitAd(source) {
+
+		if (this.platform == null) {
+			return;
+		}
+		// Moonma.AdKit.AdConfig.AdConfig.main.InitPriority(source, AdConfigParser.SOURCE_TYPE_INSERT);
+		this.platform.InitAd(source);
+	}
+	SetObjectInfo(objName) {
+		if (this.platform == null) {
+			return;
+		}
+		this.platform.SetObjectInfo(objName);
+	}
+	ShowAd() {
+		if (this.platform == null) {
+			return;
+		}
+		this.platform.ShowAd();
+	}
+
 }
 
 

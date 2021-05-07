@@ -22,7 +22,25 @@ export class UIGameBase extends UIView {
     textTitle: UIText | null = null;
 
     listProLoad: ItemInfo[] = [];
+    onLoad() {
+        super.onLoad();
+        this.LayOut();
+    }
+    start() {
+        super.start();
+        this.LayOut();
+    }
+    UpdateLevel(level: number) {
 
+    }
+    OnClickBtnBack(event: Event, customEventData: string) {
+        if (this.controller != null) {
+            var navi = this.controller.naviController;
+            if (navi != null) {
+                navi.Pop();
+            }
+        }
+    }
 
 }
 

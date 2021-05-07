@@ -1,5 +1,7 @@
 
 import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject } from 'cc';
+import { Platform } from '../../Platform';
+import { AdBannerWeiXin } from './AdBannerWeiXin';
 
 const { ccclass, property, type, string } = _decorator;
 
@@ -9,17 +11,43 @@ const { ccclass, property, type, string } = _decorator;
 
 @ccclass('AdBannerPlatformWrapper')
 export class AdBannerPlatformWrapper extends CCObject {
-    static _main: AdBannerPlatformWrapper;
-    //静态方法
-    static get main() {
-        if (this._main == null) {
-            this._main = new AdBannerPlatformWrapper();
-            // this._main.Init();
-        }
-        return this._main;
-    }
  
+    GetPlatform () {
+        var p = null;
+        if (Platform.isWeiXin) {
+            p = new AdBannerWeiXin();
+        }
+        return p;
+    }
 
+        /*
+  {
+    source:"", 
+    success: (p:any,w:any,h:any) => {
+        
+    }, 
+    fail: (p:any) => {
+        
+    },
+  }
+  */
+    InitAd(obj:any) {
+ 
+    }
+
+    ShowAd(isShow) {
+       
+    } 
+    SetScreenSize(w, h) {
+     
+    }
+    //y 基于屏幕底部
+    SetScreenOffset(x, y) {
+    
+    }
+	GetHeight() {
+ 
+	}
 }
 
 

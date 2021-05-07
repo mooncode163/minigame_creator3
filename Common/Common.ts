@@ -2,6 +2,7 @@
 import { _decorator, Component, Node, CCObject, resources, Prefab, Label, UITransform, director, sys } from 'cc';
 import { Debug } from './Debug';
 import { Platform } from './Platform';
+import { Device } from './Device';
 
 const { ccclass, property } = _decorator;
 // 动态加载资源文档
@@ -18,6 +19,63 @@ export class Common extends CCObject {
     public static RES_CONFIG_DATA_COMMON = "ConfigDataCommon";
     public static THUMB_SUFFIX = "_thumb";
     public static TOUCH_MOVE_STEP_MIN = 3.0;//6.0f
+
+
+
+    static get noad() {
+        var key = "APP_NO_AD";
+        var ret = Common.GetBoolOfKey(key, false);
+        return ret;
+    }
+    static set noad(value) {
+        var key = "APP_NO_AD";
+        Common.SetItemOfKey(key, value);
+        // if (value) {
+        //     ret = 1;
+        //     AdConfig.main.SetNoAd();
+        // }
+        // else {
+        //     ret = 0;
+        // }
+        // PlayerPrefs.SetInt(key, ret);
+    }
+
+    static CanvasToScreenWidth(canvasSize, w) {
+        let screenSize = Device.main.screenSize;
+        var ret = w * screenSize.width / canvasSize.width;
+        return ret;
+    }
+
+
+    static CanvasToScreenHeight(canvasSize, h) {
+        let screenSize = Device.main.screenSize;
+        var ret = h * screenSize.height / canvasSize.height;
+        return ret;
+    }
+    static ScreenToCanvasWidth(canvasSize, w) {
+        let screenSize = Device.main.screenSize;
+        var ret = w * canvasSize.width / screenSize.width;
+        return ret;
+    }
+
+    static ScreenToCanvasHeigt(canvasSize, h) {
+        let screenSize = Device.main.screenSize;
+        var ret = h * canvasSize.height / screenSize.height;
+        return ret;
+    }
+
+    static RandomRange(min: any, max: any) {
+        var count = max - min;
+        //floor() 方法执行的是向下取整计算，它返回的是小于或等于函数参数，并且与之最接近的整数 
+        var rdm = min + Math.floor((Math.random() * count));
+        if (rdm >= max) {
+            rdm = max - 1;
+        }
+        if (rdm < min) {
+            rdm = min;
+        }
+        return rdm;
+    }
     static IsBlankString(str: string) {
         if (typeof str == "undefined" || str == null || str == "") {
             return true;
@@ -171,7 +229,7 @@ export class Common extends CCObject {
         }
     }
 
-    static GetIntOfKey (key: string, default_value:number) {
+    static GetIntOfKey(key: string, default_value: number) {
         var v = sys.localStorage.getItem(key);
         //微信小程序key不存在的时候返回""而非null
         if (Common.BlankString(v)) {

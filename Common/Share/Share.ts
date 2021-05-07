@@ -10,55 +10,7 @@ const { ccclass, property } = _decorator;
 export class Share extends CCObject {
 
     
-    /*
-      {
-          filepath:"",
-          bind:any,
-          success: function (tex:Texture2D) {
-          },
-          fail: function (p) {
-          },
-          progress: function (p) {
-          } ,
-        
-      }
-      */
-    Load(obj: any) {
-        console.log("TextureCache Load");        // load a texture
-        var pic = obj.filepath+"/texture";
-        resources.load(pic, Texture2D, (err: any, texture: Texture2D) => {
-            if (texture == null) { 
-                // Bundle resources doesn't contain 1
-                console.log("Test texture err:" + err.message || err);
-                if (obj.fail != null) {
-                    obj.fail(obj.bind);
-                }
-            } else {
-                console.log("Test texture is not null");
-                if (obj.success != null) {
-                    obj.success(obj.bind, texture);
-                }
-            }
-
-        });
-
-        //   pic = "AlertBoard/spriteFrame"
-        // obj.filepath = "test"
-        //  resources.load(obj.filepath, Texture2D, (err: any, texture: Texture2D) 会失败
-        // resources.load(obj.filepath, (err: any, texture: Texture2D) => {
-        //     console.log("TextureCache callback Load obj.filepath=", obj.filepath, " err=", err);
-        //     // spriteFrame.texture = texture;
-        //     if (texture != null) {
-        //         console.log("TextureCache texture is not null");
-        //     } else {
-        //         console.log("TextureCache texture is  null");
-        //     }
-        //     if (obj.success != null) {
-        //         obj.success(obj.bind, texture);
-        //     }
-
-        // });
-    }
+    
 }
 
 /**

@@ -178,6 +178,11 @@ export class AppSceneBase extends Component {
 
 
     }
+
+    LayOut()
+    {
+        
+    }
 }
 
 /**

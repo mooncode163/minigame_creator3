@@ -51,9 +51,8 @@ export class NaviViewController extends UIViewController {
 
     }
 
-    CreateContent () {
-        var classname = "Content";
-        this.objContent = new Node();
+    CreateContent () { 
+        this.objContent = new Node("Content");
         var uitran = this.objContent.addComponent(UITransform);
         this.objContent.parent = this.objController;
 

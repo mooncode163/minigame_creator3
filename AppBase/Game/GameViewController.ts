@@ -1,22 +1,107 @@
 
-import { _decorator, Component, Node } from 'cc'; 
+import { _decorator, Component, Node, Prefab, instantiate } from 'cc';
+import { AdKitCommon } from '../../Common/AdKit/AdKitCommon';
+import { PrefabCache } from '../../Common/Cache/PrefabCache';
+import { Config } from '../../Common/Config/Config';
+import { Debug } from '../../Common/Debug';
 import { UIViewController } from '../../Common/UIKit/ViewController/UIViewController';
+import { UIGameBase } from './UIGameBase';
 const { ccclass, property } = _decorator;
- 
+
 
 @ccclass('GameViewController')
 export class GameViewController extends UIViewController {
-    static _main:GameViewController;
+
+    uiPrefab: Prefab = null;
+    ui: UIGameBase = null;
+    _gameBase: UIGameBase = null; 
+    get gameBase() {
+        this.LoadUI();
+        return this.ui;
+    }
+
+
+    static _main: GameViewController;
     //静态方法
-    static get  main(){ 
-        if(this._main==null)
-        {
+    static get main() {
+        if (this._main == null) {
             this._main = new GameViewController();
         }
         return this._main;
     }
 
-    
+
+
+
+    Init() {
+        //提前加载
+        this.LoadPrefab();
+    }
+ 
+
+    LoadUI() {
+        if (this.ui == null) {
+            var node = instantiate(this.uiPrefab);
+            this.ui = node.getComponent(UIGameBase);
+        }
+    }
+
+    CreateUI() {
+        this.LoadUI();
+        this.ui.SetController(this);
+
+        AdKitCommon.main.InitAdBanner();
+        AdKitCommon.main.ShowAdBanner(true);
+
+        // insert
+        AdKitCommon.main.InitAdInsert();
+        AdKitCommon.main.ShowAdInsert(100);
+    }
+
+    LoadPrefabEnd() {
+     
+    }
+
+    LoadPrefab() {
+        var strPrefab = "AppCommon/Prefab/Game/UIGame" + Config.main.appType;
+
+        PrefabCache.main.Load(
+            {
+                filepath: strPrefab,
+                success: (p: any, data: any) => {
+                    this.uiPrefab = data;
+                    this.LoadPrefabEnd();
+                 
+                },
+                fail: () => {
+                    this.LoadPrefabEnd();
+                },
+            });
+ 
+    }
+
+
+    ViewDidLoad() {
+        Debug.Log("GameViewController ViewDidLoad");
+        super.ViewDidLoad();
+        //this.LoadPrefab();
+        this.CreateUI();
+    }
+    ViewDidUnLoad() {
+        Debug.Log("GameViewController ViewDidUnLoad");
+        super.ViewDidUnLoad();
+        this.ui.node.destroy();
+        this.ui = null;
+
+    }
+    LayOutView() {
+        Debug.Log("GameViewController LayOutView");
+        //  base.LayOutView();
+
+    }
+
+    GotoGame(name:string) {
+    }
 }
 
 /**

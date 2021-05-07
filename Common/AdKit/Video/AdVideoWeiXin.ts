@@ -9,16 +9,46 @@ const { ccclass, property, type, string } = _decorator;
 
 @ccclass('AdVideoWeiXin')
 export class AdVideoWeiXin extends CCObject {
-    static _main: AdVideoWeiXin;
-    //静态方法
-    static get main() {
-        if (this._main == null) {
-            this._main = new AdVideoWeiXin();
-            // this._main.Init();
-        }
-        return this._main;
+    videoAd = null;
+   
+    SetObjectInfo(objName, objMethod) {
+
     }
- 
+    SetType(type) {
+
+    }
+    InitAd(source) {
+        // 在页面中定义激励视频广告 
+        // 在页面onLoad回调事件中创建激励视频广告实例
+        // if (wx.createRewardedVideoAd) {
+        //     this.videoAd = wx.createRewardedVideoAd({
+        //         adUnitId: cc.AdInfo.ID_Video
+        //     })
+        // }
+
+    }
+    PreLoad(source) {
+
+    }
+
+    ShowAd() {
+
+        // 用户触发广告后，显示激励视频广告
+        // if (this.videoAd) {
+        //     this.videoAd.show().catch(() => {
+        //         // 失败重试
+        //         this.videoAd.load()
+        //             .then(() => this.videoAd.show())
+        //             .catch(err => {
+        //                 console.log('激励视频 广告显示失败')
+        //             })
+        //     })
+        // }
+    }
+    OnClickAd() {
+
+    }
+
 }
 
 

@@ -9,9 +9,7 @@ const { ccclass, property } = _decorator;
 @ccclass('SharePlatformWrapper')
 export class SharePlatformWrapper extends CCObject {
 
-     
- 
-    }
+      
 }
 
 /**
