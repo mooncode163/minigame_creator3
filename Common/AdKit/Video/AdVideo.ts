@@ -1,6 +1,8 @@
 
 import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject } from 'cc';
+import { Platform } from '../../Platform';
 import { AdVideoPlatformWrapper } from './AdVideoPlatformWrapper';
+import { AdVideoWeiXin } from './AdVideoWeiXin';
 
 const { ccclass, property, type, string } = _decorator;
 
@@ -24,10 +26,16 @@ export class AdVideo extends CCObject {
         }
         return this._main;
     }
+    GetPlatform() {
+        var p = null;
+        if (Platform.isWeiXin) {
+            p = new AdVideoWeiXin();
+        }
+        return p;
+    }
 
-    Init() {
-        var p = new AdVideoPlatformWrapper();
-        this.platform = p.GetPlatform();
+    Init() { 
+        this.platform = this.GetPlatform();
     }
     InitAd(source) {
 

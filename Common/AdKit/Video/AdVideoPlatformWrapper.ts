@@ -11,13 +11,6 @@ const { ccclass, property, type, string } = _decorator;
 
 @ccclass('AdVideoPlatformWrapper')
 export class AdVideoPlatformWrapper extends CCObject {
-    GetPlatform() {
-        var p = null;
-        if (Platform.isWeiXin) {
-            p = new AdVideoWeiXin();
-        }
-        return p;
-    }
 
    
     SetObjectInfo(objName, objMethod) {

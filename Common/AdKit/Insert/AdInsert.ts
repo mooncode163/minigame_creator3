@@ -1,6 +1,8 @@
 
 import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject } from 'cc';
+import { Platform } from '../../Platform';
 import { AdInsertPlatformWrapper } from './AdInsertPlatformWrapper';
+import { AdInsertWeiXin } from './AdInsertWeiXin';
 
 const { ccclass, property, type, string } = _decorator;
 
@@ -22,10 +24,15 @@ export class AdInsert extends CCObject {
         }
         return this._main;
     }
- 
-    Init () {
-		var p = new AdInsertPlatformWrapper();
-		this.platform = p.GetPlatform();
+	GetPlatform() {
+        var p = null;
+        if (Platform.isWeiXin) {
+            p = new AdInsertWeiXin();
+        }
+        return p;
+    }
+    Init () { 
+		this.platform = this.GetPlatform();
 	}
 	InitAd(source) {
 

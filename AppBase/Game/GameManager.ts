@@ -7,7 +7,37 @@ const { ccclass, property, type } = _decorator;
 @ccclass('GameManager')
 export class GameManager extends CCObject {
   
+    statics: {
+        gameMode: 0,
+
+    }
+    properties: {
+        uiPrefab: {
+            default: null,
+            type: cc.Prefab
+        } 
  
+        
+    }
+    Init () {
+        //this.ParseGuanka();
+    }
+    LoadPrefab () {
+
+    }
+ 
+
+    //UIViewController
+    GotoGame (fromController) {
+        var navi = fromController.naviController;
+        if (navi != null) {
+            navi.Push(GameViewController.main());
+        }
+    }  
+ 
+    GotoPlayAgain () {
+        GameViewController.main().gameBase.UpdateGuankaLevel(cc.LevelManager.main().gameLevel);
+    }
 
 }
 

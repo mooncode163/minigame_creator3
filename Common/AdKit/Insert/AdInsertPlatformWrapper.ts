@@ -11,13 +11,7 @@ const { ccclass, property, type, string } = _decorator;
 
 @ccclass('AdInsertPlatformWrapper')
 export class AdInsertPlatformWrapper extends CCObject {
-    GetPlatform() {
-        var p = null;
-        if (Platform.isWeiXin) {
-            p = new AdInsertWeiXin();
-        }
-        return p;
-    }
+
 
     InitAd(source) {
 

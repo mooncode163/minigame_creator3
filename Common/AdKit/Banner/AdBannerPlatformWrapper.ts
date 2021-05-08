@@ -12,14 +12,7 @@ const { ccclass, property, type, string } = _decorator;
 @ccclass('AdBannerPlatformWrapper')
 export class AdBannerPlatformWrapper extends CCObject {
  
-    GetPlatform () {
-        var p = null;
-        if (Platform.isWeiXin) {
-            p = new AdBannerWeiXin();
-        }
-        return p;
-    }
-
+  
         /*
   {
     source:"", 
