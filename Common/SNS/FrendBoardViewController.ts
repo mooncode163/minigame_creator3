@@ -51,15 +51,15 @@ export class FrendBoardViewController extends CCObject {
 
     ViewDidLoad () {
         Debug.Log("FrendBoardViewController ViewDidLoad");
-        this._super();
+        super.ViewDidLoad();
         this.LoadPrefab();
     }
     ViewDidUnLoad () {
         Debug.Log("FrendBoardViewController ViewDidUnLoad");
-        this._super();
+        super.ViewDidUnLoad();
 
     }
-    LayOutView () {
+    LayOut () {
         Debug.Log("FrendBoardViewController LayOutView");
         //  base.LayOutView();
 

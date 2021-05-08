@@ -13,13 +13,13 @@ export class UIDeadLine extends UIView {
         isGameFail:false,
     }
     onLoad () {
-        this._super(); 
+        super.onLoad();
         this.node.name = cc.GameData.NameDeadLine;
         this.t = 0;
         this.isGameFail = false;
     }
     start () {
-        this._super();
+        super.start();
     } 
   
     onCollisionEnter(other, self) {
@@ -53,9 +53,9 @@ export class UIDeadLine extends UIView {
         console.log('UIDeadLine onPreSolve');
         // this.t += cc.director.getDeltaTime();
 
-        // if (other.node.name != cc.GameData.main().NameBoardLine)
+        // if (other.node.name != GameData.main.NameBoardLine)
         // {
-        //     cc.Debug.Log("OnTriggerStay2D t=" + this.t + " name=" + other.node.name);
+        //     Debug.Log("OnTriggerStay2D t=" + this.t + " name=" + other.node.name);
         //     var ui = other.node.getComponent(UIMergeItem);
         //     if (ui != null)
         //     {
@@ -70,7 +70,7 @@ export class UIDeadLine extends UIView {
         //             if (!this.isGameFail)
         //             {
         //                 this.isGameFail = true;
-        //                 // cc.UIGameMerge.main().OnGameFinish(true);
+        //                 // cc.UIGameMerge.main.OnGameFinish(true);
         //             }
         //         }
         //     }

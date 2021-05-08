@@ -22,11 +22,11 @@ export class UIViewPop extends UIView {
  
 
     onLoad () {
-        this._super();
+        super.onLoad();
         this.LayOut();
     }
     start () {
-        this._super();
+        super.start();
         this.LayOut();
         this.node.active = false;
         this.scheduleOnce(this.ShowInitAnimate, 0.1); 

@@ -1,7 +1,9 @@
 
 import { _decorator, Component, Node, Prefab } from 'cc';
 import { UIGameBase } from '../../../../AppBase/Game/UIGameBase';
+import { Debug } from '../../../../Common/Debug';
 import { UIView } from '../../../../Common/UIKit/ViewController/UIView';
+import { GameData } from '../../Data/GameData';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UIGameMerge')
@@ -38,14 +40,14 @@ export class UIGameMerge extends UIGameBase {
         titleScore: cc.Label,
     }
     onLoad () {
-        this._super();
+        super.onLoad();
         UIGameMerge._main = this;
         // this.LoadLanguageGame(); 
         // this.textTitle.node.active = false;
         
     }
     start () {
-        this._super();
+        super.start();
  
         // this.ShowGameWinAlert();
     }
@@ -76,8 +78,8 @@ export class UIGameMerge extends UIGameBase {
 
     }
     UpdateScore () {
-        var str = cc.Language.main().GetString("Score") + ":" + cc.GameData.main().score.toString();
-        cc.Debug.Log("UpdateScore str="+str);
+        var str = Language.main.GetString("Score") + ":" + GameData.main.score.toString();
+        Debug.Log("UpdateScore str="+str);
         this.titleScore.string = str;
         this.LayOut();
        
@@ -86,12 +88,12 @@ export class UIGameMerge extends UIGameBase {
 
 
 
-    UpdateGuankaLevel (level) {
-        cc.Debug.Log("UIGameShapeColor::UpdateGuankaLevel");
-        this._super();
-        cc.GameData.main().isGameFail = false;
+    UpdateLevel (level) {
+        Debug.Log("UIGameShapeColor::UpdateGuankaLevel");
+        super.UpdateLevel();
+        GameData.main.isGameFail = false;
         
-        cc.GameData.main().score = 0;
+        GameData.main.score = 0;
         this.CreateGameInteranl();
         
         this.UpdateScore();
@@ -127,7 +129,7 @@ export class UIGameMerge extends UIGameBase {
             cc.PopUpManager.main().Show({
                 prefab: strPrefab,
                 open (ui) {
-                    cc.AudioPlay.main().PlayByKey("Fail");
+                    AudioPlay.main.PlayByKey("Fail");
                     //ui.UpdateItem(info); 
                 }.bind(this),
                 close (ui) {
@@ -135,11 +137,11 @@ export class UIGameMerge extends UIGameBase {
             });  
             // cc.PrefabCache.main.LoadByKey(key, function (err, prefab) {
             //     if (err) {
-            //         cc.Debug.Log("UIGameFail err=" + err.message || err);
+            //         Debug.Log("UIGameFail err=" + err.message || err);
             //         return;
             //     }
             //     var node = cc.instantiate(prefab); 
-            //     cc.Debug.Log("UIGameFail ok");
+            //     Debug.Log("UIGameFail ok");
             //     // node.parent = this.node;
             //     var nodeRoot = cc.Common.appSceneMain.rootNode;
             //     node.parent = nodeRoot;

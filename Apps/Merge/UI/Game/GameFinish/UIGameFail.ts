@@ -1,49 +1,47 @@
 
-import { _decorator, Component, Node, Prefab } from 'cc';  
+import { _decorator, Component, Node, Prefab, Size } from 'cc';
 import { UIView } from '../../../../../Common/UIKit/ViewController/UIView';
 import { UIViewPop } from '../../../../../Common/UIKit/PopUp/UIViewPop';
+import { Language } from '../../../../../Common/Language/Language';
+import { UIText } from '../../../../../Common/UIKit/UIText/UIText';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UIGameFail')
 export class UIGameFail extends UIViewPop {
-    
-    properties: {
-        textTitle: cc.Component,
-        textMsg: cc.Component,
-        textAgain: cc.Component,
-       
-    }
-    onLoad () {
-        this._super(); 
-         this.LayOut();  
+    textTitle: UIText;
+    textMsg: UIText;
+    textAgain: UIText;
 
-        this.textTitle.text = cc.Language.main().GetString("STR_GameFail_TITLE");
-        this.textMsg.text = cc.Language.main().GetString("STR_GameFail_Detail");
-        this.textAgain.text = cc.Language.main().GetString("Restart");
-    }
-    start () {
-        this._super();
+    onLoad() {
+        super.onLoad();
         this.LayOut();
 
-        
+        this.textTitle.text = Language.main.GetString("STR_GameFail_TITLE");
+        this.textMsg.text = Language.main.GetString("STR_GameFail_Detail");
+        this.textAgain.text = Language.main.GetString("Restart");
+    }
+    start() {
+        super.start();
+        this.LayOut();
+
+
     }
 
-    LayOut () {
-        this._super();
+    LayOut() {
+        super.LayOut();
         var ratio = 0.8;
-        var w = this.node.parent.getContentSize().width*ratio;
-        var h = this.node.parent.getContentSize().height*ratio;
-        this.node.setContentSize(new cc.size(w,h));
-        // this.node.setContentSize(this.node.parent.getContentSize()*ratio);
-        this._super();
+        var w = this.GetParent().GetContentSize().width * ratio;
+        var h = this.GetParent().GetContentSize().height * ratio;
+        this.SetContentSize(w, h);
+        super.LayOut();
     }
-   
-   
-    OnClickBtnAgain (event, customEventData) {
+
+
+    OnClickBtnAgain(event, customEventData) {
         this.Close();
-        cc.GameManager.main().GotoPlayAgain();
+        GameManager.main().GotoPlayAgain();
     }
- 
+
 
 }
 

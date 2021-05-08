@@ -108,12 +108,12 @@ export class AppSceneBase extends Component {
 
         this.textTitle.string = str;
         // this.sizeCanvas.width = screenSize.width * this.sizeCanvas.height / screenSize.height;
-        // cc.Debug.Log("sizeCanvas size=" + this.sizeCanvas);
+        // Debug.Log("sizeCanvas size=" + this.sizeCanvas);
         // var framesize = cc.view.getFrameSize();
-        // cc.Debug.Log("frame size=" + framesize);
+        // Debug.Log("frame size=" + framesize);
         // // cc.view.setFrameSize(windowSize.width,windowSize.height);
         // // var framesize1 = cc.view.getFrameSize();
-        // //  cc.Debug.Log("new frame size=" + framesize1);
+        // //  Debug.Log("new frame size=" + framesize1);
 
         //按2048
         // w = this.canvasMain.design

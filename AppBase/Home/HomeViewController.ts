@@ -45,10 +45,10 @@ export class HomeViewController extends UIViewController {
         // var strPrefab = "App/Prefab/Home/UIHome" + cc.Config.main().appType;
         // var key = "UIHome" + cc.Config.main().appType;
         // // var strPrefab = cc.ConfigPrefab.main().GetPrefab(key);
-        // // cc.Debug.Log("HomeViewController LoadPrefab=" + strPrefab);
+        // // Debug.Log("HomeViewController LoadPrefab=" + strPrefab);
         // cc.PrefabCache.main.LoadByKey(key, function (err, prefab) {
         //     if (err) {
-        //         cc.Debug.Log("LoadPrefab err:" + err.message || err);
+        //         Debug.Log("LoadPrefab err:" + err.message || err);
         //         this.LoadPrefabDefault();
         //         return;
         //     }

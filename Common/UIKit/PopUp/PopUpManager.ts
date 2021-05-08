@@ -54,7 +54,7 @@ export class PopUpManager extends CCObject {
         var strPrefab = "Common/Prefab/UIKit/UIPopUp/PopUpBgPannel";
         cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
-                cc.Debug.Log("PopUpManager  LoadBg err=" + err.message || err);
+                Debug.Log("PopUpManager  LoadBg err=" + err.message || err);
                 return;
             }
             this.LoadBgInternal(prefab);
@@ -75,7 +75,7 @@ export class PopUpManager extends CCObject {
 
         cc.PrefabCache.main.Load(this.objPop.prefab, function (err, prefab) {
             if (err) {
-                cc.Debug.Log("PopUpManager err=" + err.message || err);
+                Debug.Log("PopUpManager err=" + err.message || err);
                 return;
             }
             this.OpenPopup(prefab);
@@ -84,16 +84,16 @@ export class PopUpManager extends CCObject {
     }
 
     OpenPopup(prefab) {
-        cc.Debug.Log("OpenPopup");
+        Debug.Log("OpenPopup");
         var nodeRoot = cc.Common.appSceneMain.rootNode;
         var nodePop = cc.instantiate(prefab);
         nodePop.setParent(nodeRoot);
         var ui = nodePop.getComponent(UIViewPop);
         if (nodePop == null) {
-            cc.Debug.Log("OpenPopup nodePop is null");
+            Debug.Log("OpenPopup nodePop is null");
         }
         if (ui == null) {
-            cc.Debug.Log("OpenPopup ui is null");
+            Debug.Log("OpenPopup ui is null");
         }
         this.listItem.push(ui);
 
@@ -132,7 +132,7 @@ export class PopUpManager extends CCObject {
         var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BTN_SOUND, false);
         if (ret) {
             //play sound click
-            cc.AudioPlay.main().PlayCloudAudio("PopUp/PopupOpen.mp3");
+            AudioPlay.main.PlayCloudAudio("PopUp/PopupOpen.mp3");
         }
  
     }
@@ -189,7 +189,7 @@ export class PopUpManager extends CCObject {
         var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BTN_SOUND, false);
         if (ret) {
             //play sound click
-            cc.AudioPlay.main().PlayCloudAudio("PopUp/PopupClose.mp3");
+            AudioPlay.main.PlayCloudAudio("PopUp/PopupClose.mp3");
         }
 
         var duration = PopUpManager.ANIMATE_DURATION;

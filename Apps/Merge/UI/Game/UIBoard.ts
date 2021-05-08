@@ -7,10 +7,10 @@ const { ccclass, property, type } = _decorator;
 export class UIBoard extends UIView {
     
     onLoad () {
-        this._super(); 
+        super.onLoad();
     }
     start () {
-        this._super();
+        super.start();
     }
      
 

@@ -26,12 +26,12 @@ export class CSVParser extends CCObject {
         // var list = str.split("\n");
         // var list = str.split(",");
         // list.forEach(function (value, index) {
-        //     cc.Debug.Log("line "+index+" =" + value);
+        //     Debug.Log("line "+index+" =" + value);
         // }.bind(this));
 
         var index = 0;
         for (let value of list) {
-            // cc.Debug.Log("line " + index + " =" + value);
+            // Debug.Log("line " + index + " =" + value);
             if (value.length > 0) {
                 if (value[0] == this.KEY_WORD_CANCEL) {
                     // 去掉注释
@@ -56,7 +56,7 @@ export class CSVParser extends CCObject {
         var yinhao_pos_end = -1;
         var strYinhao = "";
         for (var i = 0; i < str.length; i++) {
-            //cc.Debug.Log("SplitLine:"+str[i]);
+            //Debug.Log("SplitLine:"+str[i]);
             var word = str[i];
 
             if (yinhao_pos_start >= 0) {
@@ -72,7 +72,7 @@ export class CSVParser extends CCObject {
                 //substring:pos to (i-1)
                 var len = (i - 1) - pos + 1;
                 var strtmp = str.substr(pos, len);
-                //cc.Debug.Log("SplitLine:" + strtmp);
+                //Debug.Log("SplitLine:" + strtmp);
                 list.push(strtmp);
                 pos = i + 1;
             }
@@ -88,7 +88,7 @@ export class CSVParser extends CCObject {
                     yinhao_pos_end = postmp;
                     //has found
                     skip_step = postmp - i + 1;
-                    //cc.Debug.Log("postmp=" + postmp + " skip_step=" + skip_step);
+                    //Debug.Log("postmp=" + postmp + " skip_step=" + skip_step);
                 }
                 // i += skip_step;
             }
@@ -98,7 +98,7 @@ export class CSVParser extends CCObject {
 
                     var len = i - pos + 1;
                     var strtmp = str.substr(pos, len);
-                    //cc.Debug.Log("SplitLine:" + strtmp);
+                    //Debug.Log("SplitLine:" + strtmp);
                     list.push(strtmp);
 
                 } else {
@@ -111,7 +111,7 @@ export class CSVParser extends CCObject {
         }
         var index = 0;
         for (let value of list) {
-            //  cc.Debug.Log("SplitLine list=" + value);
+            //  Debug.Log("SplitLine list=" + value);
             index++;
         }
         this.listTable.push(list);

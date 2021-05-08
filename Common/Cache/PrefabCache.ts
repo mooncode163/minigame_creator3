@@ -1,56 +1,81 @@
 
-import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc'; 
+import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc';
 import { ResManager } from '../Res/ResManager';
+import { ConfigPrefab } from '../Config/ConfigPrefab';
 
 const { ccclass, property } = _decorator;
 
 
 @ccclass('PrefabCache')
 export class PrefabCache extends CCObject {
-    
+
     static _main: PrefabCache;
     //静态方法
-    static get main() { 
+    static get main() {
         if (this._main == null) {
             this._main = new PrefabCache();
         }
         return this._main;
     }
-/*
-{ 
-   filepath:"", 
-success: (p:any,data:any) => {
-    
-}, 
-fail: (p:any) => {
-    
-},
-}
-*/
-Load(obj: any) {
+    /*
+    { 
+       filepath:"", 
+    success: (p:any,data:any) => {
+        
+    }, 
+    fail: (p:any) => {
+        
+    },
+    }
+    */
+    Load(obj: any) {
 
-    // resources.load("App/Prefab/Home/UIHomeMerge", Prefab, (err, prefab) => {
-    //     const newNode = instantiate(prefab);
-    //     // director.getScene().addChild(newNode);
-    //     this.objController?.addChild(newNode);
-    // });
+        ResManager.Load(
+            {
+                filepath: obj.filepath,
+                success: (p: any, data: any) => {
+                    if (obj.success != null) {
+                        obj.success(this, data);
+                    }
+                },
+                fail: () => {
+                    if (obj.fail != null) {
+                        obj.fail(this);
+                    }
+                },
+            });
+    }
 
 
-    ResManager.Load(
-        {
-            filepath: obj.filepath,
-            success: (p: any, data: any) => {
-                if (obj.success != null) {
-                    obj.success(this, data);
-                }
-            },
-            fail: () => {
-                if (obj.fail != null) {
-                    obj.fail(this);
-                }
-            },
-        });
-}
+    /*
+    { 
+       key:"", 
+    success: (p:any,data:any) => {
+        
+    }, 
+    fail: (p:any) => {
+        
+    },
+    }
+    */
+    LoadByKey(obj: any) {
+        var filepath = ConfigPrefab.main.GetPrefab(obj.key);
+        ResManager.Load(
+            {
+                filepath: filepath,
+                success: (p: any, data: any) => {
+                    if (obj.success != null) {
+                        obj.success(this, data);
+                    }
+                },
+                fail: () => {
+                    if (obj.fail != null) {
+                        obj.fail(this);
+                    }
+                },
+            });
+    }
+
 
 }
 

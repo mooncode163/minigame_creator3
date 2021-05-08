@@ -60,9 +60,9 @@ export class LTLocalization extends CCObject {
         var listTable = this.csvParser.listTable;
         var list = listTable[0];
         for (var i = 1; i < list.length; i++) {
-            //cc.Debug.Log("GetLanguageIndexByName indexLanguage i=" + i + " list[i]=" + list[i] + " str=" + str);
+            //Debug.Log("GetLanguageIndexByName indexLanguage i=" + i + " list[i]=" + list[i] + " str=" + str);
             if (list[i] == str) {
-                // cc.Debug.Log("indexLanguage i=" + i + " list[i]=" + list[i] + " str=" + str);
+                // Debug.Log("indexLanguage i=" + i + " list[i]=" + list[i] + " str=" + str);
                 return i;
             }
         }
@@ -93,7 +93,7 @@ export class LTLocalization extends CCObject {
         for (var row = 0; row < row_count; row++) {
             var key = this.csvParser.GetText(row, 0);
             var value = this.csvParser.GetText(row, this.indexLanguage);
-            //cc.Debug.Log("dicData.Add key=" + key + " value=" + value);
+            //Debug.Log("dicData.Add key=" + key + " value=" + value);
             this.dicData.Add(key, value);
         }
     }

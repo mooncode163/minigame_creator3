@@ -68,24 +68,24 @@ export class UIGameBase extends UIView {
     Init () {
     }
     onLoad () {
-        this._super();
+        super.onLoad();
         this.node.setContentSize(this.node.parent.getContentSize());
         this.LoadGamePrefab();
         
     }
     start () {
         // this.UpdateBtnMusic();
-        this._super();
+        super.start();
     }
     LoadGamePrefab () {
         // var strPrefab = "AppCommon/Prefab/Game/Game" + cc.Config.main().appType;
 
         var key = "Game"+ cc.Config.main().appType;
         // var strPrefab = cc.ConfigPrefab.main().GetPrefab(key);
-        // cc.Debug.Log("HomeViewController LoadPrefab=" + strPrefab);
+        // Debug.Log("HomeViewController LoadPrefab=" + strPrefab);
         cc.PrefabCache.main.LoadByKey(key, function (err, prefab) {
             if (err) {
-                cc.Debug.Log("LoadGamePrefab err=" + err.message || err);
+                Debug.Log("LoadGamePrefab err=" + err.message || err);
                 return;
             }
             this.gamePrefab = prefab;
@@ -113,14 +113,14 @@ export class UIGameBase extends UIView {
     OnClickBtnMusic (event, customEventData) {
         var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
         var v = !ret;
-        cc.Debug.Log("UpdateBtnSwitch value=" + v);
+        Debug.Log("UpdateBtnSwitch value=" + v);
         cc.Common.SetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, v);
         this.UpdateBtnMusic();
         if (v) {
-            cc.AudioPlay.main().PlayBgMusic();
+            AudioPlay.main.PlayBgMusic();
         }
         else {
-            cc.AudioPlay.main().PlayStopBgMusic();
+            AudioPlay.main.PlayStopBgMusic();
         }
     }
     OnClickBtnShare (event, customEventData) {
@@ -133,7 +133,7 @@ export class UIGameBase extends UIView {
 
     UpdateGuankaLevel (level) {
         var idx = cc.LevelManager.main().gameLevel;
-        cc.Debug.Log("UIGameBase::UpdateGuankaLevel idx=" + idx);
+        Debug.Log("UIGameBase::UpdateGuankaLevel idx=" + idx);
         if (idx >= 3) {
             var isLock = cc.Common.GetBoolOfKey(cc.AppRes.KEY_GAME_LOCK, true);
             if (isLock) {
@@ -162,9 +162,9 @@ export class UIGameBase extends UIView {
         if (isshowplay == true) {
             return;
         }
-        var title = cc.Language.main().GetString("STR_UIVIEWALERT_TITLE_USER_GUIDE");
-        var msg = cc.Language.main().GetString("STR_UIVIEWALERT_MSG_USER_GUIDE");
-        var yes = cc.Language.main().GetString("STR_UIVIEWALERT_YES_USER_GUIDE");
+        var title = Language.main.GetString("STR_UIVIEWALERT_TITLE_USER_GUIDE");
+        var msg = Language.main.GetString("STR_UIVIEWALERT_MSG_USER_GUIDE");
+        var yes = Language.main.GetString("STR_UIVIEWALERT_YES_USER_GUIDE");
         var no = yes;
 
         cc.ViewAlertManager.main().ShowFull({
@@ -205,18 +205,18 @@ export class UIGameBase extends UIView {
             cc.LevelManager.main().gameLevelFinish = cc.LevelManager.main().gameLevel;
             //好友排行榜
             let score = cc.LevelManager.main().placeLevel + "-" + cc.LevelManager.main().gameLevel;
-            cc.Debug.Log("OnGameWin score=" + score);
+            Debug.Log("OnGameWin score=" + score);
             cc.FrendBoard.main().SaveData(score);
         }
 
     }
 
     ShowGameWinAlert () {
-        var title = cc.Language.main().GetString("STR_UIVIEWALERT_TITLE_GAME_FINISH");
-        var msg = cc.Language.main().GetString("STR_UIVIEWALERT_MSG_GAME_FINISH");
-        var yes = cc.Language.main().GetString("STR_UIVIEWALERT_YES_GAME_FINISH");
-        var no = cc.Language.main().GetString("STR_UIVIEWALERT_NO_GAME_FINISH");
-        cc.Debug.Log("game finish ShowFull");
+        var title = Language.main.GetString("STR_UIVIEWALERT_TITLE_GAME_FINISH");
+        var msg = Language.main.GetString("STR_UIVIEWALERT_MSG_GAME_FINISH");
+        var yes = Language.main.GetString("STR_UIVIEWALERT_YES_GAME_FINISH");
+        var no = Language.main.GetString("STR_UIVIEWALERT_NO_GAME_FINISH");
+        Debug.Log("game finish ShowFull");
 
         cc.ViewAlertManager.main().ShowFull({
             title: title,

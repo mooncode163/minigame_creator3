@@ -8,14 +8,23 @@ const { ccclass, property, type } = _decorator;
 export class UIGameWin extends UIViewPop {
     
     onLoad () {
-        this._super(); 
+        super.onLoad();
+        this.LayOut();
     }
     start () {
-        this._super();
+        super.start();
+        this.LayOut();
     }
      
 
-
+    LayOut() {
+        super.LayOut();
+        var ratio = 0.8;
+        var w = this.GetParent().GetContentSize().width * ratio;
+        var h = this.GetParent().GetContentSize().height * ratio;
+        this.SetContentSize(w, h);
+        super.LayOut();
+    }
 }
 
 /**

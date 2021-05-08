@@ -22,7 +22,7 @@ export class UIViewAlert extends UIView {
         callback: null,
     }
     onLoad () {
-        this._super();
+        super.onLoad();
 
         this.LayOut();
     }
@@ -30,7 +30,7 @@ export class UIViewAlert extends UIView {
     LayOut () {
         var ratio = 0.8;
         var x, y, w, h;
-        this._super();
+        super.LayOut();
         {
             ratio = 0.8;
             var size = cc.Common.appSceneMain.sizeCanvas; 
@@ -42,14 +42,14 @@ export class UIViewAlert extends UIView {
             w = Math.min(size.width, size.height) * ratio;
             h = w * 9 / 16;
             // h = w / 2;
-            cc.Debug.Log("UIViewAlert setContentSize = w=" + w + " h=" + h);
+            Debug.Log("UIViewAlert setContentSize = w=" + w + " h=" + h);
             this.node.setContentSize(new cc.Size(w, h));
 
-            this._super();
+            super.LayOut();
         }
     }
     SetText (title, msg, yes, no) {
-        //cc.Debug.Log("SetText title ="+title+" msg="+msg);
+        //Debug.Log("SetText title ="+title+" msg="+msg);
         this.textTitle.text = title;
         this.textMsg.text = msg;
 

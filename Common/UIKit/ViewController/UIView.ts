@@ -72,7 +72,7 @@ export class UIView extends Component {
             while (i < max) {
                 i++;
                 var par = this.node.parent;
-                // cc.Debug.Log("UIHomeCenterBar controller ");
+                // Debug.Log("UIHomeCenterBar controller ");
                 if (par == null) {
                     Debug.Log("UIView controller par is null");
                     break;
@@ -101,7 +101,9 @@ export class UIView extends Component {
         this._controller = value;
     }
 
-
+    static GetNodeBoundingBox(node: Node) {
+       return node.getComponent(UITransform)?.getBoundingBox();
+    }
 
     onLoad() {
     }
@@ -171,30 +173,40 @@ export class UIView extends Component {
         }
     }
 
-    SetContentSize(w, h) { 
+    SetContentSize(w, h) {
         this.node?.getComponent(UITransform)?.setContentSize(new Size(w, h));
         this.LayOut();
     }
+    GetContentSize() {
+       return this.node?.getComponent(UITransform)?.contentSize; 
+    }
+
+    GetBoundingBox() { 
+      return  UIView.GetNodeBoundingBox(this.node);
+    }
 
     // UIView parent
-    SetParent(parent:UIView) {
+    SetParent(parent: UIView) {
         this.node.parent = parent.node;
         this.LayOut();
     }
 
+    GetParent() {
+       return this.node.parent.getComponent(UIView); 
+    } 
 
     //js 默认参数方法： https://www.cnblogs.com/luotingliang/p/7250990.html
-    GetKeyColor(def:Color) {
+    GetKeyColor(def: Color) {
         var ret = Color.BLACK;
         if (def) {
             ret = def;
         }
-        
+
         if (!Common.BlankString(this.keyColor)) {
             ret = ColorConfig.main.GetColor(this.keyColor);
             Debug.Log("UIView this.keyColor =" + this.keyColor + " ret=" + ret);
-        }else{
-            Debug.Log("UIView this.keyColor null" );
+        } else {
+            Debug.Log("UIView this.keyColor null");
         }
         return ret;
     }

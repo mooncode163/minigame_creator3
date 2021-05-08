@@ -21,7 +21,7 @@ export class ColorConfigInternal extends ConfigInternalBase {
         var strsplit = ",";
         var list = strrgba.split(strsplit);
         var index = 0;
-        //cc.Debug.Log("RGBString2Color:list="+list.length);
+        //Debug.Log("RGBString2Color:list="+list.length);
 
         for (let value of list) {
             if (index == 0) {

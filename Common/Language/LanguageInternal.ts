@@ -58,7 +58,7 @@ export class LanguageInternal extends ConfigInternalBase {
     GetString(key: string) { 
         var str = "";
         if (this.IsContainsKey(key)) {
-            // cc.Debug.Log("GetString: IsContainsKey key=" + key);
+            // Debug.Log("GetString: IsContainsKey key=" + key);
             str = this.ltLocalization.GetText(key);
         }
         return str;

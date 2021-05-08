@@ -41,7 +41,7 @@ export class ViewAlertManager extends CCObject {
         var strPrefab = "Common/Prefab/UIKit/UIViewAlert/UIViewAlert";
         cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
-                cc.Debug.Log(err.message || err);
+                Debug.Log(err.message || err);
                 return;
             }
             this.uiPrefab = prefab;
@@ -53,7 +53,7 @@ export class ViewAlertManager extends CCObject {
     }
 
     ShowInternal (title, msg, yes, no) {
-        //cc.Debug.Log("ShowInternal SetText title ="+title+" msg="+msg);
+        //Debug.Log("ShowInternal SetText title ="+title+" msg="+msg);
         var node = cc.instantiate(this.uiPrefab);
         this.ui = node.getComponent(UIViewAlert);
         // this.ui.callback = this.OnUIViewAlertFinished.bind(this);

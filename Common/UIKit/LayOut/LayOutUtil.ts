@@ -1,6 +1,7 @@
 
 import { _decorator, Component, Node, CCObject, UITransform, Enum } from 'cc';
 import { AppSceneBase } from '../../../AppBase/Common/AppSceneBase';
+import { UIView } from '../ViewController/UIView';
 import { LayOutElement } from './LayOutElement';
 const { ccclass, property } = _decorator;
 
@@ -219,13 +220,13 @@ export class LayOutUtil extends CCObject {
             objUp = node1;
         }
         var pos = objDown.getPosition();
-        var size = objDown.getBoundingBox();
+        var size =UIView.GetNodeBoundingBox(objDown); //objDown.getBoundingBox();
         var y1 = pos.y + size.height / 2;
         var x1 = pos.x + size.width / 2;
 
         // objUp
         pos = objUp.getPosition();
-        size = objUp.getBoundingBox();
+        size = UIView.GetNodeBoundingBox(objUp);
         var y2 = pos.y - size.height / 2;
         var x2 = pos.x - size.width / 2;
 
@@ -246,7 +247,8 @@ export class LayOutUtil extends CCObject {
         var v1 = 0, v2 = 0;
         var size = node.getBoundingBox();
         var pos = node.getPosition();
-        var sizeParent = node.parent.getBoundingBox();
+        // var sizeParent = node.parent.getBoundingBox();
+        var sizeParent = UIView.GetNodeBoundingBox(node.parent);
         var w_parent = sizeParent.width;
         var h_parent = sizeParent.height;
         switch (type) {

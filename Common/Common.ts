@@ -130,7 +130,7 @@ export class Common extends CCObject {
         //active 从false变成true 会重新刷新
         node.active = true;
         size = labelTmp.node.getComponent(UITransform)?.contentSize;
-        //cc.Debug.Log("labelTmp2 size= " + size + " bd=" + labelTmp.node.getBoundingBox());
+        //Debug.Log("labelTmp2 size= " + size + " bd=" + labelTmp.node.getBoundingBox());
 
         node.removeFromParent();
         //Common.GetTextHeight(text, fontsize);
@@ -204,14 +204,14 @@ export class Common extends CCObject {
         if (Platform.isWeiXin) {
             v = wx.getStorageSync(key);
             if (!Common.isKeyExistWeiXin(v)) {
-                //cc.Debug.Log("key is null:" + key);
+                //Debug.Log("key is null:" + key);
                 return default_value;
             }
             Debug.Log("GetItemOfKey wx key=" + key + " value=" + v);
         } else {
             v = sys.localStorage.getItem(key);
             if (Common.BlankString(v)) {
-                //cc.Debug.Log("key is null:" + key);
+                //Debug.Log("key is null:" + key);
                 return default_value;
             }
         }

@@ -1,6 +1,9 @@
 
 import { _decorator, Component, Node, Prefab } from 'cc'; 
+import { Debug } from '../../../../Common/Debug';
 import { UIView } from '../../../../Common/UIKit/ViewController/UIView';
+import { GameData } from '../../Data/GameData';
+import { UIGameMerge } from './UIGameMerge';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UIMergeItem')
@@ -21,7 +24,7 @@ export class UIMergeItem extends UIView {
         hasGoDownDeadLine: false,
     }
     onLoad () {
-        this._super();
+        super.onLoad();
         this.t = 0;
         // this.node.zIndex = 100;
         // var manager = cc.director.getCollisionManager();
@@ -32,7 +35,7 @@ export class UIMergeItem extends UIView {
         ev.callBackTouch = this.OnUITouchEvent.bind(this);
     }
     start () {
-        this._super();
+        super.start();
     }
 
     update () {
@@ -42,16 +45,16 @@ export class UIMergeItem extends UIView {
             // this.t += cc.director.getDeltaTime();
             // if (this.t > 2.0) {
                 // this.t = 0;
-                // var pos = cc.GameMerge.main().nodeDeadline.getPosition();
+                // var pos = GameMerge.main.nodeDeadline.getPosition();
                 // var y_top = this.node.getPosition().y + this.node.getBoundingBox().height / 2;
                 // if (y_top >= pos.y) {
-                //     cc.Debug.Log("UIMergeItem this.hasGoDownDeadLine="+this.hasGoDownDeadLine);
+                //     Debug.Log("UIMergeItem this.hasGoDownDeadLine="+this.hasGoDownDeadLine);
                 //     if (this.hasGoDownDeadLine) {
-                //         if (!cc.GameData.main().isGameFail) {
+                //         if (!GameData.main.isGameFail) {
 
-                //             cc.GameData.main().isGameFail = true;
-                //             cc.Debug.Log("UIMergeItem game over");
-                //             cc.UIGameMerge.main().OnGameFinish(true);
+                //             GameData.main.isGameFail = true;
+                //             Debug.Log("UIMergeItem game over");
+                //             cc.UIGameMerge.main.OnGameFinish(true);
                 //         }
                 //     }
 
@@ -67,17 +70,17 @@ export class UIMergeItem extends UIView {
 
     // 碰撞线检测
     IsCollisionDeadLine () {
-        var pos = cc.GameMerge.main().nodeDeadline.getPosition();
-        var y1 = this.node.getPosition().y + this.node.getBoundingBox().height / 2;
-        var y2 = this.node.getPosition().y - this.node.getBoundingBox().height / 2;
+        var pos = GameMerge.main.nodeDeadline.getPosition();
+        var y1 = this.node.getPosition().y + this.GetBoundingBox().height / 2;
+        var y2 = this.node.getPosition().y - this.GetBoundingBox().height / 2;
         if ((pos.y > y2) && (pos.y < y1)) {
             this.t += cc.director.getDeltaTime();
             if (this.t > 2.0) {
                 this.t = 0;
-                if (!cc.GameData.main().isGameFail) {
-                    cc.GameData.main().isGameFail = true;
-                    cc.Debug.Log("UIMergeItem game over");
-                    cc.UIGameMerge.main().OnGameFinish(true);
+                if (!GameData.main.isGameFail) {
+                    GameData.main.isGameFail = true;
+                    Debug.Log("UIMergeItem game over");
+                    UIGameMerge.main.OnGameFinish(true);
                 }
             }
 

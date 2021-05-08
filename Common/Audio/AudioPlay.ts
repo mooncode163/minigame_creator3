@@ -22,9 +22,9 @@ export class AudioPlay extends CCObject {
     PlayCloudAudio(file: string) {
         // var filepath = cc.CloudRes.main().audioRootPath + "/" + file;
         // if (cc.Common.main().isWeiXin) {
-        //     cc.AudioPlay.main().PlayUrl(filepath);
+        //     AudioPlay.main.PlayUrl(filepath);
         // } else {
-        //     cc.AudioPlay.main().PlayFile(filepath);
+        //     AudioPlay.main.PlayFile(filepath);
         // }
     }
 
@@ -34,7 +34,9 @@ export class AudioPlay extends CCObject {
     PlayFile(filepath: string) {
 
     }
+    PlayByKey(key: string) {
 
+    } 
     PlayBgMusic() {
 
     }
