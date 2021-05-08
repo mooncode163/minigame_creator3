@@ -10,17 +10,17 @@ export class CollisionDetection extends UIView {
         isItDetected: true,//定义是否进行碰撞检测后逻辑判断
         playFallingSound: false,//定义是否播放过下落声音
 
-    },
-    onLoad: function () {
+    }
+    onLoad () {
         this.isItDetected = true;
         this._super();
-    },
-    start: function () {
+    }
+    start () {
         this._super();
-    },
+    }
 
 
-    CheckCollision: function (other) {
+    CheckCollision (other) {
         var _tag = other.node.name;//获取被碰撞物体的Tag 
       
         //播放下落声音
@@ -104,47 +104,47 @@ export class CollisionDetection extends UIView {
         }
 
 
-    },
+    }
 
     /// <summary>
     /// 用来忽略检测
     /// </summary>
-    IgnoreDetection: function ()//用于忽略检测
+    IgnoreDetection ()//用于忽略检测
     {
         this.isItDetected = false;//不进行检测
-    },
+    }
 
-    HasTheDeliveryBeenDetected: function () {
+    HasTheDeliveryBeenDetected () {
         return this.isItDetected;
-    },
+    }
 
 
     // onCollisionEnter:function(other,self){
     //     console.log('on collision enter onCollisionEnter other.name='+other.node.name);
-    // },
+    // }
 
     // 只在两个碰撞体开始接触时被调用一次
-    onBeginContact: function (contact, selfCollider, otherCollider) {
+    onBeginContact (contact, selfCollider, otherCollider) {
         console.log('OnCollisionEnter2D on collision enter onBeginContact otherCollider.name=' + otherCollider.node.name+" this.name="+this.node.name);
         this.CheckCollision(otherCollider);
         
-    },
+    }
 
     // 只在两个碰撞体结束接触时被调用一次
-    onEndContact: function (contact, selfCollider, otherCollider) {
+    onEndContact (contact, selfCollider, otherCollider) {
         
-    },
+    }
 
     // 每次将要处理碰撞体接触逻辑时被调用
-    onPreSolve: function (contact, selfCollider, other) {
+    onPreSolve (contact, selfCollider, other) {
         if (other.node.name == cc.GameData.NameDeadLine)
          {
             cc.Debug.Log("onPreSolve enter other.name="+other.node.name);
         } 
-    },
+    }
 
     // 每次处理完碰撞体接触逻辑时被调用
-    onPostSolve: function (contact, selfCollider, otherCollider) {
+    onPostSolve (contact, selfCollider, otherCollider) {
     }
 
 

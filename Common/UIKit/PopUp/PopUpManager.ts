@@ -21,33 +21,33 @@ export class PopUpManager extends CCObject {
     statics: {
         //enum
         ANIMATE_DURATION: 0.8,
-    },
+    }
     properties: {
         listItem: {
             default: [],
             type: cc.UIViewPop
-        },
+        }
         nodePannel: cc.Node,
 
         /*
         {
         prefab: "", 
-        open: function (ui) {
-        },
-        close: function (ui) {
-         }, 
+        open (ui) {
+        }
+        close (ui) {
+         } 
          }
         */
 
         objPop: null,
-    },
+    }
 
 
 
     Show(obj) {
         this.objPop = obj;
         this.LoadBg();
-    },
+    }
 
 
     LoadBg() {
@@ -60,7 +60,7 @@ export class PopUpManager extends CCObject {
             this.LoadBgInternal(prefab);
         }.bind(this)
         );
-    },
+    }
     LoadBgInternal(prefab) {
         var nodeRoot = cc.Common.appSceneMain.rootNode;
         var node = cc.instantiate(prefab);
@@ -81,7 +81,7 @@ export class PopUpManager extends CCObject {
             this.OpenPopup(prefab);
         }.bind(this)
         );
-    },
+    }
 
     OpenPopup(prefab) {
         cc.Debug.Log("OpenPopup");
@@ -135,12 +135,12 @@ export class PopUpManager extends CCObject {
             cc.AudioPlay.main().PlayCloudAudio("PopUp/PopupOpen.mp3");
         }
  
-    },
+    }
 
 
     OnClose() {
 
-    },
+    }
     /// <summary>
     /// Closes the topmost popup.
     /// </summary>
@@ -151,7 +151,7 @@ export class PopUpManager extends CCObject {
            currentPopup.GetComponent<UIViewPop>().Close();
        } 
        */
-    },
+    }
 
     /// <summary>
     /// Closes the topmost popup.
@@ -199,7 +199,7 @@ export class PopUpManager extends CCObject {
             ui.DoClose();
         }.bind(this))]);
         ui.node.runAction(seq);
-    },
+    }
 
 
 
@@ -218,7 +218,7 @@ export class PopUpManager extends CCObject {
         //     image.color = color;
 
         // }
-    },
+    }
 
     /// <summary>
     /// Utility coroutine to fade out the specified image.
@@ -239,7 +239,7 @@ export class PopUpManager extends CCObject {
         // if (onComplete != null) {
         //     onComplete();
         // }
-    },
+    }
 
 }
 

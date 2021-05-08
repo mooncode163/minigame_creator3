@@ -32,32 +32,32 @@ export class UIGameMerge extends UIGameBase {
         game: {
             default: null,
             type: GameMerge
-        },
+        }
         // nodeImageBg:cc.Node,
         isShowGame: false,
         titleScore: cc.Label,
-    },
-    onLoad: function () {
+    }
+    onLoad () {
         this._super();
         UIGameMerge._main = this;
         // this.LoadLanguageGame(); 
         // this.textTitle.node.active = false;
         
-    },
-    start: function () {
+    }
+    start () {
         this._super();
  
         // this.ShowGameWinAlert();
-    },
+    }
 
 
-    CreateGame: function () {
+    CreateGame () {
         this.UpdateGuankaLevel(cc.LevelManager.main().gameLevel);
         // this.OnGameFinish(true);
 
-    },
+    }
 
-    CreateGameInteranl: function () {
+    CreateGameInteranl () {
         if(this.game!=null)
         {
             this.game.OnDestroy();
@@ -74,19 +74,19 @@ export class UIGameMerge extends UIGameBase {
         this.callbackGuankaFinish = null;
       
 
-    },
-    UpdateScore: function () {
+    }
+    UpdateScore () {
         var str = cc.Language.main().GetString("Score") + ":" + cc.GameData.main().score.toString();
         cc.Debug.Log("UpdateScore str="+str);
         this.titleScore.string = str;
         this.LayOut();
        
-    },
+    }
 
 
 
 
-    UpdateGuankaLevel: function (level) {
+    UpdateGuankaLevel (level) {
         cc.Debug.Log("UIGameShapeColor::UpdateGuankaLevel");
         this._super();
         cc.GameData.main().isGameFail = false;
@@ -99,10 +99,10 @@ export class UIGameMerge extends UIGameBase {
         // this.textTitle.node.active = false;
 
         // this.game.objGameFinish = {
-        //     onWin: function (ui) {
+        //     onWin (ui) {
         //         this.OnGameWinFinish(ui, false);
         //     }.bind(this),
-        //     onFail: function (ui) {
+        //     onFail (ui) {
         //         this.OnGameWinFinish(ui, true);
         //     }.bind(this),
         // };
@@ -110,7 +110,7 @@ export class UIGameMerge extends UIGameBase {
         // this.game.LoadGame(cc.GameManager.gameMode);
 
 
-    },
+    }
 
  
     OnGameFinish(isFail) {
@@ -126,11 +126,11 @@ export class UIGameMerge extends UIGameBase {
             strPrefab = cc.ConfigPrefab.main().GetPrefab(key);
             cc.PopUpManager.main().Show({
                 prefab: strPrefab,
-                open: function (ui) {
+                open (ui) {
                     cc.AudioPlay.main().PlayByKey("Fail");
                     //ui.UpdateItem(info); 
                 }.bind(this),
-                close: function (ui) {
+                close (ui) {
                 }.bind(this),
             });  
             // cc.PrefabCache.main.LoadByKey(key, function (err, prefab) {
@@ -157,7 +157,7 @@ export class UIGameMerge extends UIGameBase {
             // }.bind(this)
             // );
         }
-    },
+    }
 
 }
 

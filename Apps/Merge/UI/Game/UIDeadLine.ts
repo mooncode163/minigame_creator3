@@ -11,44 +11,44 @@ export class UIDeadLine extends UIView {
         //  public UISprite uiLine; 
         t:0,
         isGameFail:false,
-    },
-    onLoad: function () {
+    }
+    onLoad () {
         this._super(); 
         this.node.name = cc.GameData.NameDeadLine;
         this.t = 0;
         this.isGameFail = false;
-    },
-    start: function () {
+    }
+    start () {
         this._super();
-    }, 
+    } 
   
-    onCollisionEnter: function(other, self) {
+    onCollisionEnter(other, self) {
         // console.log(other, self);
         this.t = 0; 
         console.log('UIDeadLine onCollisionEnter enter')
-    },
-    onCollisionStay: function(other, self) {
+    }
+    onCollisionStay(other, self) {
        
-    },
-    onCollisionExit: function(other, self) {
+    }
+    onCollisionExit(other, self) {
         console.log('UIDeadLine 现在刚离开')
-    },
+    }
 
  
 
      // 只在两个碰撞体开始接触时被调用一次
-     onBeginContact: function (contact, selfCollider, otherCollider) {
+     onBeginContact (contact, selfCollider, otherCollider) {
         this.t = 0; 
         
-    },
+    }
 
     // 只在两个碰撞体结束接触时被调用一次
-    onEndContact: function (contact, selfCollider, otherCollider) {
+    onEndContact (contact, selfCollider, otherCollider) {
         
-    },
+    }
 
     // 每次将要处理碰撞体接触逻辑时被调用 碰撞持续,接触时被调用;
-    onPreSolve: function (contact, selfCollider, other) {
+    onPreSolve (contact, selfCollider, other) {
 
         console.log('UIDeadLine onPreSolve');
         // this.t += cc.director.getDeltaTime();
@@ -77,10 +77,10 @@ export class UIDeadLine extends UIView {
 
 
         // }
-    },
+    }
 
     // 每次处理完碰撞体接触逻辑时被调用 碰撞接触更新完后调用,可以获得冲量信息
-    onPostSolve: function (contact, selfCollider, otherCollider) {
+    onPostSolve (contact, selfCollider, otherCollider) {
     }
 
 }

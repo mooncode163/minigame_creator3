@@ -6,13 +6,13 @@ const { ccclass, property, type } = _decorator;
 @ccclass('BoardLine')
 export class BoardLine extends UIView {
     
-    onLoad: function () {
+    onLoad () {
         this._super(); 
         this.node.id = cc.GameRes.NameBoardLine;
-    },
-    start: function () {
+    }
+    start () {
         this._super();
-    },
+    }
     
  
 

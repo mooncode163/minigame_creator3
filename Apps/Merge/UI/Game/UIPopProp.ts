@@ -6,12 +6,12 @@ const { ccclass, property, type } = _decorator;
 @ccclass('UIPopProp')
 export class UIPopProp extends UIView {
     
-    onLoad: function () {
+    onLoad () {
         this._super(); 
-    },
-    start: function () {
+    }
+    start () {
         this._super();
-    },
+    }
      
 
 }

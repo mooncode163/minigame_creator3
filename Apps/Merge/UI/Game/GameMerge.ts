@@ -32,7 +32,7 @@ export class GameMerge extends GameBase {
         TimeStep: 0.8,
 
 
-    },
+    }
 
     properties: {
         ScaleStart: 0.4,
@@ -42,7 +42,7 @@ export class GameMerge extends GameBase {
         listItem: {
             default: [],
             type: cc.Object
-        },
+        }
 
         time: 1.0,
         hasItBeenGenerated: false,
@@ -52,15 +52,15 @@ export class GameMerge extends GameBase {
         posYInit:0,
         nodeDeadline:cc.Node,
  
-    },
+    }
     //百度tts:  http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=你要转换的文字 
-    onLoad: function () {
+    onLoad () {
         this._super();
         GameMerge._main = this;
         this.time = 0;
         this.LoadPrefab();
         this.node.setContentSize(this.node.parent.getContentSize());
-    },
+    }
 
 
     LoadPrefab() {
@@ -74,13 +74,13 @@ export class GameMerge extends GameBase {
             
         }.bind(this)
         );
-    },
+    }
 
     StartGame() {
         var ev = this.node.addComponent(cc.UITouchEvent);
         ev.callBackTouch = this.OnUITouchEvent.bind(this);
         this.time = GameMerge.TimeStep;
-    },
+    }
 
 
     update() {         //用作延迟生成物体
@@ -109,30 +109,30 @@ export class GameMerge extends GameBase {
         }
 
 
-    },
-    LayOut: function () {
+    }
+    LayOut () {
         this._super();
 
-    },
+    }
 
-    OnDestroy: function () {
+    OnDestroy () {
         for (var i = 0; i < this.listItem.length; i++) {
             var uilist = this.listItem[i]; 
             uilist.node.destroy(); 
         }
         this.listItem.splice(0, this.listItem.length);
 
-    },
-    GetTotalItems: function () {
+    }
+    GetTotalItems () {
         return cc.GameLevelParse.main().listGameItems.length;
-    },
-    GetItemId: function (idx) {
+    }
+    GetItemId (idx) {
         var info = cc.GameLevelParse.main().GetItemInfo(idx);
         return info.id;
-    },
+    }
 
     //随机获取水果
-    RandomFruitImageKey: function () {
+    RandomFruitImageKey () {
         var rdm = 0;
         if (this.GetTotalItems() >= 4)//判断总水果是否大于4个
         {
@@ -147,20 +147,20 @@ export class GameMerge extends GameBase {
         }
 
         return this.GetItemId(rdm);
-    },
+    }
 
     // string
-    GetIndexOfItem: function (key) {
+    GetIndexOfItem (key) {
         for (var i = 0; i < this.GetTotalItems(); i++) {
             if (key == this.GetItemId(i)) {
                 return i;
             }
         }
         return 0;
-    },
+    }
 
     // string
-    GetNextItem: function (key) {
+    GetNextItem (key) {
         var ret = "";
         for (var i = 0; i < this.GetTotalItems(); i++) {
             if (key == this.GetItemId(i) && ((i + 1) < this.GetTotalItems())) {
@@ -169,24 +169,24 @@ export class GameMerge extends GameBase {
             }
         }
         return ret;
-    },
+    }
 
-    GetLastItem: function (key) {
+    GetLastItem (key) {
         var ret = "";
         if (this.GetTotalItems() > 0) {
             ret = this.GetItemId(this.GetTotalItems() - 1);
         }
         return ret;
-    },
-    OnRestPlay: function () {
+    }
+    OnRestPlay () {
         //  Invoke("OnRestPlayInternal",0.2f);
         this.OnRestPlayInternal();
-    },
+    }
 
-    OnRestPlayInternal: function () {
+    OnRestPlayInternal () {
         // UIGameMerge.main.gameStatus = UIGameMerge.Status.Play;
         // UIGameMerge.main.game.ShowProp(false);
-    },
+    }
     // 改变类型为  string toId
     ChangeItem(toId) {
         if (this.uiItem != null) {
@@ -197,7 +197,7 @@ export class GameMerge extends GameBase {
         }
 
         this.OnRestPlay();
-    },
+    }
 
     // UIMergeItem ui
     DeleteItem(ui) {
@@ -211,7 +211,7 @@ export class GameMerge extends GameBase {
             }
         }
         this.OnRestPlay();
-    },
+    }
 
     // cc.Node 
     RemoveItemFromList(objitem) {
@@ -224,7 +224,7 @@ export class GameMerge extends GameBase {
             }
         }
 
-    },
+    }
 
     // 摧毁所有的同类 string
     DeleteAllItemsOfId(id) {
@@ -242,7 +242,7 @@ export class GameMerge extends GameBase {
             }
         }
         this.OnRestPlay();
-    },
+    }
 
     // string return UIMergeItem
     CreateItem(key) {
@@ -282,19 +282,19 @@ export class GameMerge extends GameBase {
         // ui.transform.localPosition = new Vector3(0, posYInit, -1);
         this.listItem.push(ui);
         return ui;
-    },
-    ShowMergeParticle: function (pos,id) {
+    }
+    ShowMergeParticle (pos,id) {
      
 
-    },
+    }
 
-    OnTouchDown: function (pos) {
-    },
-    OnTouchMove: function (pos) {
-    },
-    OnTouchUp: function (pos) {
-    },
-    OnUITouchEvent: function (ev, status, event) {
+    OnTouchDown (pos) {
+    }
+    OnTouchMove (pos) {
+    }
+    OnTouchUp (pos) {
+    }
+    OnUITouchEvent (ev, status, event) {
 
         var pos = event.getLocation();//canvas坐标原点在屏幕左下角 
         var posnode = this.node.convertToNodeSpace(pos);//坐标原点在node左下角
@@ -315,7 +315,7 @@ export class GameMerge extends GameBase {
         }
 
         this.UpdateEvent(status,posnodeAR);
-    },
+    }
 
 
       UpdateEvent(status,point)
@@ -419,7 +419,7 @@ export class GameMerge extends GameBase {
         }
 
 
-    },
+    }
 
 }
 

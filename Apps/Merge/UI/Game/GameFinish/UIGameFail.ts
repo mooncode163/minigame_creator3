@@ -12,23 +12,23 @@ export class UIGameFail extends UIViewPop {
         textMsg: cc.Component,
         textAgain: cc.Component,
        
-    },
-    onLoad: function () {
+    }
+    onLoad () {
         this._super(); 
          this.LayOut();  
 
         this.textTitle.text = cc.Language.main().GetString("STR_GameFail_TITLE");
         this.textMsg.text = cc.Language.main().GetString("STR_GameFail_Detail");
         this.textAgain.text = cc.Language.main().GetString("Restart");
-    },
-    start: function () {
+    }
+    start () {
         this._super();
         this.LayOut();
 
         
-    },
+    }
 
-    LayOut: function () {
+    LayOut () {
         this._super();
         var ratio = 0.8;
         var w = this.node.parent.getContentSize().width*ratio;
@@ -36,13 +36,13 @@ export class UIGameFail extends UIViewPop {
         this.node.setContentSize(new cc.size(w,h));
         // this.node.setContentSize(this.node.parent.getContentSize()*ratio);
         this._super();
-    },
+    }
    
    
-    OnClickBtnAgain: function (event, customEventData) {
+    OnClickBtnAgain (event, customEventData) {
         this.Close();
         cc.GameManager.main().GotoPlayAgain();
-    },
+    }
  
 
 }

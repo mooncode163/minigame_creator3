@@ -30,14 +30,14 @@ export class ViewAlertManager extends CCObject {
 
         //callback(UIViewAlert alert, bool isYes);
         callback: null,
-    },
+    }
 
-    Init: function () {
+    Init () {
         this.isNeedShow = false;
         this.LoadUI();
-    },
+    }
 
-    LoadUI: function () {
+    LoadUI () {
         var strPrefab = "Common/Prefab/UIKit/UIViewAlert/UIViewAlert";
         cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
@@ -50,9 +50,9 @@ export class ViewAlertManager extends CCObject {
             }
         }.bind(this)
         );
-    },
+    }
 
-    ShowInternal: function (title, msg, yes, no) {
+    ShowInternal (title, msg, yes, no) {
         //cc.Debug.Log("ShowInternal SetText title ="+title+" msg="+msg);
         var node = cc.instantiate(this.uiPrefab);
         this.ui = node.getComponent(UIViewAlert);
@@ -61,9 +61,9 @@ export class ViewAlertManager extends CCObject {
         this.ui.keyName = this.keyName;
         this.ui.SetText(title, msg, yes, no);
         this.ui.SetViewParent(cc.Common.appSceneMain.canvasMain.node);
-    },
+    }
     //string
-    Show: function (title, msg, yes, no) {
+    Show (title, msg, yes, no) {
         this.isNeedShow = true;
         this.strTitle = title;
         this.strMsg = msg;
@@ -77,7 +77,7 @@ export class ViewAlertManager extends CCObject {
         }
 
 
-    },
+    }
 
     /*
  {
@@ -87,12 +87,12 @@ export class ViewAlertManager extends CCObject {
      no: "",
      isShowBtnNo:false,
      name: "",
-     finish: function (ui,isYes) {
-     }, 
+     finish (ui,isYes) {
+     } 
  }
 */
 
-    ShowFull: function (obj) {
+    ShowFull (obj) {
         // this.keyName = obj.name;
         // this.callback = obj.finish;
         // this.Show(obj.title, obj.msg, obj.yes, obj.no);
@@ -102,35 +102,35 @@ export class ViewAlertManager extends CCObject {
         var strPrefab = "Common/Prefab/UIKit/UIViewAlert/UIViewAlert";
         cc.PopUpManager.main().Show({
             prefab: strPrefab,
-            open: function (ui) {
+            open (ui) {
                 //ui.UpdateItem(info);
                 ui.keyName = obj.name;
                 ui.SetText(obj.title, obj.msg, obj.yes, obj.no);
                 ui.ShowBtnNo(obj.isShowBtnNo);
                 ui.callback = obj.finish;
             }.bind(this),
-            close: function (ui) {
+            close (ui) {
             }.bind(this),
         });
-    },
-    Hide: function () {
+    }
+    Hide () {
         if (this.ui != null) {
             // GameObject.DestroyImmediate(ui);
             // ui = null;
         }
-    },
+    }
 
-    ShowBtnNo: function (isShow) {
+    ShowBtnNo (isShow) {
         if (this.ui != null) {
             this.ui.ShowBtnNo(isShow);
         }
-    },
+    }
 
-    OnUIViewAlertFinished: function (alert, isYes) {
+    OnUIViewAlertFinished (alert, isYes) {
         if (this.callback != null) {
             this.callback(alert, isYes);
         }
-    },
+    }
 
 
 }

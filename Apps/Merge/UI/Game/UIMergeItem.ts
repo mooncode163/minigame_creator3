@@ -13,14 +13,14 @@ export class UIMergeItem extends UIView {
         spriteItem: {
             default: null,
             type: cc.UISprite
-        },
+        }
 
         isNew: false,
         type: 0,
         t: 0,
         hasGoDownDeadLine: false,
-    },
-    onLoad: function () {
+    }
+    onLoad () {
         this._super();
         this.t = 0;
         // this.node.zIndex = 100;
@@ -30,12 +30,12 @@ export class UIMergeItem extends UIView {
         // var collider = this.node.getComponent(cc.PhysicsBoxCollider);
         var ev = this.node.addComponent(cc.UITouchEvent);
         ev.callBackTouch = this.OnUITouchEvent.bind(this);
-    },
-    start: function () {
+    }
+    start () {
         this._super();
-    },
+    }
 
-    update: function () {
+    update () {
         if (!this.isNew) {
             // 游戏失败判断  onCollisionEnter 碰撞检测失效 直接判断位置
             this.IsCollisionDeadLine();
@@ -63,10 +63,10 @@ export class UIMergeItem extends UIView {
             // }
  
         }
-    },
+    }
 
     // 碰撞线检测
-    IsCollisionDeadLine: function () {
+    IsCollisionDeadLine () {
         var pos = cc.GameMerge.main().nodeDeadline.getPosition();
         var y1 = this.node.getPosition().y + this.node.getBoundingBox().height / 2;
         var y2 = this.node.getPosition().y - this.node.getBoundingBox().height / 2;
@@ -84,31 +84,31 @@ export class UIMergeItem extends UIView {
             return true;
         }
         return false;
-    },
+    }
 
-    UpdateImage: function (pic) {
+    UpdateImage (pic) {
         this.spriteItem = this.nodeItem.getComponent(cc.UISprite);
         this.spriteItem.UpdateImageCloud(pic);
-    },
+    }
 
-    EnableGravity: function (isEnable) {
+    EnableGravity (isEnable) {
         var bd = this.node.getComponent(cc.RigidBody);
         bd.type = isEnable ? cc.RigidBodyType.Dynamic : cc.RigidBodyType.Static;
-    },
+    }
 
-    OnTouchDown: function (pos) {
-    },
-    OnTouchMove: function (pos) {
-    },
-    OnTouchUp: function (pos) {
-    },
-    OnUITouchEvent: function (ev, status, event) {
+    OnTouchDown (pos) {
+    }
+    OnTouchMove (pos) {
+    }
+    OnTouchUp (pos) {
+    }
+    OnUITouchEvent (ev, status, event) {
 
         var pos = event.getLocation();//canvas坐标原点在屏幕左下角 
         var posnode = this.node.convertToNodeSpace(pos);//坐标原点在node左下角
         var posnodeAR = this.node.convertToNodeSpaceAR(pos);//坐标原点在node的锚点
 
-        switch (status) {
+        switch (status) { 
             case cc.UITouchEvent.TOUCH_DOWN:
                 this.OnTouchDown(posnodeAR);
                 break;
@@ -121,7 +121,7 @@ export class UIMergeItem extends UIView {
                 this.OnTouchUp(posnodeAR);
                 break;
         }
-    },
+    }
 
 }
 

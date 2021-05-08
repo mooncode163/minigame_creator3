@@ -21,21 +21,21 @@ export class UIViewPop extends UIView {
     }
  
 
-    onLoad: function () {
+    onLoad () {
         this._super();
         this.LayOut();
-    },
-    start: function () {
+    }
+    start () {
         this._super();
         this.LayOut();
         this.node.active = false;
         this.scheduleOnce(this.ShowInitAnimate, 0.1); 
-    },
-    update: function () { 
+    }
+    update () { 
         // this.LayOut();
-    },
+    }
 
-    ShowInitAnimate: function () { 
+    ShowInitAnimate () { 
         var nodePop = this.node;
         this.node.active = true;
         nodePop.scaleX = 0;
@@ -50,7 +50,7 @@ export class UIViewPop extends UIView {
             this.LayOut();
         }.bind(this))]);
         nodePop.runAction(seq);
-    },
+    }
 
     Close() {
         // AudioPlay.main.PlayFile(AppRes.Audio_PopupClose);
@@ -68,14 +68,14 @@ export class UIViewPop extends UIView {
 
         cc.PopUpManager.main().ClosePopup();
      
-    },
+    }
 
 
     DoClose() {
         // PopUpManager.main.OnClose();
         // DestroyImmediate(gameObject);
         this.node.destroy();
-    },
+    }
  
 }
 

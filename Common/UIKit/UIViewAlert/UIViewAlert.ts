@@ -20,14 +20,14 @@ export class UIViewAlert extends UIView {
 
         //callback(UIViewAlert alert, bool isYes);
         callback: null,
-    },
-    onLoad: function () {
+    }
+    onLoad () {
         this._super();
 
         this.LayOut();
-    },
+    }
 
-    LayOut: function () {
+    LayOut () {
         var ratio = 0.8;
         var x, y, w, h;
         this._super();
@@ -47,8 +47,8 @@ export class UIViewAlert extends UIView {
 
             this._super();
         }
-    },
-    SetText: function (title, msg, yes, no) {
+    }
+    SetText (title, msg, yes, no) {
         //cc.Debug.Log("SetText title ="+title+" msg="+msg);
         this.textTitle.text = title;
         this.textMsg.text = msg;
@@ -60,38 +60,38 @@ export class UIViewAlert extends UIView {
         this.btnNo.text = no;
 
 
-    },
+    }
 
-    ShowBtnNo: function (isShow) {
+    ShowBtnNo (isShow) {
         this.btnNo.node.active = isShow;
-    },
-    OnClickBtnYes: function () {
+    }
+    OnClickBtnYes () {
         this.Remove();
         if (this.callback != null) {
             this.callback(this, true);
         }
 
-    },
+    }
 
 
-    OnClickBtnNo: function () {
+    OnClickBtnNo () {
         this.Remove();
         if (this.callback != null) {
             this.callback(this, false);
         }
-    },
+    }
 
-    Remove: function () {
+    Remove () {
         // if (this.node != null) {
         //     this.node.destroy();
         //     //this.node = null;
         // }
         this.Close();
-    },
+    }
 
-    Hide: function () {
+    Hide () {
         this.Remove();
-    },
+    }
 
 }
 
