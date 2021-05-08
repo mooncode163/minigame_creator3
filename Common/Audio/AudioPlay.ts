@@ -35,6 +35,12 @@ export class AudioPlay extends CCObject {
 
     }
 
+    PlayBgMusic() {
+
+    }
+    StopBgMusic() {
+
+    } 
 }
 
 

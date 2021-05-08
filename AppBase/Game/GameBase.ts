@@ -16,6 +16,36 @@ export class GameBase extends UIView {
     }
     UpdateLevel (level:number) { 
     }
+    properties: {
+        gameStatus: 0,
+        callbackGameWin: null,
+        callbackGameFail: null,
+
+        /*
+    `   { 
+            onWin (ui) {
+            }
+            onFail (ui) {
+            } 
+        }
+        */
+        objGameFinish: null,
+    }
+    OnGameFail () {
+        if (this.objGameFinish != null) {
+            if (this.objGameFinish.onFail != null) {
+                this.objGameFinish.onFail(this);
+            }
+        }
+    }
+
+    OnGameWin () {
+        if (this.objGameFinish != null) {
+            if (this.objGameFinish.onWin != null) {
+                this.objGameFinish.onWin(this);
+            }
+        }
+    }
 
 }
 
