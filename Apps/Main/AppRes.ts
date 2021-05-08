@@ -1,18 +1,14 @@
 
-import { _decorator, Component, Node, Prefab } from 'cc'; 
-import { UIView } from '../../../../Common/UIKit/ViewController/UIView';
-const { ccclass, property, type } = _decorator;
+import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc';
 
-@ccclass('UIPopProp')
-export class UIPopProp extends UIView {
-    
-    onLoad: function () {
-        this._super(); 
-    },
-    start: function () {
-        this._super();
-    },
-     
+const { ccclass, property } = _decorator;
+// 动态加载资源文档
+// https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
+
+@ccclass('AppRes')
+export class AppRes extends CCObject {
+
+    public static KEY_GAME_LOCK: string = "KEY_GAME_LOCK"; 
 
 }
 

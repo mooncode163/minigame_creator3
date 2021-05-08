@@ -6,7 +6,13 @@ const { ccclass, property, type } = _decorator;
 @ccclass('UIBoard')
 export class UIBoard extends UIView {
     
-
+    onLoad: function () {
+        this._super(); 
+    },
+    start: function () {
+        this._super();
+    },
+     
 
 }
 
