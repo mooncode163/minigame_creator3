@@ -18,7 +18,49 @@ export class FrendBoard extends CCObject {
         }
         return this._main;
     }
- 
+    properties: {
+        platform: cc.FrendBoardPlatformWrapper,
+    }
+    statics: {
+
+    }
+    GetPlatform () {
+        var p = null;
+        if (cc.Common.main().isWeiXin) {
+            //显示分享
+            //  wx.showFrendBoardMenu();
+            p = new cc.FrendBoardWeiXin();
+        } else if (cc.Common.main().isFacebook) {
+            p = new cc.FrendBoardFacebook();
+        }
+
+
+        return p;
+    }
+
+    Init () {
+        var p = new cc.FrendBoardPlatformWrapper();
+        this.platform = p.GetPlatform();
+    }
+
+    //score:string
+    SaveData (score) {
+        if (this.platform == null) {
+            return;
+        }
+        this.platform.SaveData(score);
+    }
+
+    // ShowFrendBoard () {
+    //     if (this.platform == null) {
+    //         return;
+    //     }
+    //     this.platform.ShowFrendBoard();
+    // }
+
+    Show() {
+        FrendBoardViewController.main().Show(null, null);
+    }
 
 }
 

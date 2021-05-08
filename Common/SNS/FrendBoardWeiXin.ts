@@ -9,16 +9,27 @@ const { ccclass, property, type, string } = _decorator;
 
 @ccclass('FrendBoardWeiXin')
 export class FrendBoardWeiXin extends CCObject {
-    static _main: FrendBoardWeiXin;
-    //静态方法
-    static get main() {
-        if (this._main == null) {
-            this._main = new FrendBoardWeiXin();
-            // this._main.Init();
-        }
-        return this._main;
-    }
  
+    //https://www.jianshu.com/p/abf753ded43b
+    //https://segmentfault.com/a/1190000015034592?utm_source=tag-newest
+    SaveData (score) {
+        //let score = '' + 50;
+        wx.setUserCloudStorage({
+            KVDataList: [{ key: 'score', value: score }],
+            success: res => {
+                console.log(res);
+                // 让子域更新当前用户的最高分，因为主域无法得到getUserCloadStorage;
+                let openDataContext = wx.getOpenDataContext();
+                openDataContext.postMessage({
+                    type: 'updateMaxScore',
+                });
+            }
+            fail: res => {
+                console.log(res);
+            }
+        });
+    }
+
 }
 
 

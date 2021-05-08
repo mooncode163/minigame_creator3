@@ -9,17 +9,9 @@ const { ccclass, property, type, string } = _decorator;
 
 @ccclass('FrendBoardFacebook')
 export class FrendBoardFacebook extends CCObject {
-    static _main: FrendBoardFacebook;
-    //静态方法
-    static get main() {
-        if (this._main == null) {
-            this._main = new FrendBoardFacebook();
-            // this._main.Init();
-        }
-        return this._main;
-    }
+    SaveData (score) {
  
-
+    } 
 }
 
 
