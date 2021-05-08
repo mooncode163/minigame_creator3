@@ -1,5 +1,8 @@
 
 import { _decorator, Component, Node, CCObject, resources, Texture2D } from 'cc';
+import { Platform } from '../Platform';
+import { SharePlatformWrapper } from './SharePlatformWrapper';
+import { ShareWeiXin } from './ShareWeiXin';
 
 const { ccclass, property } = _decorator;
 
@@ -9,8 +12,37 @@ const { ccclass, property } = _decorator;
 @ccclass('Share')
 export class Share extends CCObject {
 
-    
-    
+    platform: SharePlatformWrapper = null;
+
+    statics: {
+
+    }
+    GetPlatform() {
+        var p = null;
+        if (Platform.isWeiXin) {
+            //显示分享
+            //  wx.showShareMenu();
+            p = new ShareWeiXin();
+        }
+        return p;
+    }
+    Init() {
+        this.platform = this.GetPlatform();
+    }
+
+
+    SetWeiXinMPShareMenu(title: string, pic: string) {
+        if (this.platform == null) {
+            return;
+        }
+        this.platform.SetWeiXinMPShareMenu(title, pic);
+    }
+    ShareImageText(source: string, title: string, pic: string, url: string) {
+        if (this.platform == null) {
+            return;
+        }
+        this.platform.ShareImageText(source, title, pic, url);
+    }
 }
 
 /**
