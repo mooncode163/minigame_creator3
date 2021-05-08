@@ -1,5 +1,6 @@
 
 import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc'; 
+import { JsonUtil } from '../File/JsonUtil';
 import { ConfigInternalBase } from './ConfigInternalBase';
 
 const { ccclass, property } = _decorator;
@@ -7,9 +8,17 @@ const { ccclass, property } = _decorator;
 // https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
 
 @ccclass('ConfigPrefabInternal')
-export class ConfigPrefabInternal extends ConfigInternalBase {
-    
+export class ConfigPrefabInternal extends ConfigInternalBase { 
+    ContainsKey(key:string)
+    { 
+        return JsonUtil.ContainsKey(this.rootJson, key);
+    }
+    //同步 synchronization
    
+    GetPrefabSync(key:string) {
+        return JsonUtil.GetItem(this.rootJson, key, ""); 
+    }
+
 }
 
 /**
