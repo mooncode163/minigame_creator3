@@ -16,7 +16,7 @@ export class GameViewController extends UIViewController {
     ui: UIGameBase = null;
     _gameBase: UIGameBase = null; 
     get gameBase() {
-        this.LoadUI();
+        // this.LoadUI();
         return this.ui;
     }
 

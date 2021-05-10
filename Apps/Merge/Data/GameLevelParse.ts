@@ -99,9 +99,7 @@ export class GameLevelParse extends LevelParseBase {
             info.id = item["id"];
             info.pic = this.GetImagePath(info.id);
             this.listGameItems.push(info);
-        }
-
-        this.ParseGuankaDidFinish();
+        } 
     }
 
 
@@ -115,7 +113,7 @@ export class GameLevelParse extends LevelParseBase {
             this.listGameItems.push(info);
         }
         Debug.Log("GameItems:this.listGameItems=" + this.listGameItems.length);
-        this.ParseGuankaDidFinish();
+        
     }
 
     ParseGameItemsDefault(json) {
@@ -142,6 +140,11 @@ export class GameLevelParse extends LevelParseBase {
     }
     */
     StartParseGameItems(obj: any) {
+        // if (obj.success != null) {
+        //     obj.success(this);
+        // }
+        // return;
+
         if ((this.listGameItems != null) && (this.listGameItems.length != 0)) {
             return;
         }

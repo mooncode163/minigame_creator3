@@ -60,7 +60,7 @@ export class LevelManager extends CCObject {
 
 
     GetPlaceItemInfo(idx) {
-        var game = GameViewController.main.gameBase;
+        // var game = GameViewController.main.gameBase;
         var info = this.listPlace[idx];
         Debug.Log("GetPlaceItemInfo idx=" + idx + " LevelManager.listPlace.length=" + this.listPlace.length);
         return info;

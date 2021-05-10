@@ -173,12 +173,7 @@ export class LevelParseBase extends CCObject {
                 },
             }); 
     }
-
-    ParseGuankaDidFinish() {
-        // if (this.callbackGuankaFinish != null) {
-        //     this.callbackGuankaFinish();
-        // }
-    }
+ 
 
     LoadGuankaItemId(cbFinish) {
         var idx =  LevelManager.main.placeLevel;
