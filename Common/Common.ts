@@ -240,6 +240,11 @@ export class Common extends CCObject {
         //Debug.Log("GetIntOfKey key=:" + key + " v=" + v + " v_int=" + v_int);
         return v_int;
     }
+
+    static GetAppVersion()
+    {
+        return "1.0.0";
+    }
 }
 
 /**

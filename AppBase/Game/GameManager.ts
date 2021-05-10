@@ -1,24 +1,26 @@
 
 import { _decorator, Component, Node, Prefab, CCObject } from 'cc';
 import { ItemInfo } from '../../Common/ItemInfo';
+import { GameViewController } from './GameViewController';
+import { LevelManager } from './LevelManager';
 const { ccclass, property, type } = _decorator;
 
 
 @ccclass('GameManager')
 export class GameManager extends CCObject {
-  
-    statics: {
-        gameMode: 0,
+    static gameMode = 0;
+    uiPrefab:Prefab=null; 
 
+    static _main: GameManager;
+    //静态方法
+    static get main {
+        if (this._main == null) {
+            this._main = new GameManager();
+            this._main.Init();
+        }
+        return this._main;
     }
-    properties: {
-        uiPrefab: {
-            default: null,
-            type: cc.Prefab
-        } 
- 
-        
-    }
+
     Init () {
         //this.ParseGuanka();
     }
@@ -31,12 +33,12 @@ export class GameManager extends CCObject {
     GotoGame (fromController) {
         var navi = fromController.naviController;
         if (navi != null) {
-            navi.Push(GameViewController.main());
+            navi.Push(GameViewController.main);
         }
     }  
  
     GotoPlayAgain () {
-        GameViewController.main().gameBase.UpdateGuankaLevel(cc.LevelManager.main().gameLevel);
+        GameViewController.main.gameBase.UpdateGuankaLevel(LevelManager.main.gameLevel);
     }
 
 }

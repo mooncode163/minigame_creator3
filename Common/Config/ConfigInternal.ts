@@ -1,6 +1,7 @@
 
 import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc';
 import { Debug } from '../Debug';
+import { Device } from '../Device';
 import { FileUtil } from '../File/FileUtil';
 import { JsonUtil } from '../File/JsonUtil';
 import { ResManager } from '../Res/ResManager';
@@ -23,6 +24,36 @@ export class ConfigInternal extends ConfigInternalBase {
         Debug.Log("GetAppIdOfStore appid= " + strid + "store=" + store);
         return strid;
     }
+
+    GetString (key, def) { 
+        return JsonUtil.GetItem(this.rootJson, key, def); 
+    }
+
+    GetCloudResUrl () { 
+        var key = "url";
+        if(Device.main.isLandscape)
+        {
+            key = "url_hd";
+        }
+        return JsonUtil.GetItem(this.rootJson.CloudRes, key, ""); 
+    }
+
+
+    GetShareUrl () { 
+        var key = "url"; 
+        return JsonUtil.GetItem(this.rootJson.Share, key, ""); 
+    }
+
+    GetShareTitle () { 
+        var key = "title"; 
+        return JsonUtil.GetItem(this.rootJson.Share, key, ""); 
+    }
+ 
+
+    IsHaveKey(key) {
+        return JsonUtil.ContainsKey(this.rootJson, key); 
+    }
+  
 }
 
 /**

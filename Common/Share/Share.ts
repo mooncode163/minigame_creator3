@@ -14,9 +14,16 @@ export class Share extends CCObject {
 
     platform: SharePlatformWrapper = null;
 
-    statics: {
-
+    static _main: Share;
+    //静态方法
+    static get main() {
+        if (this._main == null) {
+            this._main = new Share();
+            this._main.Init();
+        }
+        return this._main;
     }
+
     GetPlatform() {
         var p = null;
         if (Platform.isWeiXin) {
