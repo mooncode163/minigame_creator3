@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Prefab, CCObject, director } from 'cc';
+import { _decorator, Component, Node, Prefab, CCObject, director, instantiate } from 'cc';
 import { GameBase } from '../../../../AppBase/Game/GameBase';
 import { PrefabCache } from '../../../../Common/Cache/PrefabCache';
 import { Debug } from '../../../../Common/Debug';
@@ -57,16 +57,16 @@ export class GameMerge extends GameBase {
 
 
     LoadPrefab() {
-        PrefabCache.main.LoadByKey("UIMergeItem", function (err, prefab) {
-            if (err) {
-                Debug.Log("LoadGamePrefab err=" + err.message || err);
-                return;
-            }
-            this.prefabItem = prefab;
-            this.StartGame();
+        // PrefabCache.main.LoadByKey("UIMergeItem", function (err, prefab) {
+        //     if (err) {
+        //         Debug.Log("LoadGamePrefab err=" + err.message || err);
+        //         return;
+        //     }
+        //     this.prefabItem = prefab;
+        //     this.StartGame();
 
-        }.bind(this)
-        );
+        // }.bind(this)
+        // );
     }
 
     StartGame() {

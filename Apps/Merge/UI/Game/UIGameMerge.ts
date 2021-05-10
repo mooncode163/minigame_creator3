@@ -49,7 +49,7 @@ export class UIGameMerge extends UIGameBase {
 
 
     CreateGame () {
-        this.UpdateGuankaLevel(LevelManager.main.gameLevel);
+        // this.UpdateGuankaLevel(LevelManager.main.gameLevel);
         // this.OnGameFinish(true);
 
     }
@@ -83,6 +83,7 @@ export class UIGameMerge extends UIGameBase {
     UpdateLevel(level: number) {
         super.UpdateLevel(level); 
         Debug.Log("UIGameShapeColor::UpdateGuankaLevel");
+        return;
         
         GameData.main.isGameFail = false;
         

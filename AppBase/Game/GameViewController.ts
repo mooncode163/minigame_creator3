@@ -33,9 +33,8 @@ export class GameViewController extends UIViewController {
 
 
 
-    Init() {
-        //提前加载
-        this.LoadPrefab();
+    Init() { 
+  
     }
  
 
@@ -63,18 +62,17 @@ export class GameViewController extends UIViewController {
     }
 
     LoadPrefab() {
-        var strPrefab = "AppCommon/Prefab/Game/UIGame" + Config.main.appType;
-
-        PrefabCache.main.Load(
+        var key = "UIGame" + Config.main.appType;
+        PrefabCache.main.LoadByKey(
             {
-                filepath: strPrefab,
+                key: key,
                 success: (p: any, data: any) => {
                     this.uiPrefab = data;
-                    this.LoadPrefabEnd();
+                    this.CreateUI();
                  
                 },
                 fail: () => {
-                    this.LoadPrefabEnd();
+                    
                 },
             });
  
@@ -84,8 +82,7 @@ export class GameViewController extends UIViewController {
     ViewDidLoad() {
         Debug.Log("GameViewController ViewDidLoad");
         super.ViewDidLoad();
-        //this.LoadPrefab();
-        this.CreateUI();
+        this.LoadPrefab(); 
     }
     ViewDidUnLoad() {
         Debug.Log("GameViewController ViewDidUnLoad");
