@@ -1,20 +1,17 @@
 
 import { _decorator, Component, Node, Prefab } from 'cc'; 
 import { UIView } from '../../../../Common/UIKit/ViewController/UIView';
+import { GameData } from '../../Data/GameData';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UIDeadLine')
 export class UIDeadLine extends UIView {
-    
+    t=0;
+    isGameFail=false;
 
-    properties: { 
-        //  public UISprite uiLine; 
-        t:0,
-        isGameFail:false,
-    }
     onLoad () {
         super.onLoad();
-        this.node.name = cc.GameData.NameDeadLine;
+        this.node.name = GameData.NameDeadLine;
         this.t = 0;
         this.isGameFail = false;
     }
@@ -51,7 +48,7 @@ export class UIDeadLine extends UIView {
     onPreSolve (contact, selfCollider, other) {
 
         console.log('UIDeadLine onPreSolve');
-        // this.t += cc.director.getDeltaTime();
+        // this.t += director.getDeltaTime();
 
         // if (other.node.name != GameData.main.NameBoardLine)
         // {
@@ -70,7 +67,7 @@ export class UIDeadLine extends UIView {
         //             if (!this.isGameFail)
         //             {
         //                 this.isGameFail = true;
-        //                 // cc.UIGameMerge.main.OnGameFinish(true);
+        //                 // UIGameMerge.main.OnGameFinish(true);
         //             }
         //         }
         //     }

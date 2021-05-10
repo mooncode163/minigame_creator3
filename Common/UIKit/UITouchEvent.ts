@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Prefab, SystemEventType, EventTouch } from 'cc';  
+import { _decorator, Component, Node, Prefab, SystemEventType, EventTouch, UITransform } from 'cc';  
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UITouchEvent')
@@ -28,6 +28,11 @@ export class UITouchEvent extends Component {
 
     // touch event handler
     protected _onTouchBegan (event?: EventTouch) {
+
+        var pos = event.getLocation();//canvas坐标原点在屏幕左下角 
+        // var posnode = this.node.convertToNodeSpace(pos);//坐标原点在node左下角
+        // var posnodeAR = this.node.getComponent(UITransform).convertToNodeSpaceAR(pos);//坐标原点在node的锚点
+
         if (this.callBackTouch != null) {
             this.callBackTouch(this, UITouchEvent.TOUCH_DOWN, event);
         }

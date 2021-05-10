@@ -1,60 +1,55 @@
 
-import { _decorator, Component, Node, Prefab } from 'cc';
+import { _decorator, Component, Node, Prefab, instantiate } from 'cc';
 import { UIGameBase } from '../../../../AppBase/Game/UIGameBase';
+import { AudioPlay } from '../../../../Common/Audio/AudioPlay';
+import { ConfigPrefab } from '../../../../Common/Config/ConfigPrefab';
 import { Debug } from '../../../../Common/Debug';
+import { Language } from '../../../../Common/Language/Language';
+import { PopUpManager } from '../../../../Common/UIKit/PopUp/PopUpManager';
 import { UIView } from '../../../../Common/UIKit/ViewController/UIView';
 import { GameData } from '../../Data/GameData';
+import { GameLevelParse } from '../../Data/GameLevelParse';
+import { GameMerge } from './GameMerge';
+import { UIText } from '../../../../Common/UIKit/UIText/UIText';
+import { LevelManager } from '../../../../AppBase/Game/LevelManager';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UIGameMerge')
 export class UIGameMerge extends UIGameBase {
-
+    game:GameMerge = null;
+    // nodeImageBg:Node,
+    isShowGame= false;
+    titleScore: UIText;
+    
     static _main: UIGameMerge;
     //静态方法
     static get main() {
         return this._main;
     }
-    onLoad() {
-        super.onLoad();
-        UIGameMerge._main = this;
-        this.LayOut();
-    }
-    start() {
-        super.start();
-        this.LayOut();
-    }
+ 
+  
     LayOut() {
         super.LayOut();
     }
-    UpdateLevel(level: number) {
-        super.UpdateLevel(level);
-    }
-
-    properties: {
-        game: {
-            default: null,
-            type: GameMerge
-        }
-        // nodeImageBg:cc.Node,
-        isShowGame: false,
-        titleScore: cc.Label,
-    }
+ 
     onLoad () {
         super.onLoad();
         UIGameMerge._main = this;
+        this.LayOut();
         // this.LoadLanguageGame(); 
         // this.textTitle.node.active = false;
         
     }
     start () {
         super.start();
+        this.LayOut();
  
         // this.ShowGameWinAlert();
     }
 
 
     CreateGame () {
-        this.UpdateGuankaLevel(cc.LevelManager.main().gameLevel);
+        this.UpdateGuankaLevel(LevelManager.main.gameLevel);
         // this.OnGameFinish(true);
 
     }
@@ -65,32 +60,30 @@ export class UIGameMerge extends UIGameBase {
             this.game.OnDestroy();
             this.game.destroy();
         }
-        var node = cc.instantiate(this.gamePrefab);
+        var node = instantiate(this.gamePrefab);
         this.game = node.getComponent(GameMerge);
         this.game.node.parent = this.node;
         //zorder 让imageBg 显示在最底层，game显示在UI下面
-        this.imageBg.node.zIndex = -20;
-        // this.nodeImageBg.zIndex = -20;
-        this.game.node.zIndex = -10;
+        // this.imageBg.node.zIndex = -20; 
+        // this.game.node.zIndex = -10;
         this.isShowGame = true;
-        this.callbackGuankaFinish = null;
+        // this.callbackGuankaFinish = null;
       
 
     }
     UpdateScore () {
         var str = Language.main.GetString("Score") + ":" + GameData.main.score.toString();
         Debug.Log("UpdateScore str="+str);
-        this.titleScore.string = str;
+        this.titleScore.text = str;
         this.LayOut();
        
     }
 
 
-
-
-    UpdateLevel (level) {
+    UpdateLevel(level: number) {
+        super.UpdateLevel(level); 
         Debug.Log("UIGameShapeColor::UpdateGuankaLevel");
-        super.UpdateLevel();
+        
         GameData.main.isGameFail = false;
         
         GameData.main.score = 0;
@@ -109,14 +102,14 @@ export class UIGameMerge extends UIGameBase {
         //     }.bind(this),
         // };
 
-        // this.game.LoadGame(cc.GameManager.gameMode);
+        // this.game.LoadGame(GameManager.gameMode);
 
 
     }
 
  
     OnGameFinish(isFail) {
-        var info = cc.GameLevelParse.main().GetItemInfo();  
+        var info = GameLevelParse.main.GetItemInfo();  
         var key = "UIGameWin";
         var strPrefab = "";
         //show game win
@@ -125,39 +118,18 @@ export class UIGameMerge extends UIGameBase {
             this.ShowAdInsert(UIGameBase.GAME_AD_INSERT_SHOW_STEP);
             
             key = "UIGameFail";
-            strPrefab = cc.ConfigPrefab.main().GetPrefab(key);
-            cc.PopUpManager.main().Show({
-                prefab: strPrefab,
-                open (ui) {
-                    AudioPlay.main.PlayByKey("Fail");
-                    //ui.UpdateItem(info); 
-                }.bind(this),
-                close (ui) {
-                }.bind(this),
-            });  
-            // cc.PrefabCache.main.LoadByKey(key, function (err, prefab) {
-            //     if (err) {
-            //         Debug.Log("UIGameFail err=" + err.message || err);
-            //         return;
-            //     }
-            //     var node = cc.instantiate(prefab); 
-            //     Debug.Log("UIGameFail ok");
-            //     // node.parent = this.node;
-            //     var nodeRoot = cc.Common.appSceneMain.rootNode;
-            //     node.parent = nodeRoot;
+            strPrefab = ConfigPrefab.main.GetPrefab(key);
 
-            //     // var nodePop = node;
-            //     // nodePop.scaleX = 0;
-            //     // nodePop.scaleY = 0;
-            //     // var duration = cc.PopUpManager.ANIMATE_DURATION;
-            //     // var actionTo1 = cc.scaleTo(duration / 2, 1.2);
-            //     // var actionTo2 = cc.scaleTo(duration / 2, 1);
-            //     // var seq = cc.sequence([actionTo1, actionTo2, cc.callFunc(function () {
-            //     //     // this.DoClickItem(event, customEventData);
-            //     // }.bind(this))]);
-            //     // nodePop.runAction(seq);
-            // }.bind(this)
-            // );
+            PopUpManager.main.Show(
+                {
+                    prefab: strPrefab,
+                    open: (ui: any) => {
+                        AudioPlay.main.PlayByKey("Fail");
+                    },
+                    close: (ui: any) => {
+                    },
+                });
+ 
         }
     }
 

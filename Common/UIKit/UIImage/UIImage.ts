@@ -65,6 +65,12 @@ export class UIImage extends UIView {
         // RectTransform rctan = this.GetComponent<RectTransform>();
         // rctan.sizeDelta = new Vector2(tex.width, tex.height);
     }
+
+    UpdateImageCloud(pic: string) {
+    }
+
+
+    
     // 绝对路径
     UpdateImage(pic: string, key: string) {
         var strKey = key;

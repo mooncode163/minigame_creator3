@@ -1,37 +1,34 @@
 
-import { _decorator, Component, Node, Prefab } from 'cc'; 
+import { _decorator, Component, Node, Prefab, director, RigidBody, UITransform } from 'cc'; 
 import { Debug } from '../../../../Common/Debug';
+import { UISprite } from '../../../../Common/UIKit/UIImage/UISprite';
+import { UITouchEvent } from '../../../../Common/UIKit/UITouchEvent';
 import { UIView } from '../../../../Common/UIKit/ViewController/UIView';
 import { GameData } from '../../Data/GameData';
+import { GameMerge } from './GameMerge';
 import { UIGameMerge } from './UIGameMerge';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UIMergeItem')
 export class UIMergeItem extends UIView {
     
-
-    properties: {
-        nodeItem: cc.Node,
-        collision: cc.py,
-        spriteItem: {
-            default: null,
-            type: cc.UISprite
-        }
-
-        isNew: false,
-        type: 0,
-        t: 0,
-        hasGoDownDeadLine: false,
-    }
+    nodeItem: Node=null;
+    // collision: py,
+    spriteItem:UISprite = null; 
+    isNew= false;
+    type= 0;
+    t= 0;
+    hasGoDownDeadLine= false;
+  
     onLoad () {
         super.onLoad();
         this.t = 0;
         // this.node.zIndex = 100;
-        // var manager = cc.director.getCollisionManager();
+        // var manager = director.getCollisionManager();
         // manager.enabled = true;
         // manager.enabledDebugDraw = true;
-        // var collider = this.node.getComponent(cc.PhysicsBoxCollider);
-        var ev = this.node.addComponent(cc.UITouchEvent);
+        // var collider = this.node.getComponent(PhysicsBoxCollider);
+        var ev = this.node.addComponent(UITouchEvent);
         ev.callBackTouch = this.OnUITouchEvent.bind(this);
     }
     start () {
@@ -42,7 +39,7 @@ export class UIMergeItem extends UIView {
         if (!this.isNew) {
             // 游戏失败判断  onCollisionEnter 碰撞检测失效 直接判断位置
             this.IsCollisionDeadLine();
-            // this.t += cc.director.getDeltaTime();
+            // this.t += director.getDeltaTime();
             // if (this.t > 2.0) {
                 // this.t = 0;
                 // var pos = GameMerge.main.nodeDeadline.getPosition();
@@ -54,7 +51,7 @@ export class UIMergeItem extends UIView {
 
                 //             GameData.main.isGameFail = true;
                 //             Debug.Log("UIMergeItem game over");
-                //             cc.UIGameMerge.main.OnGameFinish(true);
+                //             UIGameMerge.main.OnGameFinish(true);
                 //         }
                 //     }
 
@@ -74,7 +71,7 @@ export class UIMergeItem extends UIView {
         var y1 = this.node.getPosition().y + this.GetBoundingBox().height / 2;
         var y2 = this.node.getPosition().y - this.GetBoundingBox().height / 2;
         if ((pos.y > y2) && (pos.y < y1)) {
-            this.t += cc.director.getDeltaTime();
+            this.t += director.getDeltaTime();
             if (this.t > 2.0) {
                 this.t = 0;
                 if (!GameData.main.isGameFail) {
@@ -90,13 +87,13 @@ export class UIMergeItem extends UIView {
     }
 
     UpdateImage (pic) {
-        this.spriteItem = this.nodeItem.getComponent(cc.UISprite);
+        this.spriteItem = this.nodeItem.getComponent(UISprite);
         this.spriteItem.UpdateImageCloud(pic);
     }
 
     EnableGravity (isEnable) {
-        var bd = this.node.getComponent(cc.RigidBody);
-        bd.type = isEnable ? cc.RigidBodyType.Dynamic : cc.RigidBodyType.Static;
+        var bd = this.node.getComponent(RigidBody);
+        bd.type = isEnable ?RigidBody.Type.DYNAMIC:RigidBody.Type.STATIC;// RigidBodyType.Dynamic : RigidBodyType.Static;
     }
 
     OnTouchDown (pos) {
@@ -108,19 +105,19 @@ export class UIMergeItem extends UIView {
     OnUITouchEvent (ev, status, event) {
 
         var pos = event.getLocation();//canvas坐标原点在屏幕左下角 
-        var posnode = this.node.convertToNodeSpace(pos);//坐标原点在node左下角
-        var posnodeAR = this.node.convertToNodeSpaceAR(pos);//坐标原点在node的锚点
+        // var posnode = this.node.convertToNodeSpace(pos);//坐标原点在node左下角
+        var posnodeAR = this.node.getComponent(UITransform).convertToNodeSpaceAR(pos);//坐标原点在node的锚点
 
         switch (status) { 
-            case cc.UITouchEvent.TOUCH_DOWN:
+            case UITouchEvent.TOUCH_DOWN:
                 this.OnTouchDown(posnodeAR);
                 break;
 
-            case cc.UITouchEvent.TOUCH_MOVE:
+            case UITouchEvent.TOUCH_MOVE:
                 this.OnTouchMove(posnodeAR);
                 break;
 
-            case cc.UITouchEvent.TOUCH_UP:
+            case UITouchEvent.TOUCH_UP:
                 this.OnTouchUp(posnodeAR);
                 break;
         }
