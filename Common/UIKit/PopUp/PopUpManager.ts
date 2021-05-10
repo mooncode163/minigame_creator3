@@ -1,5 +1,12 @@
 
-import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject } from 'cc';
+import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject, instantiate, Color } from 'cc';
+import { AudioPlay } from '../../Audio/AudioPlay';
+import { Common } from '../../Common';
+import { CommonRes } from '../../CommonRes';
+import { UIViewPop } from './UIViewPop';
+import { AppSceneBase } from '../../../AppBase/Common/AppSceneBase';
+import { Debug } from '../../Debug';
+import { PrefabCache } from '../../Cache/PrefabCache';
 
 const { ccclass, property, type, string } = _decorator;
 
@@ -9,6 +16,12 @@ const { ccclass, property, type, string } = _decorator;
 
 @ccclass('PopUpManager')
 export class PopUpManager extends CCObject {
+
+    static ANIMATE_DURATION = 0.8;
+    listItem: UIViewPop[] = [];
+    nodePannel: Node = null;
+    objPop = null;
+
     static _main: PopUpManager;
     //静态方法
     static get main() {
@@ -18,29 +31,7 @@ export class PopUpManager extends CCObject {
         }
         return this._main;
     }
-    statics: {
-        //enum
-        ANIMATE_DURATION: 0.8,
-    }
-    properties: {
-        listItem: {
-            default: [],
-            type: cc.UIViewPop
-        }
-        nodePannel: cc.Node,
 
-        /*
-        {
-        prefab: "", 
-        open (ui) {
-        }
-        close (ui) {
-         } 
-         }
-        */
-
-        objPop: null,
-    }
 
 
 
@@ -51,42 +42,46 @@ export class PopUpManager extends CCObject {
 
 
     LoadBg() {
-        var strPrefab = "Common/Prefab/UIKit/UIPopUp/PopUpBgPannel";
-        cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
-            if (err) {
-                Debug.Log("PopUpManager  LoadBg err=" + err.message || err);
-                return;
-            }
-            this.LoadBgInternal(prefab);
-        }.bind(this)
-        );
+        // var strPrefab = "Common/Prefab/UIKit/UIPopUp/PopUpBgPannel"; 
+        PrefabCache.main.LoadByKey(
+            {
+                key: "PopUpBgPannel",
+                success: (p: any, data: any) => {
+                    this.LoadBgInternal(data);
+
+                },
+                fail: () => {
+                },
+            });
+
     }
     LoadBgInternal(prefab) {
-        var nodeRoot = cc.Common.appSceneMain.rootNode;
-        var node = cc.instantiate(prefab);
-        // var panel = new cc.Node("Panel");
+        var nodeRoot = AppSceneBase.main.rootNode;
+        var node = instantiate(prefab);
+        // var panel = new Node("Panel");
         node.setParent(nodeRoot);
-        node.setContentSize(cc.Common.appSceneMain.sizeCanvas);
-        node.color = new cc.Color(52, 52, 52, 50);
+        node.setContentSize(AppSceneBase.main.sizeCanvas);
+        node.color = new Color(52, 52, 52, 50);
         //拦截点击
-        //  panel.addComponent(cc.BlockInputEvents);
+        //  panel.addComponent(BlockInputEvents);
         this.nodePannel = node;
         // this.nodePannel.active = false;
+        PrefabCache.main.Load(
+            {
+                filepath: this.objPop.prefab,
+                success: (p: any, data: any) => {
+                    this.LoadBgInternal(data);
 
-        cc.PrefabCache.main.Load(this.objPop.prefab, function (err, prefab) {
-            if (err) {
-                Debug.Log("PopUpManager err=" + err.message || err);
-                return;
-            }
-            this.OpenPopup(prefab);
-        }.bind(this)
-        );
+                },
+                fail: () => {
+                },
+            });
     }
 
     OpenPopup(prefab) {
         Debug.Log("OpenPopup");
-        var nodeRoot = cc.Common.appSceneMain.rootNode;
-        var nodePop = cc.instantiate(prefab);
+        var nodeRoot = AppSceneBase.main.rootNode;
+        var nodePop = instantiate(prefab);
         nodePop.setParent(nodeRoot);
         var ui = nodePop.getComponent(UIViewPop);
         if (nodePop == null) {
@@ -103,7 +98,7 @@ export class PopUpManager extends CCObject {
         /* 
         Canvas canvas = AppSceneBase.main.canvasMain;
        // var panel = new GameObject("Panel");
-         var panel = new cc.Node("Panel");
+         var panel = new Node("Panel");
         var panelImage = panel.AddComponent<Image>();
         var color = Color.black;
         color.a = 0;
@@ -129,12 +124,12 @@ export class PopUpManager extends CCObject {
         _onClose = onClose;
         currentPopups.Push(popup);
         */
-        var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BTN_SOUND, false);
+        var ret = Common.GetBoolOfKey(CommonRes.KEY_BTN_SOUND, false);
         if (ret) {
             //play sound click
             AudioPlay.main.PlayCloudAudio("PopUp/PopupOpen.mp3");
         }
- 
+
     }
 
 
@@ -186,19 +181,28 @@ export class PopUpManager extends CCObject {
             _onClose(topmostPopup.GetComponent<UIViewPop>());
         }
         */
-        var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BTN_SOUND, false);
+        var ret = Common.GetBoolOfKey(CommonRes.KEY_BTN_SOUND, false);
         if (ret) {
             //play sound click
             AudioPlay.main.PlayCloudAudio("PopUp/PopupClose.mp3");
         }
 
+
+        //delay延时
+        // var time = delayTime(2);
         var duration = PopUpManager.ANIMATE_DURATION;
-        var actionTo1 = cc.scaleTo(duration / 2, 1.2);
-        var actionTo2 = cc.scaleTo(duration / 2, 0);
-        var seq = cc.sequence([actionTo1, actionTo2, cc.callFunc(function () {
-            ui.DoClose();
-        }.bind(this))]);
-        ui.node.runAction(seq);
+
+        var scale1 = 1.2;
+        var scale2 = 0;
+
+        tween(ui.node)
+            .to(duration / 2, { scale: new Vec3(scale1, scale1, 1) })
+            .to(duration / 2, { scale: new Vec3(scale2, scale2, 1) })
+            .call(() => {
+                ui.DoClose();
+            })
+            .start()
+
     }
 
 

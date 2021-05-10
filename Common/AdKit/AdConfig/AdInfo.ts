@@ -1,12 +1,24 @@
 
-import { _decorator, CCObject, Node } from 'cc';
+import { _decorator, CCObject, Node, Enum } from 'cc';
 
 const { ccclass, property } = _decorator;
 // 动态加载资源文档
 // https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
 
+enum AdType {
+    SPLASH= 0,
+    BANNER,
+    INSERT,
+    SPLASH_INSERT,
+    NATIVE, 
+    VIDEO,
+    INSERT_VIDEO,
+}
+Enum(AdType);
+
 @ccclass('AdInfo')
 export class AdInfo extends CCObject {
+    public static AdType = AdType;
     source = '';
     appid = '';
     appkey = '';

@@ -1,6 +1,7 @@
 
-import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject } from 'cc';
+import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject, Vec2 } from 'cc';
 import { UIView } from '../ViewController/UIView';
+import { PopUpManager } from './PopUpManager';
 
 const { ccclass, property, type, string } = _decorator;
 
@@ -38,18 +39,21 @@ export class UIViewPop extends UIView {
     ShowInitAnimate () { 
         var nodePop = this.node;
         this.node.active = true;
-        nodePop.scaleX = 0;
-        nodePop.scaleY = 0;
+        nodePop.scale = new Vec3(0,0,1); 
            //delay延时
-        // var time = cc.delayTime(2);
-        var duration = cc.PopUpManager.ANIMATE_DURATION;
-        var actionTo1 = cc.scaleTo(duration / 2, 1.2);
-        var actionTo2 = cc.scaleTo(duration / 2, 1); 
-        var seq = cc.sequence([actionTo1, actionTo2, cc.callFunc(function () {
-            // this.DoClickItem(event, customEventData);
-            this.LayOut();
-        }.bind(this))]);
-        nodePop.runAction(seq);
+        // var time = delayTime(2);
+        var duration = PopUpManager.ANIMATE_DURATION;
+
+        var scale1 = 1.2;
+        var scale2 = 1;
+
+        tween(nodePop) 
+            .to(duration / 2, { scale: new Vec3(scale1, scale1, 1) })
+            .to(duration / 2, { scale: new Vec3(scale2, scale2, 1) })
+            .call(() => {
+                this.LayOut();
+            })
+            .start() 
     }
 
     Close() {
@@ -66,7 +70,7 @@ export class UIViewPop extends UIView {
         //     DoClose();
         // }
 
-        cc.PopUpManager.main().ClosePopup();
+        PopUpManager.main.ClosePopup();
      
     }
 

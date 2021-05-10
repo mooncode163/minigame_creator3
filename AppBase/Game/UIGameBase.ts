@@ -5,6 +5,8 @@ import { UIView } from '../../Common/UIKit/ViewController/UIView';
 import { UIImage } from '../../Common/UIKit/UIImage/UIImage';
 import { ItemInfo } from '../../Common/ItemInfo';
 import { UIText } from '../../Common/UIKit/UIText/UIText';
+import { Config } from '../../Common/Config/Config';
+import { PrefabCache } from '../../Common/Cache/PrefabCache';
 const { ccclass, property, type } = _decorator;
 
 
@@ -65,52 +67,48 @@ export class UIGameBase extends UIView {
         callbackGuankaFinish: null,
         callbackPlaceFinish: null,
     }
-    Init () {
+    Init() {
     }
-    onLoad () {
+    onLoad() {
         super.onLoad();
         this.node.setContentSize(this.node.parent.getContentSize());
         this.LoadGamePrefab();
-        
+
     }
-    start () {
+    start() {
         // this.UpdateBtnMusic();
         super.start();
     }
-    LoadGamePrefab () {
+    LoadGamePrefab() {
         // var strPrefab = "AppCommon/Prefab/Game/Game" + cc.Config.main().appType;
 
-        var key = "Game"+ cc.Config.main().appType;
-        // var strPrefab = cc.ConfigPrefab.main().GetPrefab(key);
-        // Debug.Log("HomeViewController LoadPrefab=" + strPrefab);
-        cc.PrefabCache.main.LoadByKey(key, function (err, prefab) {
-            if (err) {
-                Debug.Log("LoadGamePrefab err=" + err.message || err);
-                return;
-            }
-            this.gamePrefab = prefab;
-            this.CreateGame();
-        }.bind(this)
-        );
+        var key = "Game" + Config.main.appType;
+
+
+        PrefabCache.main.LoadByKey(
+            {
+                key: key,
+                success: (p: any, data: any) => {
+                    this.gamePrefab = data;
+                    this.CreateGame();
+                },
+                fail: () => {
+                },
+            });
+
+
     }
-    CreateGame () {
+    CreateGame() {
     }
 
-    OnClickBtnBack (event, customEventData) {
-        if (this.controller != null) {
-            var navi = this.controller.naviController;
-            if (navi != null) {
-                navi.Pop();
-            }
-        }
-    }
-    UpdateBtnMusic () {
+  
+    UpdateBtnMusic() {
         var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, false);
         this.btnMusic.UpdateSwitch(ret);
 
     }
 
-    OnClickBtnMusic (event, customEventData) {
+    OnClickBtnMusic(event, customEventData) {
         var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
         var v = !ret;
         Debug.Log("UpdateBtnSwitch value=" + v);
@@ -123,7 +121,7 @@ export class UIGameBase extends UIView {
             AudioPlay.main.PlayStopBgMusic();
         }
     }
-    OnClickBtnShare (event, customEventData) {
+    OnClickBtnShare(event, customEventData) {
         cc.Share.main().ShareImageText("", cc.Config.main().shareTitle, cc.Config.main().shareUrl, "");
     }
 
@@ -131,7 +129,7 @@ export class UIGameBase extends UIView {
 
 
 
-    UpdateGuankaLevel (level) {
+    UpdateGuankaLevel(level) {
         var idx = cc.LevelManager.main().gameLevel;
         Debug.Log("UIGameBase::UpdateGuankaLevel idx=" + idx);
         if (idx >= 3) {
@@ -142,21 +140,21 @@ export class UIGameBase extends UIView {
         }
 
     }
-    UpdatePlaceLevel (level) {
+    UpdatePlaceLevel(level) {
     }
 
 
-    LoadLanguageGameDidFinish (p) {
+    LoadLanguageGameDidFinish(p) {
 
     }
 
-    LoadLanguageGame () {
+    LoadLanguageGame() {
         var info = cc.LevelManager.main().GetPlaceItemInfo(cc.LevelManager.main().placeLevel);
-    
+
 
     }
 
-    ShowUserGuide () {
+    ShowUserGuide() {
         var key = cc.CommonRes.KEY_USER_GUIDE + cc.Common.main().GetAppVersion();
         var isshowplay = cc.Common.GetBoolOfKey(key, false);
         if (isshowplay == true) {
@@ -174,7 +172,7 @@ export class UIGameBase extends UIView {
             no: no,
             isShowBtnNo: false,
             name: "STR_KEYNAME_VIEWALERT_USER_GUIDE",
-            finish (ui, isYes) {
+            finish(ui, isYes) {
                 if (isYes) {
                 } else {
 
@@ -199,7 +197,7 @@ export class UIGameBase extends UIView {
         }
     }
 
-    OnGameWinBase () {
+    OnGameWinBase() {
         this.ShowAdInsert(UIGameBase.GAME_AD_INSERT_SHOW_STEP);
         if (cc.LevelManager.main().gameLevelFinish < cc.LevelManager.main().gameLevel) {
             cc.LevelManager.main().gameLevelFinish = cc.LevelManager.main().gameLevel;
@@ -211,7 +209,7 @@ export class UIGameBase extends UIView {
 
     }
 
-    ShowGameWinAlert () {
+    ShowGameWinAlert() {
         var title = Language.main.GetString("STR_UIVIEWALERT_TITLE_GAME_FINISH");
         var msg = Language.main.GetString("STR_UIVIEWALERT_MSG_GAME_FINISH");
         var yes = Language.main.GetString("STR_UIVIEWALERT_YES_GAME_FINISH");
@@ -225,7 +223,7 @@ export class UIGameBase extends UIView {
             no: no,
             isShowBtnNo: true,
             name: "STR_KEYNAME_VIEWALERT_GAME_FINISH",
-            finish (ui, isYes) {
+            finish(ui, isYes) {
                 if (isYes) {
                     cc.LevelManager.main().GotoNextLevelWithoutPlace();
                 } else {

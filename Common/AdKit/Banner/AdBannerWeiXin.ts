@@ -2,13 +2,15 @@
 
 import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject } from 'cc';
 const { ccclass, property, type, string } = _decorator;
-import { AdInfo } from '../../Config/AdInfo';
 import { Platform } from '../../Platform';
 import { AdBannerPlatformWrapper } from './AdBannerPlatformWrapper';
+import { AdConfig } from '../AdConfig/AdConfig';
+import { Source } from '../../Source';
+import { AdInfo } from '../AdConfig/AdInfo';
 // TypeScript自动引入脚本插件
 // https=//blog.csdn.net/u011004567/article/details/78507236
 // VS Code的插件-TypeScript Importer
-
+const AdType = AdInfo.AdType;
 @ccclass('AdBannerWeiXin')
 export class AdBannerWeiXin extends AdBannerPlatformWrapper {
     bannerAd = null;
@@ -27,6 +29,7 @@ export class AdBannerWeiXin extends AdBannerPlatformWrapper {
   }
   */
     InitAd(obj: any) {
+        var adkey = AdConfig.main.GetAdKey(Source.WEIXIN,AdType.BANNER);
         // let winSize = wx.getSystemInfoSync();
         // this.objAd = obj;
         // console.log(winSize);

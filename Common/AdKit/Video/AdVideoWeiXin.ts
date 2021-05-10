@@ -1,16 +1,19 @@
 
 import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject } from 'cc';
+import { Source } from '../../Source';
+import { AdConfig } from '../AdConfig/AdConfig';
+import { AdInfo } from '../AdConfig/AdInfo';
 
 const { ccclass, property, type, string } = _decorator;
 
 // TypeScript自动引入脚本插件
 // https://blog.csdn.net/u011004567/article/details/78507236
 // VS Code的插件-TypeScript Importer
-
+const AdType = AdInfo.AdType;
 @ccclass('AdVideoWeiXin')
 export class AdVideoWeiXin extends CCObject {
     videoAd = null;
-   
+
     SetObjectInfo(objName, objMethod) {
 
     }
@@ -18,6 +21,7 @@ export class AdVideoWeiXin extends CCObject {
 
     }
     InitAd(source) {
+        var adkey = AdConfig.main.GetAdKey(Source.WEIXIN, AdType.VIDEO);
         // 在页面中定义激励视频广告 
         // 在页面onLoad回调事件中创建激励视频广告实例
         // if (wx.createRewardedVideoAd) {

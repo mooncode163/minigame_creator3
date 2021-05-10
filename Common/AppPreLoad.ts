@@ -7,8 +7,8 @@ import { ConfigPrefab } from './Config/ConfigPrefab';
 import { ImageRes } from './Config/ImageRes';
 import { Debug } from './Debug';
 import { Language } from './Language/Language';
-import { ConfigBase } from './Config/ConfigBase';
-import { ConfigAd } from './Config/ConfigAd';
+import { ConfigBase } from './Config/ConfigBase'; 
+import { AdConfig } from './AdKit/AdConfig/AdConfig';
 const { ccclass, property } = _decorator;
 // 动态加载资源文档
 // https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
@@ -37,7 +37,7 @@ export class AppPreLoad extends CCObject {
         this.listItem.push(ImageRes.main);
         this.listItem.push(ConfigPrefab.main);
         this.listItem.push(ConfigAudio.main);
-        this.listItem.push(ConfigAd.main);
+        this.listItem.push(AdConfig.main);
 
     }
     /*
