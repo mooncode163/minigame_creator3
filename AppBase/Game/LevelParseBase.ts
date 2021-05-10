@@ -86,14 +86,14 @@ export class LevelParseBase extends CCObject {
                 filepath: filepath,
                 success: (p: any, data: any) => {
                     this.ParsePlaceList(data.json);
-                    // if (obj.success != null) {
-                    //     obj.success(this, data);
-                    // }
+                    if (obj.success != null) {
+                        obj.success(this);
+                    }
                 },
                 fail: () => {
-                    // if (obj.fail != null) {
-                    //     obj.fail(this);
-                    // }
+                    if (obj.fail != null) {
+                        obj.fail(this);
+                    }
                 },
             }); 
       

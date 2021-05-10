@@ -14,6 +14,8 @@ const { ccclass, property, type } = _decorator;
 
 @ccclass('GameLevelParse')
 export class GameLevelParse extends LevelParseBase {
+    countLoad = 0;
+    loadMax= 0;
 
     listGameItems: CCObject[] = [];
     listGameItemDefault: CCObject[] = [];
@@ -152,9 +154,14 @@ export class GameLevelParse extends LevelParseBase {
                 filepath: filepath,
                 success: (p: any, data: any) => {
                     this.ParseGameItems(data.json);
+                    if (obj.success != null) {
+                        obj.success(this);
+                    }
                 },
                 fail: () => {
-
+                    if (obj.fail != null) {
+                        obj.fail(this);
+                    }
                 },
             });
 
@@ -185,9 +192,14 @@ export class GameLevelParse extends LevelParseBase {
                 filepath: filepath,
                 success: (p: any, data: any) => {
                     this.ParseGameItemsDefault(data.json);
+                    if (obj.success != null) {
+                        obj.success(this);
+                    }
                 },
                 fail: () => {
-
+                    if (obj.fail != null) {
+                        obj.fail(this);
+                    }
                 },
             });
 
@@ -195,7 +207,22 @@ export class GameLevelParse extends LevelParseBase {
 
     }
 
-
+    OnFinish(obj: any,isFail:boolean) {
+        this.countLoad++;
+        if (this.countLoad >= this.loadMax) {
+          
+            if(isFail)
+            {
+                if (obj.fail != null) {
+                    obj.fail(this);
+                }
+            }else{
+                if (obj.success != null) {
+                    obj.success(this);
+                }
+            }
+        }
+    }
     /*
    { 
    success: (p:any) => {
@@ -207,8 +234,25 @@ export class GameLevelParse extends LevelParseBase {
    }
    */
     StartParseGuanka(obj: any) {
-        this.StartParseGameItems(obj);
-        this.StartParseGameItemsDefault(obj);
+        this.loadMax = 2;
+        this.countLoad = 0;
+
+        this.StartParseGameItems({
+            success: (p: any) => {
+                this.OnFinish(obj,false);
+            },
+            fail: (p: any) => {
+                this.OnFinish(obj,true);
+            },
+        });
+        this.StartParseGameItemsDefault({
+            success: (p: any) => {
+                this.OnFinish(obj,false);
+            },
+            fail: (p: any) => {
+                this.OnFinish(obj,true);
+            },
+        });
     }
 
 

@@ -2,7 +2,7 @@
 import { _decorator, Component, Node, Sprite, Label, Color } from 'cc';
 import { Common } from '../../Common';
 import { Debug } from '../../Debug';
-import { UIView } from '../ViewController/UIView';
+import { UIView } from '../ViewController/UIView'; 
 const { ccclass, property, type, string } = _decorator;
 
 // TypeScript自动引入脚本插件

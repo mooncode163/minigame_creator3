@@ -1,9 +1,6 @@
 
 import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, Enum, UITransform, Size, Color } from 'cc';
-import { AudioPlay } from '../../Audio/AudioPlay';
-import { Common } from '../../Common';
-import { CommonRes } from '../../CommonRes';
-import { Debug } from '../../Debug';
+import { Common } from '../../Common'; 
 import { UIImage } from '../UIImage/UIImage';
 import { UIText } from '../UIText/UIText';
 import { UIView } from '../ViewController/UIView';

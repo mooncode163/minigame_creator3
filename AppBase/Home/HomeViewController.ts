@@ -47,13 +47,15 @@ export class HomeViewController extends UIViewController {
 
     }
     LoadPrefab() {
-        var key = "UIHome" + Config.main.appType;
+        // var key = "UIHome" + Config.main.appType;
+        var key = "UIHomeMerge"
+        Debug.Log("HomeViewController LoadPrefab key="+key);
         PrefabCache.main.LoadByKey(
             {
                 key: key,
                 success: (p: any, data: any) => {
                     this.uiPrefab = data;
-                    this.CreateUI();
+                    // this.CreateUI();
 
                 },
                 fail: () => {
@@ -64,6 +66,7 @@ export class HomeViewController extends UIViewController {
 
     StartParsePlace()
     {
+        Debug.Log("HomeViewController StartParsePlace"); 
         LevelManager.main.StartParsePlace(
             {
                 success: (p: any) => { 
@@ -77,6 +80,7 @@ export class HomeViewController extends UIViewController {
 
     StartParseGuanka()
     {
+        Debug.Log("HomeViewController StartParseGuanka"); 
         LevelManager.main.StartParseGuanka(
             {
                 success: (p: any) => {
@@ -94,6 +98,8 @@ export class HomeViewController extends UIViewController {
          
     }
     CreateUIInternal() {
+        Debug.Log("HomeViewController CreateUIInternal"); 
+        return;
         const newNode = instantiate(this.uiPrefab);
         this.ui = newNode.getComponent(UIHomeBase);
         this.ui.SetController(this);
