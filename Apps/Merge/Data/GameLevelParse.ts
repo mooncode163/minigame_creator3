@@ -5,52 +5,47 @@ import { Common } from '../../../Common/Common';
 import { Debug } from '../../../Common/Debug';
 import { ItemInfo } from '../../../Common/ItemInfo';
 import { GameData } from './GameData';
+import { LevelParseBase } from '../../../AppBase/Game/LevelParseBase';
+import { FileUtil } from '../../../Common/File/FileUtil';
+import { CloudRes } from '../../../Common/CloundRes/CloudRes';
+import { ResManager } from '../../../Common/Res/ResManager';
 const { ccclass, property, type } = _decorator;
 
 
 @ccclass('GameLevelParse')
-export class GameLevelParse extends CCObject {
+export class GameLevelParse extends LevelParseBase {
 
-    listGameItems:CCObject[]=[];
-    listGameItemDefault:CCObject[]=[];
+    listGameItems: CCObject[] = [];
+    listGameItemDefault: CCObject[] = [];
 
     static _main: GameLevelParse;
     //静态方法
     static get main() {
         if (this._main == null) {
-            this._main = new GameLevelParse(); 
+            this._main = new GameLevelParse();
         }
         return this._main;
     }
 
-   
+
     CleanGuankaList() {
         if (this.listGameItems != null) {
             this.listGameItems.splice(0, this.listGameItems.length);
         }
 
     }
-    GetItemInfo(idx:number) {
-        return this.listGameItems[idx];
-    }
-    GetLastItemInfo() { 
+
+    GetLastItemInfo() {
         Debug.Log("GameItems:GetLastItemInfo this.listGameItems=" + this.listGameItems.length);
         return this.listGameItems[this.listGameItems.length - 1];
     }
     GetGuankaTotal() {
         return this.listGameItems.length;
     }
-    GetImagePath(id:string) {
-        // return id;
-        if (GameData.main.IsCustom()) {
-            return this.GetCustomImagePath(id);
-        }
-        var idx = LevelManager.main.placeLevel;
-        return this.GetImagePathPlace(id, idx);
-    }
+
     GetCustomImagePath(id) {
         var pic = this.GetSaveCustomImagePath(id);
-        if (!cc.FileUtil.FileExist(pic)) {
+        if (!FileUtil.FileExist(pic)) {
             pic = this.GetImagePathPlace(id, 0);
         }
         return pic;
@@ -58,7 +53,7 @@ export class GameLevelParse extends CCObject {
 
     // string 
     GetSaveCustomImagePath(id) {
-        return cc.Common.GAME_RES_DIR + "/Image/" + id + ".png";
+        return Common.GAME_RES_DIR + "/Image/" + id + ".png";
     }
     IsRenderCustomImage(id) {
         if (GameData.main.IsCustom()) {
@@ -71,7 +66,7 @@ export class GameLevelParse extends CCObject {
 
     IsHasCustomImage(id) {
         var pic = this.GetSaveCustomImagePath(id);
-        if (cc.FileUtil.FileExist(pic)) {
+        if (FileUtil.FileExist(pic)) {
             return true;
         }
         return false;
@@ -90,8 +85,8 @@ export class GameLevelParse extends CCObject {
     }
     GetImagePathPlace(id, idx) {
         var infoPlace = LevelManager.main.GetPlaceItemInfo(idx);
-        return cc.CloudRes.main().rootPath + "/Image/" + infoPlace.id + "/" + id + ".png";
-    } 
+        return CloudRes.main.rootPath + "/Image/" + infoPlace.id + "/" + id + ".png";
+    }
 
     ParseGameItemJson(json) {
 
@@ -134,29 +129,49 @@ export class GameLevelParse extends CCObject {
         // this.ParseGuankaDidFinish();
     }
 
-
-    StartParseGameItems() {
+    /*
+    { 
+    success: (p:any) => {
+        
+    }, 
+    fail: (p:any) => {
+        
+    },
+    }
+    */
+    StartParseGameItems(obj: any) {
         if ((this.listGameItems != null) && (this.listGameItems.length != 0)) {
             return;
         }
 
         var idx = LevelManager.main.placeLevel;
         var infoPlace = LevelManager.main.GetPlaceItemInfo(idx);
-        var filepath = Common.GAME_RES_DIR + "/Level/" + infoPlace.id;// + ".json";
-        cc.resources.load(filepath, function (err, rootJson) {
-            if (err) {
-                Debug.Log("GameItems:err=" + err);
-            }
-            if (err == null) {
-                Debug.Log("GameItems:ParseGameItems");
-                this.ParseGameItems(rootJson.json);
-            }
-        }.bind(this));
+        var filepath = Common.GAME_RES_DIR + "/Level/" + infoPlace.id;// + ".json"; 
+        ResManager.Load(
+            {
+                filepath: filepath,
+                success: (p: any, data: any) => {
+                    this.ParseGameItems(data.json);
+                },
+                fail: () => {
+
+                },
+            });
+
 
     }
 
-
-    StartParseGameItemsDefault() {
+    /*
+    { 
+    success: (p:any) => {
+        
+    }, 
+    fail: (p:any) => {
+        
+    },
+    }
+    */
+    StartParseGameItemsDefault(obj: any) {
         if ((this.listGameItemDefault != null) && (this.listGameItemDefault.length != 0)) {
             return;
         }
@@ -164,23 +179,36 @@ export class GameLevelParse extends CCObject {
         var idx = 0;
         var infoPlace = LevelManager.main.GetPlaceItemInfo(idx);
         var filepath = Common.GAME_RES_DIR + "/Level/" + infoPlace.id;// + ".json";
-        cc.resources.load(filepath, function (err, rootJson) {
-            if (err) {
-                Debug.Log("GameItems:err=" + err);
-            }
-            if (err == null) {
-                this.ParseGameItemsDefault(rootJson.json);
-            }
-        }.bind(this));
+
+        ResManager.Load(
+            {
+                filepath: filepath,
+                success: (p: any, data: any) => {
+                    this.ParseGameItemsDefault(data.json);
+                },
+                fail: () => {
+
+                },
+            });
+
+
 
     }
 
 
-
-    StartParseGuanka(callback) {
-        this.callbackGuankaFinish = callback;
-        this.StartParseGameItems();
-        this.StartParseGameItemsDefault();
+    /*
+   { 
+   success: (p:any) => {
+       
+   }, 
+   fail: (p:any) => {
+       
+   },
+   }
+   */
+    StartParseGuanka(obj: any) {
+        this.StartParseGameItems(obj);
+        this.StartParseGameItemsDefault(obj);
     }
 
 

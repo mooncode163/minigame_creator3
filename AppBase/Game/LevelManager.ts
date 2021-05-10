@@ -52,37 +52,60 @@ export class LevelManager extends CCObject {
         var ret = GameLevelParse.main.GetGuankaTotal();
         return ret;
     }
-    listPlace: CCObject[] = [];
-    Init () {
+    listPlace: ItemInfo[] = [];
+    Init() {
         //this.ParseGuanka();
-    } 
+    }
 
 
-    GetPlaceItemInfo (idx) {
+    GetPlaceItemInfo(idx) {
         var game = GameViewController.main.gameBase;
-        var info =this.listPlace[idx];
+        var info = this.listPlace[idx];
         Debug.Log("GetPlaceItemInfo idx=" + idx + " LevelManager.listPlace.length=" + this.listPlace.length);
         return info;
     }
- 
-    CleanGuankaList () {
+
+    CleanGuankaList() {
         GameLevelParse.main.CleanGuankaList();
     }
-    StartParseGuanka (callback) {
-        this.CleanGuankaList(); 
+
+ /*
+{ 
+success: (p:any) => {
+    
+}, 
+fail: (p:any) => {
+    
+},
+}
+*/
+
+    StartParseGuanka(obj: any) {
+        this.CleanGuankaList();
         // GameViewController.main.gameBase.StartParseGuanka(callback);
-        GameLevelParse.main.StartParseGuanka(callback);
+        GameLevelParse.main.StartParseGuanka(obj);
     }
 
+
+     /*
+{ 
+success: (p:any) => {
+    
+}, 
+fail: (p:any) => {
+    
+},
+}
+*/
     //place 
-    StartParsePlace (callback) {
+    StartParsePlace(obj: any) {
         //GameViewController.main.gameBase.StartParsePlaceList(callback);
-        GameLevelParse.main.StartParsePlaceList(callback);
+        GameLevelParse.main.StartParsePlaceList(obj);
     }
 
-  
 
-    GotoPreLevel () {
+
+    GotoPreLevel() {
 
         this.gameLevel--;
         if (this.gameLevel < 0) {
@@ -95,7 +118,7 @@ export class LevelManager extends CCObject {
 
     }
 
-    GotoNextLevel () {
+    GotoNextLevel() {
         Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + this.maxGuankaNum);
         this.gameLevel++;
         Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + this.maxGuankaNum);
@@ -110,7 +133,7 @@ export class LevelManager extends CCObject {
     }
 
 
-    GotoNextPlace () {
+    GotoNextPlace() {
 
         this.placeLevel++;
 
@@ -126,7 +149,7 @@ export class LevelManager extends CCObject {
 
     }
 
-    GotoPrePlace () {
+    GotoPrePlace() {
 
         this.placeLevel--;
         if (this.placeLevel < 0) {
@@ -141,7 +164,7 @@ export class LevelManager extends CCObject {
 
     }
     //关卡循环
-    GotoNextLevelWithoutPlace () {
+    GotoNextLevelWithoutPlace() {
         Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + this.maxGuankaNum);
         this.gameLevel++;
         Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + this.maxGuankaNum);
@@ -154,7 +177,7 @@ export class LevelManager extends CCObject {
     }
 
     //return List<object>
-    GetGuankaListOfAllPlace () {
+    GetGuankaListOfAllPlace() {
         var listRet;// = new List<object>();
         Debug.Log("GetGuankaListOfAllPlace placeTotal=" + this.placeTotal);
         for (var i = 0; i < this.placeTotal; i++) {

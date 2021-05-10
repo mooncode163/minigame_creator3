@@ -27,6 +27,8 @@ export class ItemInfo extends CCObject {
     time = '';
     game = '';
     gameType = '';
+    language = '';
+    isAd=false;
 }
 
 /**

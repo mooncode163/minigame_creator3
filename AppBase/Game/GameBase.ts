@@ -5,7 +5,9 @@ const { ccclass, property, type } = _decorator;
 
 @ccclass('GameBase')
 export class GameBase extends UIView {
-    
+    gameStatus = 0;
+    objGameFinish = null;
+
     onLoad() {
         super.onLoad(); 
         this.LayOut();
@@ -15,22 +17,7 @@ export class GameBase extends UIView {
         this.LayOut();
     }
     UpdateLevel (level:number) { 
-    }
-    properties: {
-        gameStatus: 0,
-        callbackGameWin: null,
-        callbackGameFail: null,
-
-        /*
-    `   { 
-            onWin (ui) {
-            }
-            onFail (ui) {
-            } 
-        }
-        */
-        objGameFinish: null,
-    }
+    } 
     OnGameFail () {
         if (this.objGameFinish != null) {
             if (this.objGameFinish.onFail != null) {

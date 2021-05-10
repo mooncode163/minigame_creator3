@@ -1,30 +1,35 @@
 
-import { _decorator, Component, Node, Prefab, instantiate } from 'cc'; 
+import { _decorator, Component, Node, Prefab, instantiate, math } from 'cc';
+import { AdKitCommon } from '../../Common/AdKit/AdKitCommon';
+import { AdInsert } from '../../Common/AdKit/Insert/AdInsert';
 import { PrefabCache } from '../../Common/Cache/PrefabCache';
+import { Config } from '../../Common/Config/Config';
 import { Debug } from '../../Common/Debug';
+import { Source } from '../../Common/Source';
 import { UIViewController } from '../../Common/UIKit/ViewController/UIViewController';
+import { LevelManager } from '../Game/LevelManager';
 import { UIHomeBase } from './UIHomeBase';
+import { AdInfo } from '../../Common/AdKit/AdConfig/AdInfo';
 const { ccclass, property } = _decorator;
- 
+
 
 @ccclass('HomeViewController')
 export class HomeViewController extends UIViewController {
 
     uiPrefab: Prefab;
-    ui: UIHomeBase; 
-    runCount= 0;
+    ui: UIHomeBase;
+    runCount = 0;
 
-    static _main:HomeViewController;
+    static _main: HomeViewController;
     //静态方法
-    static get  main(){ 
-        if(this._main==null)
-        {
+    static get main() {
+        if (this._main == null) {
             this._main = new HomeViewController();
         }
         return this._main;
     }
 
-    ViewDidLoad () {
+    ViewDidLoad() {
         Debug.Log("HomeViewController ViewDidLoad");
         super.ViewDidLoad();
         //提前加载game prefab
@@ -36,34 +41,20 @@ export class HomeViewController extends UIViewController {
         // }
         this.LoadPrefab();
     }
-    ViewDidUnLoad () {
+    ViewDidUnLoad() {
         Debug.Log("HomeViewController ViewDidUnLoad");
         super.ViewDidUnLoad();
 
     }
-    LoadPrefab () {
-        // var strPrefab = "App/Prefab/Home/UIHome" + cc.Config.main().appType;
-        // var key = "UIHome" + cc.Config.main().appType;
-        // // var strPrefab = cc.ConfigPrefab.main().GetPrefab(key);
-        // // Debug.Log("HomeViewController LoadPrefab=" + strPrefab);
-        // cc.PrefabCache.main.LoadByKey(key, function (err, prefab) {
-        //     if (err) {
-        //         Debug.Log("LoadPrefab err:" + err.message || err);
-        //         this.LoadPrefabDefault();
-        //         return;
-        //     }
-        //     this.uiPrefab = prefab;
-        //     this.CreateUI();
-        // }.bind(this)
-        // );
-
-        PrefabCache.main.Load(
+    LoadPrefab() {
+        var key = "UIHome" + Config.main.appType;
+        PrefabCache.main.LoadByKey(
             {
-                filepath: "App/Prefab/Home/UIHomeMerge",
+                key: key,
                 success: (p: any, data: any) => {
                     this.uiPrefab = data;
                     this.CreateUI();
-                 
+
                 },
                 fail: () => {
 
@@ -72,7 +63,7 @@ export class HomeViewController extends UIViewController {
     }
 
 
-    CreateUI () {
+    CreateUI() {
         Debug.Log("HomeViewController CreateUI");
         // cc.LevelManager.main().StartParsePlace(function () { 
         //     cc.LevelManager.main().StartParseGuanka(function () {
@@ -81,32 +72,52 @@ export class HomeViewController extends UIViewController {
         //     ); 
         // }.bind(this)
         // );
-        this.CreateUIInternal();
+
+        LevelManager.main.StartParsePlace(
+            {
+                success: (p: any) => {
+
+                    LevelManager.main.StartParseGuanka(
+                        {
+                            success: (p: any) => {
+                                this.CreateUIInternal();
+                            },
+                            fail: () => {
+
+                            },
+                        });
+
+                },
+                fail: () => {
+
+                },
+            });
+
+
     }
-    CreateUIInternal () { 
+    CreateUIInternal() {
         const newNode = instantiate(this.uiPrefab);
-        this.ui = newNode.getComponent(UIHomeBase); 
+        this.ui = newNode.getComponent(UIHomeBase);
         this.ui.SetController(this);
 
-         // CloudResViewController.main().Show(null, null);
-         if (this.runCount == 0) {
+        // CloudResViewController.main().Show(null, null);
+        if (this.runCount == 0) {
             //至少在home界面显示一次视频广告
-            //AdKitCommon.main.callbackAdVideoFinish = OnAdKitAdVideoFinish;
-            //   if (uiHome != null)
-            // {
+            // AdKitCommon.main.callbackAdVideoFinish = OnAdKitAdVideoFinish;
+            // if (uiHome != null) {
             //     uiHome.OnClickBtnAdVideo();
             // }
 
-            //至少在home界面显示一次开机插屏
-            // var type = AdConfigParser.SOURCE_TYPE_INSERT;
-            // var source = cc.Source.GDT;
-            // cc.AdInsert.main().InitAd(source); 
-            // cc.AdKitCommon.main.ShowAdInsert(100);
+            // 至少在home界面显示一次开机插屏
+            var type = AdInfo.AdType.INSERT;
+            var source = Source.GDT;
+            AdInsert.main.InitAd(source);
+            AdKitCommon.main.ShowAdInsert(100);
 
         }
         this.runCount++;
     }
-    
+
 }
 
 /**
