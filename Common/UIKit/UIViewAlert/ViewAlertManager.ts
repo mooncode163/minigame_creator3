@@ -1,5 +1,10 @@
 
-import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject } from 'cc';
+import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject, Prefab, instantiate } from 'cc';
+import { PrefabCache } from '../../Cache/PrefabCache';
+import { UIViewAlert } from './UIViewAlert';
+import { AppSceneBase } from '../../../AppBase/Common/AppSceneBase';
+import { PopUpManager } from '../PopUp/PopUpManager';
+import { ConfigPrefab } from '../../Config/ConfigPrefab';
 
 const { ccclass, property, type, string } = _decorator;
 
@@ -9,6 +14,18 @@ const { ccclass, property, type, string } = _decorator;
 
 @ccclass('ViewAlertManager')
 export class ViewAlertManager extends CCObject {
+    uiPrefab: Prefab = null;
+    ui: UIViewAlert = null;
+    keyName: string = "";
+    isNeedShow: boolean = false;
+    strTitle: string = "";
+    strMsg: string = "";
+    strYes: string = "";
+    strNo: string = "";
+
+    //callback(UIViewAlert alert, bool isYes);
+    callback = null;
+
     static _main: ViewAlertManager;
     //静态方法
     static get main() {
@@ -18,52 +35,41 @@ export class ViewAlertManager extends CCObject {
         }
         return this._main;
     }
-    properties: {
-        uiPrefab: cc.Prefab,
-        ui: UIViewAlert,
-        keyName: "",
-        isNeedShow: false,
-        strTitle: "",
-        strMsg: "",
-        strYes: "",
-        strNo: "",
 
-        //callback(UIViewAlert alert, bool isYes);
-        callback: null,
-    }
-
-    Init () {
+    Init() {
         this.isNeedShow = false;
         this.LoadUI();
     }
 
-    LoadUI () {
-        var strPrefab = "Common/Prefab/UIKit/UIViewAlert/UIViewAlert";
-        cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
-            if (err) {
-                Debug.Log(err.message || err);
-                return;
-            }
-            this.uiPrefab = prefab;
-            if (this.isNeedShow) {
-                this.ShowInternal(this.strTitle, this.strMsg, this.strYes, this.strNo);
-            }
-        }.bind(this)
-        );
+    LoadUI() {
+        PrefabCache.main.LoadByKey(
+            {
+                key: "UIViewAlert",
+                success: (p: any, data: any) => {
+                    this.uiPrefab = data;
+                    if (this.isNeedShow) {
+                        this.ShowInternal(this.strTitle, this.strMsg, this.strYes, this.strNo);
+                    }
+                },
+                fail: () => {
+                },
+            });
+
+
     }
 
-    ShowInternal (title, msg, yes, no) {
+    ShowInternal(title, msg, yes, no) {
         //Debug.Log("ShowInternal SetText title ="+title+" msg="+msg);
-        var node = cc.instantiate(this.uiPrefab);
+        var node = instantiate(this.uiPrefab);
         this.ui = node.getComponent(UIViewAlert);
         // this.ui.callback = this.OnUIViewAlertFinished.bind(this);
 
         this.ui.keyName = this.keyName;
         this.ui.SetText(title, msg, yes, no);
-        this.ui.SetViewParent(cc.Common.appSceneMain.canvasMain.node);
+        this.ui.SetViewParent(AppSceneBase.main.canvasMain.node);
     }
     //string
-    Show (title, msg, yes, no) {
+    Show(title, msg, yes, no) {
         this.isNeedShow = true;
         this.strTitle = title;
         this.strMsg = msg;
@@ -92,41 +98,42 @@ export class ViewAlertManager extends CCObject {
  }
 */
 
-    ShowFull (obj) {
+    ShowFull(obj) {
         // this.keyName = obj.name;
         // this.callback = obj.finish;
         // this.Show(obj.title, obj.msg, obj.yes, obj.no);
         // //必须在show之后设置
         // this.ShowBtnNo(obj.isShowBtnNo);
-
-        var strPrefab = "Common/Prefab/UIKit/UIViewAlert/UIViewAlert";
-        cc.PopUpManager.main().Show({
-            prefab: strPrefab,
-            open (ui) {
-                //ui.UpdateItem(info);
-                ui.keyName = obj.name;
+ 
+        var strPrefab = ConfigPrefab.main.GetPrefab("UIViewAlert");
+        PopUpManager.main.Show(
+            {
+                prefab: strPrefab,
+                open: (ui: any) => {
+                    ui.keyName = obj.name;
                 ui.SetText(obj.title, obj.msg, obj.yes, obj.no);
                 ui.ShowBtnNo(obj.isShowBtnNo);
                 ui.callback = obj.finish;
-            }.bind(this),
-            close (ui) {
-            }.bind(this),
-        });
+                },
+                close: (ui: any) => {
+                },
+            });
+
     }
-    Hide () {
+    Hide() {
         if (this.ui != null) {
             // GameObject.DestroyImmediate(ui);
             // ui = null;
         }
     }
 
-    ShowBtnNo (isShow) {
+    ShowBtnNo(isShow) {
         if (this.ui != null) {
             this.ui.ShowBtnNo(isShow);
         }
     }
 
-    OnUIViewAlertFinished (alert, isYes) {
+    OnUIViewAlertFinished(alert, isYes) {
         if (this.callback != null) {
             this.callback(alert, isYes);
         }

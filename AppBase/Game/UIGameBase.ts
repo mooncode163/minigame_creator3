@@ -18,6 +18,7 @@ import { Language } from '../../Common/Language/Language';
 import { AdKitCommon } from '../../Common/AdKit/AdKitCommon';
 import { FrendBoard } from '../../Common/SNS/FrendBoard';
 import { GameManager } from './GameManager';
+import { ViewAlertManager } from '../../Common/UIKit/UIViewAlert/ViewAlertManager';
 const { ccclass, property, type } = _decorator;
 
 
@@ -57,14 +58,14 @@ export class UIGameBase extends UIView {
         }
     }
 
-    
- 
+
+
     Init() {
     }
-  
-   
-    LoadGamePrefab() { 
-        var key = "Game" + Config.main.appType; 
+
+
+    LoadGamePrefab() {
+        var key = "Game" + Config.main.appType;
         PrefabCache.main.LoadByKey(
             {
                 key: key,
@@ -81,7 +82,7 @@ export class UIGameBase extends UIView {
     CreateGame() {
     }
 
-  
+
     UpdateBtnMusic() {
         var ret = Common.GetBoolOfKey(CommonRes.KEY_BACKGROUND_MUSIC, false);
         this.btnMusic.UpdateSwitch(ret);
@@ -144,22 +145,25 @@ export class UIGameBase extends UIView {
         var msg = Language.main.GetString("STR_UIVIEWALERT_MSG_USER_GUIDE");
         var yes = Language.main.GetString("STR_UIVIEWALERT_YES_USER_GUIDE");
         var no = yes;
+        ViewAlertManager.main.ShowFull(
+            {
+                title: title,
+                msg: msg,
+                yes: yes,
+                no: no,
+                isShowBtnNo: false,
+                name: "STR_KEYNAME_VIEWALERT_USER_GUIDE",
+                finish: (ui: any, isYes: boolean) => {
+                    if (isYes) {
+                    } else {
 
-        ViewAlertManager.main.ShowFull({
-            title: title,
-            msg: msg,
-            yes: yes,
-            no: no,
-            isShowBtnNo: false,
-            name: "STR_KEYNAME_VIEWALERT_USER_GUIDE",
-            finish(ui, isYes) {
-                if (isYes) {
-                } else {
+                    }
+                    Common.SetBoolOfKey(key, true);
+                },
+                close: (ui: any) => {
+                },
+            });
 
-                }
-                Common.SetBoolOfKey(key, true);
-            }.bind(this),
-        });
 
     }
 
@@ -195,24 +199,25 @@ export class UIGameBase extends UIView {
         var yes = Language.main.GetString("STR_UIVIEWALERT_YES_GAME_FINISH");
         var no = Language.main.GetString("STR_UIVIEWALERT_NO_GAME_FINISH");
         Debug.Log("game finish ShowFull");
-
-        ViewAlertManager.main.ShowFull({
-            title: title,
-            msg: msg,
-            yes: yes,
-            no: no,
-            isShowBtnNo: true,
-            name: "STR_KEYNAME_VIEWALERT_GAME_FINISH",
-            finish(ui, isYes) {
-                if (isYes) {
-                    LevelManager.main.GotoNextLevelWithoutPlace();
-                } else {
-                    //replay
-                    GameManager.main.GotoPlayAgain();
-                }
-            }.bind(this),
-        });
-
+        ViewAlertManager.main.ShowFull(
+            {
+                title: title,
+                msg: msg,
+                yes: yes,
+                no: no,
+                isShowBtnNo: true,
+                name: "STR_KEYNAME_VIEWALERT_GAME_FINISH",
+                finish: (ui: any, isYes: boolean) => {
+                    if (isYes) {
+                        LevelManager.main.GotoNextLevelWithoutPlace();
+                    } else {
+                        //replay
+                        GameManager.main.GotoPlayAgain();
+                    }
+                },
+                close: (ui: any) => {
+                },
+            });
     }
 
 }

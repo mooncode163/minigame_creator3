@@ -1,6 +1,12 @@
 
 import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject } from 'cc';
+import { UIButton } from '../UIButton/UIButton';
+import { UIImage } from '../UIImage/UIImage';
+import { UIText } from '../UIText/UIText';
 import { UIView } from '../ViewController/UIView';
+import { AppSceneBase } from '../../../AppBase/Common/AppSceneBase';
+import { Debug } from '../../Debug';
+import { UIViewPop } from '../PopUp/UIViewPop';
 
 const { ccclass, property, type, string } = _decorator;
 
@@ -9,31 +15,29 @@ const { ccclass, property, type, string } = _decorator;
 // VS Code的插件-TypeScript Importer
 
 @ccclass('UIViewAlert')
-export class UIViewAlert extends UIView {
-    properties: {
-        imageBg: cc.UIImage,
-        textTitle: cc.UIText,
-        textMsg: cc.UIText,
-        btnYes: cc.UIButton,
-        btnNo: cc.UIButton,
-        keyName: "",
+export class UIViewAlert extends UIViewPop {
+    imageBg: UIImage;
+    textTitle: UIText;
+    textMsg: UIText;
+    btnYes: UIButton;
+    btnNo: UIButton;
+    keyName: string = "";
 
-        //callback(UIViewAlert alert, bool isYes);
-        callback: null,
-    }
-    onLoad () {
+    //callback(UIViewAlert alert, bool isYes);
+    callback = null;
+    onLoad() {
         super.onLoad();
 
         this.LayOut();
     }
 
-    LayOut () {
+    LayOut() {
         var ratio = 0.8;
         var x, y, w, h;
         super.LayOut();
         {
             ratio = 0.8;
-            var size = cc.Common.appSceneMain.sizeCanvas; 
+            var size = AppSceneBase.main.sizeCanvas;
             var ratio = 0.8;
             //显示异常
             //this.node.setContentSize(size * ratio);
@@ -43,12 +47,12 @@ export class UIViewAlert extends UIView {
             h = w * 9 / 16;
             // h = w / 2;
             Debug.Log("UIViewAlert setContentSize = w=" + w + " h=" + h);
-            this.node.setContentSize(new cc.Size(w, h));
+            this.SetContentSize(w, h);
 
             super.LayOut();
         }
     }
-    SetText (title, msg, yes, no) {
+    SetText(title, msg, yes, no) {
         //Debug.Log("SetText title ="+title+" msg="+msg);
         this.textTitle.text = title;
         this.textMsg.text = msg;
@@ -62,10 +66,10 @@ export class UIViewAlert extends UIView {
 
     }
 
-    ShowBtnNo (isShow) {
+    ShowBtnNo(isShow) {
         this.btnNo.node.active = isShow;
     }
-    OnClickBtnYes () {
+    OnClickBtnYes() {
         this.Remove();
         if (this.callback != null) {
             this.callback(this, true);
@@ -74,14 +78,14 @@ export class UIViewAlert extends UIView {
     }
 
 
-    OnClickBtnNo () {
+    OnClickBtnNo() {
         this.Remove();
         if (this.callback != null) {
             this.callback(this, false);
         }
     }
 
-    Remove () {
+    Remove() {
         // if (this.node != null) {
         //     this.node.destroy();
         //     //this.node = null;
@@ -89,7 +93,7 @@ export class UIViewAlert extends UIView {
         this.Close();
     }
 
-    Hide () {
+    Hide() {
         this.Remove();
     }
 
