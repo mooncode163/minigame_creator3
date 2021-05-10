@@ -5,8 +5,7 @@ import { UIViewController } from "../../Common/UIKit/ViewController/UIViewContro
 import { LoadItemInfo } from "./LoadItemInfo";
 import { Debug } from '../../Common/Debug';
 import { Device } from '../../Common/Device';
-import { AppPreLoad } from '../../Common/AppPreLoad'; 
-import { Config } from '../../Common/Config/Config';
+import { AppPreLoad } from '../../Common/AppPreLoad';  
 
 
 // typescript 提示 Object is possibly ‘null‘ 的N种解决方法
@@ -30,12 +29,7 @@ export class AppSceneBase extends Component {
 
     @type(Node)
     rootNode: Node | null = null;
-
-    @type(Button)
-    btnUpRight: Button | null = null;
-
-    @type(Label)
-    textTitle: Label | null = null;
+  
 
     // @type(Size)
     sizeCanvas: Size | null = null;
@@ -45,9 +39,7 @@ export class AppSceneBase extends Component {
 
     // canvasWidth=0;
     // canvasHeight=0;
-
-    @type([Node]) // declare the cc type of the attribute _children as a Node array
-    private listProLoad: LoadItemInfo[] = [];
+ 
 
     isHasRunApp = false;
 
@@ -106,7 +98,7 @@ export class AppSceneBase extends Component {
 
 
 
-        this.textTitle.string = str;
+        // this.textTitle.string = str;
         // this.sizeCanvas.width = screenSize.width * this.sizeCanvas.height / screenSize.height;
         // Debug.Log("sizeCanvas size=" + this.sizeCanvas);
         // var framesize = cc.view.getFrameSize();

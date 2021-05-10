@@ -12,6 +12,7 @@ const { ccclass, property, type } = _decorator;
 export class LevelManager extends CCObject {
 
     placeLevel = 0;
+    objGuanka=null;
     static _main: LevelManager;
     //静态方法
     static get main() {
@@ -81,6 +82,7 @@ fail: (p:any) => {
 */
 
     StartParseGuanka(obj: any) {
+        this.objGuanka = obj;
         this.CleanGuankaList();
         // GameViewController.main.gameBase.StartParseGuanka(callback);
         GameLevelParse.main.StartParseGuanka(obj);
@@ -144,7 +146,7 @@ fail: (p:any) => {
         //必须在placeLevel设置之后再设置gameLevel
         this.gameLevel = 0;
 
-        this.StartParseGuanka(this.callbackGuankaFinish);
+        this.StartParseGuanka(this.objGuanka);
         GameViewController.main.gameBase.UpdateGuankaLevel(this.gameLevel);
 
     }
@@ -159,7 +161,7 @@ fail: (p:any) => {
         //必须在placeLevel设置之后再设置gameLevel
         this.gameLevel = 0;
 
-        this.StartParseGuanka(this.callbackGuankaFinish);
+        this.StartParseGuanka(this.objGuanka);
         GameViewController.main.gameBase.UpdateGuankaLevel(this.gameLevel);
 
     }
@@ -184,7 +186,7 @@ fail: (p:any) => {
             this.placeLevel = i;
             //必须在placeLevel设置之后再设置gameLevel
             this.gameLevel = 0;
-            this.StartParseGuanka(this.callbackGuankaFinish);
+            this.StartParseGuanka(this.objGuanka);
             // if (UIGameBase.listGuanka == null) {
             //     Debug.Log("listGuanka is null");
             // }

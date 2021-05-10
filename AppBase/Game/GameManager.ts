@@ -13,7 +13,7 @@ export class GameManager extends CCObject {
 
     static _main: GameManager;
     //静态方法
-    static get main {
+    static get main() {
         if (this._main == null) {
             this._main = new GameManager();
             this._main.Init();

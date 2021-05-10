@@ -1,15 +1,13 @@
 
 import { _decorator, Component, Node, Texture2D, resources, SpriteFrame } from 'cc';
+import { AppSceneBase } from './Common/AppSceneBase';
 import { MainViewController } from '../Apps/Main/MainViewController';
-const { ccclass, property } = _decorator;
-// import AppSceneBase = require("AppSceneBase");
- 
-// import {  AppSceneBase } ;
-import { AppSceneBase } from "./Common/AppSceneBase";
-import { UIViewController } from '../Common/UIKit/ViewController/UIViewController';
+import { Debug } from '../Common/Debug';
+const { ccclass, property } = _decorator;   
 
 @ccclass('AppScene')
-export class AppScene extends AppSceneBase {
+// AppSceneBase
+export class AppScene extends AppSceneBase  {
     // [1]
     // dummy = '';
 
@@ -20,19 +18,19 @@ export class AppScene extends AppSceneBase {
         // [3]
         super.onLoad(); 
         // this.super();
-        console.log("AppScene onLoad");
+        Debug.Log("AppScene onLoad");
     }
     start () {
         // [3]
         super.start();
-        console.log("AppScene start"); 
+        Debug.Log("AppScene start"); 
 
     }
     RunApp () {
         super.RunApp();
-        console.log("AppScene RunApp");
+        Debug.Log("AppScene RunApp");
         var p = MainViewController.main; 
-        console.log("AppScene RunApp Main");
+        Debug.Log("AppScene RunApp Main");
         this.SetRootViewController(p);
 
     } 

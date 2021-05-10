@@ -1,8 +1,6 @@
 
-import { _decorator, Component, Node, Sprite, Label, Prefab, instantiate, UITransform } from 'cc';
-import { PrefabCache } from '../../Cache/PrefabCache';
-import { Debug } from '../../Debug';
-import { UIView } from '../ViewController/UIView';
+import { _decorator, Component, Node, Sprite, Label, Prefab, instantiate, UITransform } from 'cc'; 
+import { Debug } from '../../Debug'; 
 import { UIViewController } from '../ViewController/UIViewController';
 import { UINaviBar } from './UINaviBar';
 import { AppSceneBase } from '../../../AppBase/Common/AppSceneBase';
@@ -26,13 +24,7 @@ export class NaviViewController extends UIViewController {
 
 
     LoadPrefab () { 
-    //     var strPrefab = "Common/Prefab/NaviBar/UINaviBar";
-    //    PrefabCache.main.Load(strPrefab, function (err, prefab) {
-    //         this.uiNaviBarPrefab = prefab;
-    //         this.CreateBar();
-
-    //     }.bind(this)
-    //     );
+ 
     }
 
     ViewDidLoad () {

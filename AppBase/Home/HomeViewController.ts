@@ -62,38 +62,36 @@ export class HomeViewController extends UIViewController {
             });
     }
 
-
-    CreateUI() {
-        Debug.Log("HomeViewController CreateUI");
-        // cc.LevelManager.main().StartParsePlace(function () { 
-        //     cc.LevelManager.main().StartParseGuanka(function () {
-        //         this.CreateUIInternal();
-        //     }.bind(this)
-        //     ); 
-        // }.bind(this)
-        // );
-
+    StartParsePlace()
+    {
         LevelManager.main.StartParsePlace(
             {
-                success: (p: any) => {
-
-                    LevelManager.main.StartParseGuanka(
-                        {
-                            success: (p: any) => {
-                                this.CreateUIInternal();
-                            },
-                            fail: () => {
-
-                            },
-                        });
-
+                success: (p: any) => { 
+                    this.StartParseGuanka();
                 },
                 fail: () => {
-
+                    this.StartParseGuanka();
                 },
             });
+    }
 
+    StartParseGuanka()
+    {
+        LevelManager.main.StartParseGuanka(
+            {
+                success: (p: any) => {
+                    this.CreateUIInternal();
+                },
+                fail: () => {
+                    this.CreateUIInternal();
+                },
+            });
+    }
 
+    CreateUI() {
+        Debug.Log("HomeViewController CreateUI"); 
+        this.StartParsePlace();
+         
     }
     CreateUIInternal() {
         const newNode = instantiate(this.uiPrefab);

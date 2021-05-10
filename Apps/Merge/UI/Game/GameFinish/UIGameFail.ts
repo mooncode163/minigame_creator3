@@ -4,6 +4,7 @@ import { UIView } from '../../../../../Common/UIKit/ViewController/UIView';
 import { UIViewPop } from '../../../../../Common/UIKit/PopUp/UIViewPop';
 import { Language } from '../../../../../Common/Language/Language';
 import { UIText } from '../../../../../Common/UIKit/UIText/UIText';
+import { GameManager } from '../../../../../AppBase/Game/GameManager';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UIGameFail')
@@ -39,7 +40,7 @@ export class UIGameFail extends UIViewPop {
 
     OnClickBtnAgain(event, customEventData) {
         this.Close();
-        GameManager.main().GotoPlayAgain();
+        GameManager.main.GotoPlayAgain();
     }
 
 
