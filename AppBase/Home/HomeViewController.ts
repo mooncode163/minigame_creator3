@@ -63,39 +63,11 @@ export class HomeViewController extends UIViewController {
                 },
             });
     }
-
-    StartParsePlace()
-    {
-        Debug.Log("HomeViewController StartParsePlace"); 
-        LevelManager.main.StartParsePlace(
-            {
-                success: (p: any) => { 
-                    this.StartParseGuanka();
-                },
-                fail: () => {
-                    this.StartParseGuanka();
-                },
-            });
-    }
-
-    StartParseGuanka()
-    {
-        Debug.Log("HomeViewController StartParseGuanka"); 
-        LevelManager.main.StartParseGuanka(
-            {
-                success: (p: any) => {
-                    this.CreateUIInternal();
-                },
-                fail: () => {
-                    this.CreateUIInternal();
-                },
-            });
-    }
+ 
 
     CreateUI() {
-        Debug.Log("HomeViewController CreateUI"); 
-        this.StartParsePlace();
-        // this.CreateUIInternal();
+        Debug.Log("HomeViewController CreateUI");  
+        this.CreateUIInternal();
          
     }
     CreateUIInternal() {

@@ -7,6 +7,7 @@ import { PrefabCache } from '../../Common/Cache/PrefabCache';
 import { Language } from '../../Common/Language/Language';
 import { Debug } from '../../Common/Debug';
 import { HomeViewController } from '../../AppBase/Home/HomeViewController';
+import { LevelManager } from '../../AppBase/Game/LevelManager';
 const { ccclass, property } = _decorator;
 
 
@@ -26,10 +27,39 @@ export class MainViewController extends NaviViewController {
         
         var str = Language.main.GetString("BtnStartGame");
         Debug.Log("MainViewController ViewDidLoad str="+str);
-        this.GotoHome();
+        this.StartParsePlace();
         
      
     }
+
+    StartParsePlace()
+    {
+        Debug.Log("HomeViewController StartParsePlace"); 
+        LevelManager.main.StartParsePlace(
+            {
+                success: (p: any) => { 
+                    this.StartParseGuanka();
+                },
+                fail: () => {
+                    this.StartParseGuanka();
+                },
+            });
+    }
+
+    StartParseGuanka()
+    {
+        Debug.Log("HomeViewController StartParseGuanka"); 
+        LevelManager.main.StartParseGuanka(
+            {
+                success: (p: any) => {
+                    this.GotoHome();
+                },
+                fail: () => {
+                    this.GotoHome();
+                },
+            });
+    }
+    
     GotoCloundRes() {
       //  CloudResViewController.main().Show(null, this.CloundResDidClose.bind(this));
     }
