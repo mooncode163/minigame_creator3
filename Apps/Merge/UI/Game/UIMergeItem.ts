@@ -7,14 +7,13 @@ import { UIView } from '../../../../Common/UIKit/ViewController/UIView';
 import { GameData } from '../../Data/GameData';
 import { GameMerge } from './GameMerge';
 import { UIGameMerge } from './UIGameMerge';
+import { UIImage } from '../../../../Common/UIKit/UIImage/UIImage';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UIMergeItem')
 export class UIMergeItem extends UIView {
-    
-    nodeItem: Node=null;
-    // collision: py,
-    spriteItem:UISprite = null; 
+    @type(UIImage)
+    imageItem: UIImage | null = null; 
     isNew= false;
     type= 0;
     t= 0;
@@ -86,9 +85,8 @@ export class UIMergeItem extends UIView {
         return false;
     }
 
-    UpdateImage (pic) {
-        this.spriteItem = this.nodeItem.getComponent(UISprite);
-        this.spriteItem.UpdateImageCloud(pic);
+    UpdateImage (pic) { 
+        this.imageItem.UpdateImageCloud(pic);
     }
 
     EnableGravity (isEnable) {

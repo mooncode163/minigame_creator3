@@ -67,6 +67,7 @@ export class UIImage extends UIView {
     }
 
     UpdateImageCloud(pic: string) {
+        this.UpdateImage(pic,this.keyImage);
     }
 
 

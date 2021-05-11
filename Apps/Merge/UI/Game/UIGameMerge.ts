@@ -16,10 +16,13 @@ const { ccclass, property, type } = _decorator;
 
 @ccclass('UIGameMerge')
 export class UIGameMerge extends UIGameBase {
+
+    @type(UIText)
+    titleScore: UIText | null = null; 
+
     game:GameMerge = null;
     // nodeImageBg:Node,
-    isShowGame= false;
-    titleScore: UIText;
+    isShowGame= false; 
     
     static _main: UIGameMerge;
     //静态方法
@@ -49,7 +52,7 @@ export class UIGameMerge extends UIGameBase {
 
 
     CreateGame () {
-        // this.UpdateGuankaLevel(LevelManager.main.gameLevel);
+        this.UpdateLevel(LevelManager.main.gameLevel);
         // this.OnGameFinish(true);
 
     }
@@ -83,7 +86,7 @@ export class UIGameMerge extends UIGameBase {
     UpdateLevel(level: number) {
         super.UpdateLevel(level); 
         Debug.Log("UIGameShapeColor::UpdateGuankaLevel");
-        return;
+        // return;
         
         GameData.main.isGameFail = false;
         

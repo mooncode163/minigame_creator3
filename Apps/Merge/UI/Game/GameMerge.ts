@@ -10,7 +10,8 @@ const { ccclass, property, type } = _decorator;
 
 @ccclass('GameMerge')
 export class GameMerge extends GameBase {
-
+    @type(Node)
+    nodeDeadline: Node | null = null; 
 
     static TimeStep = 0.8;
 
@@ -25,8 +26,7 @@ export class GameMerge extends GameBase {
     isMouseDown = false;
     isMouseUp = false;
     isAutoClick = false;
-    posYInit: 0;
-    nodeDeadline = Node;
+    posYInit: 0; 
 
     static _main: GameMerge;
     //静态方法
