@@ -1,10 +1,13 @@
 
-import { _decorator, Component, Node, Prefab, CCObject, director, instantiate } from 'cc';
+import { _decorator, Component, Node, Prefab, CCObject, director, instantiate, UITransform } from 'cc';
 import { GameBase } from '../../../../AppBase/Game/GameBase';
 import { PrefabCache } from '../../../../Common/Cache/PrefabCache';
+import { Common } from '../../../../Common/Common';
 import { Debug } from '../../../../Common/Debug';
 import { UITouchEvent } from '../../../../Common/UIKit/UITouchEvent';
 import { UIView } from '../../../../Common/UIKit/ViewController/UIView';
+import { GameData } from '../../Data/GameData';
+import { GameLevelParse } from '../../Data/GameLevelParse';
 import { UIMergeItem } from './UIMergeItem';
 const { ccclass, property, type } = _decorator;
 
@@ -15,7 +18,7 @@ export class GameMerge extends GameBase {
 
     static TimeStep = 0.8;
 
-    ScaleStart: 0.4;
+    ScaleStart= 0.4;
     isFirstRun = false;
     prefabItem = null;
     uiItem = null;
@@ -57,16 +60,19 @@ export class GameMerge extends GameBase {
 
 
     LoadPrefab() {
-        // PrefabCache.main.LoadByKey("UIMergeItem", function (err, prefab) {
-        //     if (err) {
-        //         Debug.Log("LoadGamePrefab err=" + err.message || err);
-        //         return;
-        //     }
-        //     this.prefabItem = prefab;
-        //     this.StartGame();
-
-        // }.bind(this)
-        // );
+        PrefabCache.main.LoadByKey(
+            {
+                key: "UIMergeItem",
+                success: (p: any, data: any) => {
+                    this.prefabItem = data;
+                    this.StartGame();
+                 
+                },
+                fail: () => {
+                    
+                },
+            });
+ 
     }
 
     StartGame() {
@@ -113,10 +119,10 @@ export class GameMerge extends GameBase {
 
     }
     GetTotalItems() {
-        return GameLevelParse.main().listGameItems.length;
+        return GameLevelParse.main.listGameItems.length;
     }
     GetItemId(idx) {
-        var info = GameLevelParse.main().GetItemInfo(idx);
+        var info = GameLevelParse.main.GetLevelItemInfo(idx);
         return info.id;
     }
 
@@ -181,7 +187,7 @@ export class GameMerge extends GameBase {
         if (this.uiItem != null) {
             this.uiItem.id = toId;
             this.uiItem.name = toId;
-            var pic = GameLevelParse.main().GetImagePath(toId);
+            var pic = GameLevelParse.main.GetImagePath(toId);
             this.uiItem.UpdateImage(pic);
         }
 
@@ -193,7 +199,7 @@ export class GameMerge extends GameBase {
         for (var i = 0; i < this.listItem.length; i++) {
             var uilist = this.listItem[i];
             if (uilist == ui) {
-                ShowMergeParticle(ui.node.position, ui.id);
+                this.ShowMergeParticle(ui.node.position, ui.id);
                 uilist.node.destroy();
                 this.listItem.splice(i, 1);
                 break;
@@ -220,7 +226,7 @@ export class GameMerge extends GameBase {
         for (var i = 0; i < this.listItem.length; i++) {
             var uilist = this.listItem[i];
             if (uilist.id == id) {
-                ShowMergeParticle(ui.node.position, ui.id);
+                this.ShowMergeParticle(ui.node.position, ui.id);
                 uilist.node.destroy();
             }
         }
@@ -249,7 +255,7 @@ export class GameMerge extends GameBase {
         ui.SetParent(this);
         ui.name = keyid;
         ui.node.name = keyid;
-        var pic = GameLevelParse.main().GetImagePath(key);
+        var pic = GameLevelParse.main.GetImagePath(key);
         ui.UpdateImage(pic);
 
         ui.EnableGravity(false);
@@ -286,8 +292,8 @@ export class GameMerge extends GameBase {
     OnUITouchEvent(ev, status, event) {
 
         var pos = event.getLocation();//canvas坐标原点在屏幕左下角 
-        var posnode = this.node.convertToNodeSpace(pos);//坐标原点在node左下角
-        var posnodeAR = this.node.convertToNodeSpaceAR(pos);//坐标原点在node的锚点
+        // var posnode = this.node.convertToNodeSpace(pos);//坐标原点在node左下角 
+   var posnodeAR = this.node.getComponent(UITransform).convertToNodeSpaceAR(pos);//坐标原点在node的锚点
 
         switch (status) {
             case UITouchEvent.TOUCH_DOWN:

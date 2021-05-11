@@ -17,8 +17,8 @@ export class GameLevelParse extends LevelParseBase {
     countLoad = 0;
     loadMax= 0;
 
-    listGameItems: CCObject[] = [];
-    listGameItemDefault: CCObject[] = [];
+    listGameItems: ItemInfo[] = [];
+    listGameItemDefault: ItemInfo[] = [];
 
     static _main: GameLevelParse;
     //静态方法
@@ -37,6 +37,18 @@ export class GameLevelParse extends LevelParseBase {
 
     }
 
+    GetLevelItemInfo (idx) {
+        if (this.listGameItems == null) {
+            return null;
+        }
+        if (idx >= this.listGameItems.length) {
+            return null;
+        }
+        var info = this.listGameItems[idx];
+        // Debug.Log("UIGameCaiCaiLe GetLevelItemInfo idx=" + idx + " info=" + info);
+        return info;
+    }
+    
     GetLastItemInfo() {
         Debug.Log("GameItems:GetLastItemInfo this.listGameItems=" + this.listGameItems.length);
         return this.listGameItems[this.listGameItems.length - 1];
