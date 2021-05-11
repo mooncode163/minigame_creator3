@@ -42,16 +42,17 @@ export class LayOutRelation extends LayOutBase {
         this._type = value;
     }
 
+    // private _offset = Vec2.ZERO;
+    // @type(Vec2)
+    // //get 的用法
+    // get offset(): Vec2 {           // 函数后(): string 这个的意思是 要求函数返回的类型必须是 string
+    //     return this._offset;
+    // }
+    // // set 的用法
+    // set offset(value: Vec2) {
+    //     this._offset = value;
+    // }
 
-    private _offset = Vec2.ZERO;
-    //get 的用法
-    get offset(): Vec2 {           // 函数后(): string 这个的意思是 要求函数返回的类型必须是 string
-        return this._offset;
-    }
-    // set 的用法
-    set offset(value: Vec2) {
-        this._offset = value;
-    }
     // [1]
     // dummy = '';
 

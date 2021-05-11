@@ -81,6 +81,9 @@ export class LayOutSize extends LayOutBase {
         this._height = value;
         this.LayOut();
     } 
+
+     // 必须设置两个@type 才能在editor里修改
+    @type(SizeType) 
     private _typeX = SizeType.MATCH_PARENT;
     @type(SizeType) 
     get typeX() {
@@ -91,6 +94,9 @@ export class LayOutSize extends LayOutBase {
         this.LayOut();
     }
     
+
+     // 必须设置两个@type 才能在editor里修改
+    @type(SizeType) 
     private _typeY = SizeType.MATCH_PARENT;
     @type(SizeType) 
     get typeY() {
@@ -124,8 +130,7 @@ export class LayOutSize extends LayOutBase {
     // serializableDummy = 0;
 
     onLoad() {
-        super.onLoad();
-        this._typeX = SizeType.MATCH_PARENT;
+        super.onLoad(); 
         // this.LayOut();
     }
     start() {
