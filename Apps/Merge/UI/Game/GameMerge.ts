@@ -9,6 +9,7 @@ import { UIView } from '../../../../Common/UIKit/ViewController/UIView';
 import { GameData } from '../../Data/GameData';
 import { GameLevelParse } from '../../Data/GameLevelParse';
 import { UIMergeItem } from './UIMergeItem';
+import { AppSceneBase } from '../../../../AppBase/Common/AppSceneBase';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('GameMerge')
@@ -262,9 +263,10 @@ export class GameMerge extends GameBase {
         this.ScaleStart = 0.2;
         // var scale = (this.ScaleStart + 0.05 * this.GetIndexOfItem(key)) * 0.8; 
         var scale = (this.ScaleStart + 0.1 * this.GetIndexOfItem(key));
-        // scale =1;
-        ui.node.scaleX = scale;
-        ui.node.scaleY = scale;
+     
+        node.scale.x = scale;
+        node.scale.y = scale;
+
         var rectParent = this.GetBoundingBox();
         x = 0;
         y = rectParent.height / 2 - ui.GetBoundingBox().height;
@@ -290,8 +292,10 @@ export class GameMerge extends GameBase {
     OnTouchUp(pos) {
     }
     OnUITouchEvent(ui: UITouchEvent, status: number, event?: EventTouch) {
+        var pos = ui.GetPosition(event);
         var posnodeAR = ui.GetPositionOnNode(event);//坐标原点在node的锚点
-        Debug.Log("OnUITouchEvent posnodeAR = "+posnodeAR);
+        var posui = ui.GetUIPosition(event);
+        Debug.Log("OnUITouchEvent posnodeAR = "+posnodeAR+ " posui="+posui+" sizeCanvas="+AppSceneBase.main.sizeCanvas);
         switch (status) {
             case UITouchEvent.TOUCH_DOWN:
                 this.OnTouchDown(posnodeAR);
@@ -344,8 +348,8 @@ export class GameMerge extends GameBase {
                     if (this.uiItem.isNew) {
                         // var pos = new Vector3(mousePosition.x, posYInit, 0);//更改水果在场景中的位置
                         mousePosition.y = this.posYInit;
-                        var value = 3.0;
-                        var ratio = 0.2;
+                        var value = 30;
+                        var ratio = 1;
                         if (this.isAutoClick) {
                             ratio = 1;
                         }
@@ -353,8 +357,8 @@ export class GameMerge extends GameBase {
                         // 生成物体 使用随机防止同地点击无限堆高
                         // uiItem.transform.position = pos + new Vector3(UnityEngine.Random.Range(-value, value) * ratio, UnityEngine.Random.Range(-value, value) * ratio, 0);//!
                         // uiItem.transform.position = pos + new Vector3(UnityEngine.Random.Range(-value, value) * ratio, 0, 0);//!
-                        mousePosition.x = 0;
-                        mousePosition.y = 200;
+                        // mousePosition.x = 0;
+                        // mousePosition.y = 200;
 
                         this.uiItem.node.setPosition(mousePosition);
 

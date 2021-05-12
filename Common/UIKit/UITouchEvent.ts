@@ -25,15 +25,24 @@ export class UITouchEvent extends Component {
 
     }
 
-    //canvas坐标原点在屏幕左下角 
+    //屏幕坐标,原点在屏幕左下角 
     GetPosition(event?: EventTouch) {
         return event.getLocation();
     }
 
+    //Canvas UI 坐标,原点在Canvas左下角 
+    GetUIPosition(event?: EventTouch) {
+        return event.getUILocation();
+    }
     //坐标原点在node的锚点
     GetPositionOnNode(event?: EventTouch) {
-        var pos = this.GetPosition(event);//canvas坐标原点在屏幕左下角  
-        return this.node.getComponent(UITransform).convertToNodeSpaceAR(new Vec3(pos.x, pos.y, 0));//坐标原点在node的锚点
+        var uiTrans = this.node.getComponent(UITransform);
+        // var pos = this.GetPosition(event);
+        var posui = this.GetUIPosition(event);
+        // pos = event.wo  convertToNodeSpaceAR convertToWorldSpaceAR
+        const localTouchPos = uiTrans.convertToNodeSpaceAR(new Vec3(posui.x, posui.y, 0));
+        return localTouchPos;
+        // return uiTrans.convertToWorldSpaceAR(new Vec3(pos.x, pos.y, 0));//坐标原点在node的锚点
     }
 
 
