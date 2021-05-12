@@ -264,8 +264,8 @@ export class GameMerge extends GameBase {
         // var scale = (this.ScaleStart + 0.05 * this.GetIndexOfItem(key)) * 0.8; 
         var scale = (this.ScaleStart + 0.1 * this.GetIndexOfItem(key));
      
-        node.scale.x = scale;
-        node.scale.y = scale;
+        // node.scale.x = scale;
+        // node.scale.y = scale;
 
         var rectParent = this.GetBoundingBox();
         x = 0;
@@ -273,7 +273,7 @@ export class GameMerge extends GameBase {
 
         // y = 512;
         this.posYInit = y;
-        Debug.Log("OnCollisionEnter2D this.posYInit=" + this.posYInit + " key=" + key);
+        Debug.Log("OnCollisionEnter2D this.posYInit=" + this.posYInit + " key=" + key+" scale="+scale);
         ui.node.setPosition(x, y);
         // ui.transform.localScale = new Vector3(scale, scale, 1);
         // ui.transform.localPosition = new Vector3(0, posYInit, -1);
