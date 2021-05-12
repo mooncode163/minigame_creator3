@@ -2,7 +2,7 @@
 import { _decorator, Component, Node, Vec2 } from 'cc';
 import { Device } from '../../Device';
 import { LayOutUtil } from './LayOutUtil';
-const { ccclass, property,type } = _decorator;
+const { ccclass, property, type } = _decorator;
 
 // TypeScript自动引入脚本插件
 // https://blog.csdn.net/u011004567/article/details/78507236
@@ -14,9 +14,9 @@ const Direction = LayOutUtil.Direction;
 @ccclass('LayOutBase')
 export class LayOutBase extends Component {
 
-    
+
     target: Node | null = null;
-    target2: Node | null = null; 
+    target2: Node | null = null;
 
 
     @property
@@ -42,8 +42,10 @@ export class LayOutBase extends Component {
     //     // displayOrder: 3,
     // })
     // public ali: Align = null!;
- 
-    private _offsetMin = Vec2.ZERO;
+
+    // vec2 @type 必须用new 不能Vec2.ZERO 不然编译报错 因为ZERO是Readonly 
+    @type(Vec2)
+    private _offsetMin = new Vec2(0, 0); 
     @type(Vec2)
     //get 的用法
     get offsetMin(): Vec2 {           // 函数后(): string 这个的意思是 要求函数返回的类型必须是 string
@@ -54,7 +56,9 @@ export class LayOutBase extends Component {
         this._offsetMin = value;
     }
 
-    private _offsetMax = Vec2.ZERO;
+    // vec2 @type 必须用new 不能Vec2.ZERO 不然编译报错 因为ZERO是Readonly 
+    @type(Vec2)
+    private _offsetMax = new Vec2(0, 0); 
     @type(Vec2)
     //get 的用法
     get offsetMax(): Vec2 {           // 函数后(): string 这个的意思是 要求函数返回的类型必须是 string
@@ -64,20 +68,21 @@ export class LayOutBase extends Component {
     set offsetMax(value: Vec2) {
         this._offsetMax = value;
     }
-  
+
+    // vec2 @type 必须用new 不能Vec2.ZERO 不然编译报错 因为ZERO是Readonly 
     @type(Vec2)
     private _offset = new Vec2(0, 0);
     @type(Vec2)
     //get 的用法
-    get offset(): Vec2 {           // 函数后(): string 这个的意思是 要求函数返回的类型必须是 string
+    get offset(): Vec2 {
         return this._offset;
     }
     // set 的用法
     set offset(value: Vec2) {
         this._offset = value;
     }
-    
-    onLoad () {   
+
+    onLoad() {
         this.LayOut();
     }
     start() {
@@ -85,46 +90,40 @@ export class LayOutBase extends Component {
         this.LayOut();
     }
 
-    LayOut () { 
+    LayOut() {
     }
 
     IsUseLandscape() {
         var ret = false;
-        if (Device.main.isLandscape&&this.enableLandscape)
-        {
+        if (Device.main.isLandscape && this.enableLandscape) {
             ret = true;
         }
         return ret;
     }
- 
+
     Enable() {
         var ret = true;
-        if (!this.enableLayout)
-        {
+        if (!this.enableLayout) {
             ret = false;
         }
-        if (this.isOnlyForLandscape)
-        {
-            if (!Device.main.isLandscape)
-            {
+        if (this.isOnlyForLandscape) {
+            if (!Device.main.isLandscape) {
                 ret = false;
             }
         }
-        if (this.isOnlyForPortrait)
-        {
-            if (Device.main.isLandscape)
-            {
+        if (this.isOnlyForPortrait) {
+            if (Device.main.isLandscape) {
                 ret = false;
             }
         }
         return ret;
     }
-    
+
     // update (deltaTime: number) {
     //     // [4]
     // }
 }
- 
+
 /**
  * [1] Class member could be defined like this.
  * [2] Use `property` decorator if your want the member to be serializable.

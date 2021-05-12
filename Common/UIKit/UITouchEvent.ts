@@ -16,6 +16,7 @@ export class UITouchEvent extends Component {
 
     Init () {
 
+        // node layer 需要设置为UI_2D
 
         this.node.on(SystemEventType.TOUCH_START, this._onTouchBegan, this);
         this.node.on(SystemEventType.TOUCH_MOVE, this._onTouchMove, this);

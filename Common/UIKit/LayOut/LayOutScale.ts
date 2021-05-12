@@ -18,6 +18,7 @@ export class LayOutScale extends LayOutBase {
     @property
     ratio = 1.0;
 
+    @type(ScaleType)
     private _type = ScaleType.MIN;
     @type(ScaleType)
     //get 的用法
@@ -34,6 +35,7 @@ export class LayOutScale extends LayOutBase {
 
     onLoad() {
         super.onLoad(); 
+        this.type = this._type;
         this.LayOut();
     }
 
@@ -77,6 +79,10 @@ export class LayOutScale extends LayOutBase {
         var h_parent = sizeParent.height;
         w_parent = sizeParent.width;
         h_parent = sizeParent.height;
+        if(AppSceneBase.main==null)
+        {
+            return;
+        }
         var sizeCanvas = AppSceneBase.main.sizeCanvas;
         if (w_parent == 0) {
             w_parent = sizeCanvas.width;
