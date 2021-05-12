@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Prefab, SystemEventType, EventTouch, UITransform } from 'cc';  
+import { _decorator, Component, Node, Prefab, SystemEventType, EventTouch, UITransform, Vec3 } from 'cc';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UITouchEvent')
@@ -7,14 +7,14 @@ export class UITouchEvent extends Component {
     public static TOUCH_DOWN = 0;
     public static TOUCH_MOVE = 1;
     public static TOUCH_UP = 2;
-    callBackTouch= null;
-   
+    callBackTouch = null;
 
-    onLoad () {
+
+    onLoad() {
         this.Init();
     }
 
-    Init () {
+    Init() {
 
         // node layer 需要设置为UI_2D
 
@@ -25,10 +25,20 @@ export class UITouchEvent extends Component {
 
     }
 
-     
+    //canvas坐标原点在屏幕左下角 
+    GetPosition(event?: EventTouch) {
+        return event.getLocation();
+    }
+
+    //坐标原点在node的锚点
+    GetPositionOnNode(event?: EventTouch) {
+        var pos = this.GetPosition(event);//canvas坐标原点在屏幕左下角  
+        return this.node.getComponent(UITransform).convertToNodeSpaceAR(new Vec3(pos.x, pos.y, 0));//坐标原点在node的锚点
+    }
+
 
     // touch event handler
-    protected _onTouchBegan (event?: EventTouch) {
+    protected _onTouchBegan(event?: EventTouch) {
 
         var pos = event.getLocation();//canvas坐标原点在屏幕左下角 
         // var posnode = this.node.convertToNodeSpace(pos);//坐标原点在node左下角
@@ -39,20 +49,20 @@ export class UITouchEvent extends Component {
         }
     }
 
-    protected _onTouchMove (event?: EventTouch) {
+    protected _onTouchMove(event?: EventTouch) {
         if (this.callBackTouch != null) {
             this.callBackTouch(this, UITouchEvent.TOUCH_MOVE, event);
         }
     }
 
-    protected _onTouchEnded (event?: EventTouch) {
+    protected _onTouchEnded(event?: EventTouch) {
         if (this.callBackTouch != null) {
             this.callBackTouch(this, UITouchEvent.TOUCH_UP, event);
         }
     }
 
-    protected _onTouchCancel (event?: EventTouch) {
-       
+    protected _onTouchCancel(event?: EventTouch) {
+
     }
 }
 

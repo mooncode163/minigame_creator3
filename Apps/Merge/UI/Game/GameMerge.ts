@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Prefab, CCObject, director, instantiate, UITransform } from 'cc';
+import { _decorator, Component, Node, Prefab, CCObject, director, instantiate, UITransform, EventTouch } from 'cc';
 import { GameBase } from '../../../../AppBase/Game/GameBase';
 import { PrefabCache } from '../../../../Common/Cache/PrefabCache';
 import { Common } from '../../../../Common/Common';
@@ -14,22 +14,22 @@ const { ccclass, property, type } = _decorator;
 @ccclass('GameMerge')
 export class GameMerge extends GameBase {
     @type(Node)
-    nodeDeadline: Node | null = null; 
+    nodeDeadline: Node | null = null;
 
     static TimeStep = 0.8;
 
-    ScaleStart= 0.4;
+    ScaleStart = 0.4;
     isFirstRun = false;
     prefabItem = null;
     uiItem = null;
-    listItem:UIMergeItem[] = [];
+    listItem: UIMergeItem[] = [];
 
     time = 1.0;
     hasItBeenGenerated = false;
     isMouseDown = false;
     isMouseUp = false;
     isAutoClick = false;
-    posYInit: 0; 
+    posYInit: 0;
 
     static _main: GameMerge;
     //静态方法
@@ -38,7 +38,7 @@ export class GameMerge extends GameBase {
     }
     onLoad() {
         super.onLoad();
-        GameMerge._main = this; 
+        GameMerge._main = this;
         this.time = 0;
         this.LoadPrefab();
         // this.setContentSize(this.node.parent.getContentSize());
@@ -56,7 +56,7 @@ export class GameMerge extends GameBase {
         super.UpdateLevel(level);
     }
 
- 
+
 
 
     LoadPrefab() {
@@ -66,13 +66,13 @@ export class GameMerge extends GameBase {
                 success: (p: any, data: any) => {
                     this.prefabItem = data;
                     this.StartGame();
-                 
+
                 },
                 fail: () => {
-                    
+
                 },
             });
- 
+
     }
 
     StartGame() {
@@ -289,12 +289,9 @@ export class GameMerge extends GameBase {
     }
     OnTouchUp(pos) {
     }
-    OnUITouchEvent(ev, status, event) {
-
-        var pos = event.getLocation();//canvas坐标原点在屏幕左下角 
-        // var posnode = this.node.convertToNodeSpace(pos);//坐标原点在node左下角 
-   var posnodeAR = this.node.getComponent(UITransform).convertToNodeSpaceAR(pos);//坐标原点在node的锚点
-
+    OnUITouchEvent(ui: UITouchEvent, status: number, event?: EventTouch) {
+        var posnodeAR = ui.GetPositionOnNode(event);//坐标原点在node的锚点
+        Debug.Log("OnUITouchEvent posnodeAR = "+posnodeAR);
         switch (status) {
             case UITouchEvent.TOUCH_DOWN:
                 this.OnTouchDown(posnodeAR);
@@ -307,8 +304,7 @@ export class GameMerge extends GameBase {
             case UITouchEvent.TOUCH_UP:
                 this.OnTouchUp(posnodeAR);
                 break;
-        }
-        posnodeAR.z = 0;
+        } 
         this.UpdateEvent(status, posnodeAR);
     }
 
@@ -359,8 +355,8 @@ export class GameMerge extends GameBase {
                         // uiItem.transform.position = pos + new Vector3(UnityEngine.Random.Range(-value, value) * ratio, 0, 0);//!
                         mousePosition.x = 0;
                         mousePosition.y = 200;
-                       
-                       this.uiItem.node.setPosition(mousePosition);
+
+                        this.uiItem.node.setPosition(mousePosition);
 
 
                     }
