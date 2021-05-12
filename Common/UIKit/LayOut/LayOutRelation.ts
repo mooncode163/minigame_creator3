@@ -29,9 +29,8 @@ const RelationType = LayOutUtil.RelationType;
 @ccclass('LayOutRelation')
 export class LayOutRelation extends LayOutBase { 
 
-   
+    @type(RelationType)
     private _type = RelationType.PARENT;
-
     @type(RelationType)
     //get 的用法
     get type() {           // 函数后(): string 这个的意思是 要求函数返回的类型必须是 string
@@ -60,8 +59,7 @@ export class LayOutRelation extends LayOutBase {
     // @property
     // serializableDummy = 0;
     onLoad() {
-        super.onLoad();
-        this._type = RelationType.PARENT;
+        super.onLoad(); 
         this.LayOut();
     }
 

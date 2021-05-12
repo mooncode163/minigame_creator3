@@ -64,8 +64,8 @@ export class LayOutBase extends Component {
     set offsetMax(value: Vec2) {
         this._offsetMax = value;
     }
- 
-
+  
+    
     private _offset = Vec2.ZERO;
     @type(Vec2)
     //get 的用法

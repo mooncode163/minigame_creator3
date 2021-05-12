@@ -92,7 +92,7 @@ export class UIButton extends UIView {
 
     onLoad() {
         super.onLoad();
-        // this.type = this._type;
+        this.type = this._type;
     }
 
     start() {
