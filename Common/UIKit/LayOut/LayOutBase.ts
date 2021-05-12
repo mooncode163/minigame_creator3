@@ -65,8 +65,8 @@ export class LayOutBase extends Component {
         this._offsetMax = value;
     }
   
-    
-    private _offset = Vec2.ZERO;
+    @type(Vec2)
+    private _offset = new Vec2(0, 0);
     @type(Vec2)
     //get 的用法
     get offset(): Vec2 {           // 函数后(): string 这个的意思是 要求函数返回的类型必须是 string
