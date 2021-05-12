@@ -14,6 +14,11 @@ export class CollisionDetection extends UIView {
 
     isItDetected = true;//定义是否进行碰撞检测后逻辑判断
     playFallingSound = false;//定义是否播放过下落声音 
+
+    isNewItem = false;
+    otherCollider:Collider2D;
+    keyNext="";
+
     onLoad() {
         this.isItDetected = true;
         super.onLoad();
@@ -39,9 +44,46 @@ export class CollisionDetection extends UIView {
     start() {
         super.start();
     }
+    update() {
+       
+    }
 
+    CreateNewItem() {
+        var keynext = this.keyNext;
+        var v2 = this.otherCollider.node.position;//保存被碰撞物体的位置
+        var _tag = this.otherCollider.node.name;
+        var uiNext = GameMerge.main.CreateItem(keynext);
+        uiNext.node.setPosition(v2);
+        uiNext.EnableGravity(true);
+        uiNext.hasGoDownDeadLine = true;
+        GameMerge.main.ShowMergeParticle(v2, _tag);
+        //播放合成声音 
+        // AudioPlay.main.PlayFile(AppRes.AUDIO_Merge);
+        AudioPlay.main.PlayByKey("Merge");
+        //增加分数
 
-    CheckCollision(other) {
+        GameData.main.score += 10 * GameMerge.main.GetIndexOfItem(keynext);
+        UIGameMerge.main.UpdateScore();
+
+        GameMerge.main.RemoveItemFromList(this.node);
+        GameMerge.main.RemoveItemFromList(this.otherCollider.node);
+        Debug.Log("OnCollisionEnter2D destroy ");
+        this.node.destroy();
+        this.otherCollider.node.destroy();
+
+        if (keynext == GameMerge.main.GetLastItem()) {
+            //game win 合成了大西瓜
+            //  UIGameMerge.main.OnGameFinish(false);
+        }
+    }
+
+    public updateCulling () {
+    }
+
+    CheckCollision(other) { 
+        // var uiNext = GameMerge.main.CreateItem("putao");
+        // return;
+
         var _tag = other.node.name;//获取被碰撞物体的Tag 
 
         //播放下落声音
@@ -91,36 +133,14 @@ export class CollisionDetection extends UIView {
             if (Common.BlankString(keynext)) {
                 Debug.Log("OnCollisionEnter2D keynext blank");
                 return;
-            }
-
-
+            } 
             {
                 Debug.Log("OnCollisionEnter2D keynext=" + keynext + " this.name=" + this.node.name + " other.name=" + other.node.name + " this.position=" + this.node.position + " other.position=" + other.node.position);
-                //在被碰撞的物体原有的位置上生成新物体
-
-                var uiNext = GameMerge.main.CreateItem(keynext);
-                uiNext.node.setPosition(v2);
-                uiNext.EnableGravity(true);
-                uiNext.hasGoDownDeadLine = true;
-                GameMerge.main.ShowMergeParticle(v2, _tag);
-                //播放合成声音 
-                // AudioPlay.main.PlayFile(AppRes.AUDIO_Merge);
-                AudioPlay.main.PlayByKey("Merge");
-                //增加分数
-
-                GameData.main.score += 10 * GameMerge.main.GetIndexOfItem(keynext);
-                UIGameMerge.main.UpdateScore();
-
-                GameMerge.main.RemoveItemFromList(this.node);
-                GameMerge.main.RemoveItemFromList(other.node);
-                Debug.Log("OnCollisionEnter2D destroy ");
-                this.node.destroy();
-                other.node.destroy();
-
-                if (keynext == GameMerge.main.GetLastItem()) {
-                    //game win 合成了大西瓜
-                    //  UIGameMerge.main.OnGameFinish(false);
-                }
+             
+                this.keyNext = keynext;
+                this.otherCollider=other;
+                // 创建新的物体需要在主线程里执行
+                this.scheduleOnce(this.CreateNewItem.bind(this));  
             }
         }
 
@@ -149,7 +169,7 @@ export class CollisionDetection extends UIView {
     // 只在两个碰撞体结束接触时被调用一次
     onEndContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
         // will be called once when the contact between two colliders just about to end.
-        Debug.Log('onEndContact');
+        // Debug.Log('onEndContact');
     }
 
     // 每次将要处理碰撞体接触逻辑时被调用
@@ -163,7 +183,7 @@ export class CollisionDetection extends UIView {
     // 每次处理完碰撞体接触逻辑时被调用
     onPostSolve(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
         // will be called every time collider contact should be resolved
-        Debug.Log('onPostSolve');
+        // Debug.Log('onPostSolve');
     }
 
 }

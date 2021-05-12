@@ -243,7 +243,7 @@ export class GameMerge extends GameBase {
     }
 
     // string return UIMergeItem
-    CreateItem(key) {
+    CreateItem(key:string) {
         var keyid = key;
         // keyid ="juzi";
 
