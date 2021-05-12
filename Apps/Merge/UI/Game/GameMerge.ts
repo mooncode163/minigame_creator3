@@ -308,7 +308,7 @@ export class GameMerge extends GameBase {
                 this.OnTouchUp(posnodeAR);
                 break;
         }
-
+        posnodeAR.z = 0;
         this.UpdateEvent(status, posnodeAR);
     }
 
@@ -357,7 +357,10 @@ export class GameMerge extends GameBase {
                         // 生成物体 使用随机防止同地点击无限堆高
                         // uiItem.transform.position = pos + new Vector3(UnityEngine.Random.Range(-value, value) * ratio, UnityEngine.Random.Range(-value, value) * ratio, 0);//!
                         // uiItem.transform.position = pos + new Vector3(UnityEngine.Random.Range(-value, value) * ratio, 0, 0);//!
-                        this.uiItem.node.setPosition(mousePosition);
+                        mousePosition.x = 0;
+                        mousePosition.y = 200;
+                       
+                       this.uiItem.node.setPosition(mousePosition);
 
 
                     }
