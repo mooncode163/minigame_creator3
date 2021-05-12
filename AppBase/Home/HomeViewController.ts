@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Prefab, instantiate, math } from 'cc';
+import { _decorator, Component, Node, Prefab, instantiate, math, PhysicsSystem2D, EPhysics2DDrawFlags } from 'cc';
 import { AdKitCommon } from '../../Common/AdKit/AdKitCommon';
 import { AdInsert } from '../../Common/AdKit/Insert/AdInsert';
 import { PrefabCache } from '../../Common/Cache/PrefabCache';
@@ -31,6 +31,10 @@ export class HomeViewController extends UIViewController {
 
     ViewDidLoad() {
         Debug.Log("HomeViewController ViewDidLoad");
+
+        // PhysicsSystem2D.instance.enable = true;
+        // PhysicsSystem2D.instance.debugDrawFlags = EPhysics2DDrawFlags.All;
+        
         super.ViewDidLoad();
         //提前加载game prefab
         // if (!HomeViewController.isGameHasInit) {

@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Prefab, CCObject, director, instantiate, UITransform, EventTouch } from 'cc';
+import { _decorator, Component, Node, Prefab, CCObject, director, instantiate, UITransform, EventTouch, PhysicsSystem2D, EPhysics2DDrawFlags, Vec3 } from 'cc';
 import { GameBase } from '../../../../AppBase/Game/GameBase';
 import { PrefabCache } from '../../../../Common/Cache/PrefabCache';
 import { Common } from '../../../../Common/Common';
@@ -44,6 +44,8 @@ export class GameMerge extends GameBase {
         this.LoadPrefab();
         // this.setContentSize(this.node.parent.getContentSize());
 
+        PhysicsSystem2D.instance.enable = true;
+        PhysicsSystem2D.instance.debugDrawFlags = EPhysics2DDrawFlags.All;
         this.LayOut();
     }
     start() {
@@ -167,7 +169,7 @@ export class GameMerge extends GameBase {
         return ret;
     }
 
-    GetLastItem(key) {
+    GetLastItem() {
         var ret = "";
         if (this.GetTotalItems() > 0) {
             ret = this.GetItemId(this.GetTotalItems() - 1);
@@ -264,8 +266,9 @@ export class GameMerge extends GameBase {
         // var scale = (this.ScaleStart + 0.05 * this.GetIndexOfItem(key)) * 0.8; 
         var scale = (this.ScaleStart + 0.1 * this.GetIndexOfItem(key));
      
-        // node.scale.x = scale;
-        // node.scale.y = scale;
+        // ui.node.scale.x = scale;
+        // ui.node.scale.y = scale;
+        ui.node.scale = new Vec3(scale, scale, 1);
 
         var rectParent = this.GetBoundingBox();
         x = 0;

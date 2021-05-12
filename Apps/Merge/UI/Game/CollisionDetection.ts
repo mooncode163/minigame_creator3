@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Prefab } from 'cc';
+import { _decorator, Component, Node, Prefab, Collider2D, Contact2DType, IPhysics2DContact, CircleCollider2D } from 'cc';
 import { AudioPlay } from '../../../../Common/Audio/AudioPlay';
 import { Common } from '../../../../Common/Common';
 import { Debug } from '../../../../Common/Debug';
@@ -17,6 +17,14 @@ export class CollisionDetection extends UIView {
     onLoad() {
         this.isItDetected = true;
         super.onLoad();
+
+        let collider = this.getComponent(CircleCollider2D);
+        if (collider) {
+            collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
+            collider.on(Contact2DType.END_CONTACT, this.onEndContact, this);
+            collider.on(Contact2DType.PRE_SOLVE, this.onPreSolve, this);
+            collider.on(Contact2DType.POST_SOLVE, this.onPostSolve, this);
+        }
     }
     start() {
         super.start();
@@ -119,37 +127,34 @@ export class CollisionDetection extends UIView {
 
     HasTheDeliveryBeenDetected() {
         return this.isItDetected;
-    }
+    } 
 
-
-    // onCollisionEnter:function(other,self){
-    //     console.log('on collision enter onCollisionEnter other.name='+other.node.name);
-    // }
-
-    // 只在两个碰撞体开始接触时被调用一次
-    onBeginContact(contact, selfCollider, otherCollider) {
-        console.log('OnCollisionEnter2D on collision enter onBeginContact otherCollider.name=' + otherCollider.node.name + " this.name=" + this.node.name);
+     // 只在两个碰撞体开始接触时被调用一次
+    onBeginContact (selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
+        // will be called once when two colliders begin to contact
+        Debug.Log('CollisionDetection OnCollisionEnter2D on collision enter onBeginContact otherCollider.name=' + otherCollider.node.name + " this.name=" + this.node.name);
         this.CheckCollision(otherCollider);
-
     }
 
-    // 只在两个碰撞体结束接触时被调用一次
-    onEndContact(contact, selfCollider, otherCollider) {
-
+     // 只在两个碰撞体结束接触时被调用一次
+    onEndContact (selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
+        // will be called once when the contact between two colliders just about to end.
+        Debug.Log('onEndContact');
     }
 
-    // 每次将要处理碰撞体接触逻辑时被调用
-    onPreSolve(contact, selfCollider, other) {
-        if (other.node.name == GameData.NameDeadLine) {
-            Debug.Log("onPreSolve enter other.name=" + other.node.name);
+     // 每次将要处理碰撞体接触逻辑时被调用
+    onPreSolve (selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
+        // will be called every time collider contact should be resolved
+        if (otherCollider.node.name == GameData.NameDeadLine) {
+            Debug.Log("CollisionDetection onPreSolve enter other.name=" + otherCollider.node.name);
         }
     }
 
     // 每次处理完碰撞体接触逻辑时被调用
-    onPostSolve(contact, selfCollider, otherCollider) {
+    onPostSolve (selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
+        // will be called every time collider contact should be resolved
+        Debug.Log('onPostSolve');
     }
-
-
 
 }
 
