@@ -19,6 +19,7 @@ import { AdKitCommon } from '../../Common/AdKit/AdKitCommon';
 import { FrendBoard } from '../../Common/SNS/FrendBoard';
 import { GameManager } from './GameManager';
 import { ViewAlertManager } from '../../Common/UIKit/UIViewAlert/ViewAlertManager';
+import { LevelData } from './LevelData';
 const { ccclass, property, type } = _decorator;
 
 
@@ -111,7 +112,7 @@ export class UIGameBase extends UIView {
 
 
     UpdateGuankaLevel(level) {
-        var idx = LevelManager.main.gameLevel;
+        var idx = LevelData.main.gameLevel;
         Debug.Log("UIGameBase::UpdateGuankaLevel idx=" + idx);
         if (idx >= 3) {
             var isLock = Common.GetBoolOfKey(AppRes.KEY_GAME_LOCK, true);
@@ -130,7 +131,7 @@ export class UIGameBase extends UIView {
     }
 
     LoadLanguageGame() {
-        var info = LevelManager.main.GetPlaceItemInfo(LevelManager.main.placeLevel);
+        var info = LevelData.main.GetPlaceItemInfo(LevelData.main.placeLevel);
 
 
     }
@@ -174,7 +175,7 @@ export class UIGameBase extends UIView {
         }
         //GameManager.main.isShowGameAdInsert = false;
         // if ((GameManager.gameLevel != 0) && ((GameManager.gameLevel % _step) == 0))
-        if ((LevelManager.main.gameLevel % _step) == 0) {
+        if ((LevelData.main.gameLevel % _step) == 0) {
             AdKitCommon.main.InitAdInsert();
             AdKitCommon.main.ShowAdInsert(100);
             //GameManager.main.isShowGameAdInsert = true;
@@ -183,10 +184,10 @@ export class UIGameBase extends UIView {
 
     OnGameWinBase() {
         this.ShowAdInsert(UIGameBase.GAME_AD_INSERT_SHOW_STEP);
-        if (LevelManager.main.gameLevelFinish < LevelManager.main.gameLevel) {
-            LevelManager.main.gameLevelFinish = LevelManager.main.gameLevel;
+        if (LevelData.main.gameLevelFinish < LevelData.main.gameLevel) {
+            LevelData.main.gameLevelFinish = LevelData.main.gameLevel;
             //好友排行榜
-            let score = LevelManager.main.placeLevel + "-" + LevelManager.main.gameLevel;
+            let score = LevelData.main.placeLevel + "-" + LevelData.main.gameLevel;
             Debug.Log("OnGameWin score=" + score);
             FrendBoard.main.SaveData(score);
         }

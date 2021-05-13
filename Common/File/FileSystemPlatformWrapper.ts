@@ -2,8 +2,7 @@
 import { _decorator, Component, Node, Prefab } from 'cc'; 
 import { UIView } from '../../Common/UIKit/ViewController/UIView'; 
 import { Common } from '../Common';
-import { Platform } from '../Platform';
-import { FileSystemWeixin } from './FileSystemWeixin';
+import { Platform } from '../Platform'; 
 const { ccclass, property, type } = _decorator;
 
 @ccclass('FileSystemPlatformWrapper')
@@ -19,16 +18,8 @@ export class FileSystemPlatformWrapper extends UIView {
         return this._main;
     }
 
-
  
 
-    GetPlatform () {
-        var p = null;
-        if (Platform.isWeiXin) {
-            p = new FileSystemWeixin();
-        }
-        return p;
-    }
     GetRootDirPath () {
         return "";
     }

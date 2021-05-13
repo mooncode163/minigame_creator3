@@ -4,6 +4,7 @@ import { UIView } from '../../Common/UIKit/ViewController/UIView';
 import { Common } from '../Common';
 import { Platform } from '../Platform';
 import { FileSystemPlatformWrapper } from './FileSystemPlatformWrapper';
+import { FileSystemWeixin } from './FileSystemWeixin';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('FileSystem')
@@ -19,10 +20,15 @@ export class FileSystem extends UIView {
         }
         return this._main;
     }
-
-    Init () {
-        var p = new FileSystemPlatformWrapper();
-        this.platform = p.GetPlatform();
+    GetPlatform () {
+        var p = null;
+        if (Platform.isWeiXin) {
+            p = new FileSystemWeixin();
+        }
+        return p;
+    }
+    Init () { 
+        this.platform = this.GetPlatform();
     }
 
     GetRootDirPath () {

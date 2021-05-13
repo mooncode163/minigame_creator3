@@ -3,10 +3,11 @@ import { _decorator, Component, Node, Prefab, CCObject } from 'cc';
 import { Debug } from '../../Common/Debug';
 import { JsonUtil } from '../../Common/File/JsonUtil';
 import { ItemInfo } from '../../Common/ItemInfo';
-import { LevelManager } from './LevelManager';
+// import { LevelManager } from './LevelManager';
 import { ResManager } from '../../Common/Res/ResManager';
 import { Common } from '../../Common/Common';
 import { CloudRes } from '../../Common/CloundRes/CloudRes';
+import { LevelData } from './LevelData';
 const { ccclass, property, type } = _decorator;
 
 
@@ -50,21 +51,9 @@ export class LevelParseBase extends CCObject {
         return info;
     }
 
-    GetItemInfo () {
-        var level =  LevelManager.main.gameLevel;
-        //Debug.Log("UIGameCaiCaiLe GetItemInfo level=" + level);
-        return this.GetLevelItemInfo(level);
-    }
+     
 
-    GetLevelItemInfoCur () {
-        var level =  LevelManager.main.gameLevel;
-        return this.GetLevelItemInfo(level);
-    }
-
-    //place 
-    GetPlaceTotal () {
-        return  LevelManager.main.listPlace.length;
-    }
+  
 
         /*
       {
@@ -100,7 +89,7 @@ export class LevelParseBase extends CCObject {
     }
     ParsePlaceList (json:any) {
         Debug.Log("StartParsePlaceList ParsePlaceList");
-        if (( LevelManager.main.listPlace != null) && ( LevelManager.main.listPlace.length != 0)) {
+        if (( LevelData.main.listPlace != null) && ( LevelData.main.listPlace.length != 0)) {
             Debug.Log("StartParsePlaceList not 0");
             // if (this.callbackPlaceFinish != null) {
             //     Debug.Log("StartParsePlaceList callbackPlaceFinish length = " +  LevelManager.main.listPlace.length);
@@ -143,7 +132,7 @@ export class LevelParseBase extends CCObject {
                 }
             }
 
-             LevelManager.main.listPlace.push(info);
+            LevelData.main.listPlace.push(info);
         }
 
         // if (this.callbackPlaceFinish != null) {
@@ -152,8 +141,8 @@ export class LevelParseBase extends CCObject {
         // }
     }
     StartParseGuanka(obj:any) { 
-        var idx =  LevelManager.main.placeLevel;
-        var infoPlace =  LevelManager.main.GetPlaceItemInfo(idx);
+        var idx =  LevelData.main.placeLevel;
+        var infoPlace =  LevelData.main.GetPlaceItemInfo(idx);
         //var filepath = cc.Common.GAME_RES_DIR + "/guanka/item_Bird" + ".json";//+ infoPlace.id 
         var filepath = Common.GAME_RES_DIR + "/guanka/item_" + infoPlace.id;// + ".json";//
    
@@ -176,8 +165,8 @@ export class LevelParseBase extends CCObject {
  
 
     LoadGuankaItemId(cbFinish) {
-        var idx =  LevelManager.main.placeLevel;
-        var infoPlace =  LevelManager.main.GetPlaceItemInfo(idx);
+        var idx =  LevelData.main.placeLevel;
+        var infoPlace =  LevelData.main.GetPlaceItemInfo(idx);
        // this.callbackGuankaIdFinish = cbFinish;
         // var filepath = cc.CloudRes.main().rootPath + "/guanka/item_" + infoPlace.id + ".json";
         var filepath = Common.GAME_RES_DIR + "/guanka/item_" + infoPlace.id + ".json";
@@ -218,8 +207,8 @@ export class LevelParseBase extends CCObject {
     ParseGuankaItemId(rootJson) {
         // Debug.Log("ParseGuankaItemId:this.listGuanka=");
         //         //search_items
-        var idx =  LevelManager.main.placeLevel;
-        var infoPlace =  LevelManager.main.GetPlaceItemInfo(idx);
+        var idx =  LevelData.main.placeLevel;
+        var infoPlace =  LevelData.main.GetPlaceItemInfo(idx);
         var picRoot = CloudRes.main.rootPath + "/image/" + infoPlace.id + "/";
 
         //clear

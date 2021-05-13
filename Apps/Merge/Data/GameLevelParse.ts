@@ -1,6 +1,6 @@
 
 import { _decorator, Component, Node, Prefab, CCObject } from 'cc';
-import { LevelManager } from '../../../AppBase/Game/LevelManager';
+// import { LevelManager } from '../../../AppBase/Game/LevelManager';
 import { Common } from '../../../Common/Common';
 import { Debug } from '../../../Common/Debug';
 import { ItemInfo } from '../../../Common/ItemInfo';
@@ -9,6 +9,7 @@ import { LevelParseBase } from '../../../AppBase/Game/LevelParseBase';
 import { FileUtil } from '../../../Common/File/FileUtil';
 import { CloudRes } from '../../../Common/CloundRes/CloudRes';
 import { ResManager } from '../../../Common/Res/ResManager';
+import { LevelData } from '../../../AppBase/Game/LevelData';
 const { ccclass, property, type } = _decorator;
 
 
@@ -89,7 +90,7 @@ export class GameLevelParse extends LevelParseBase {
         if (GameData.main.IsCustom()) {
             return this.GetCustomImagePath(id);
         }
-        var idx = LevelManager.main.placeLevel;
+        var idx = LevelData.main.placeLevel;
         return this.GetImagePathPlace(id, idx);
 
     }
@@ -98,7 +99,7 @@ export class GameLevelParse extends LevelParseBase {
         return this.GetImagePathPlace(id, 0);
     }
     GetImagePathPlace(id, idx) {
-        var infoPlace = LevelManager.main.GetPlaceItemInfo(idx);
+        var infoPlace = LevelData.main.GetPlaceItemInfo(idx);
         return CloudRes.main.rootPath + "/Image/" + infoPlace.id + "/" + id + ".png";
     }
 
@@ -161,8 +162,8 @@ export class GameLevelParse extends LevelParseBase {
             return;
         }
 
-        var idx = LevelManager.main.placeLevel;
-        var infoPlace = LevelManager.main.GetPlaceItemInfo(idx);
+        var idx = LevelData.main.placeLevel;
+        var infoPlace = LevelData.main.GetPlaceItemInfo(idx);
         var filepath = Common.GAME_RES_DIR + "/Level/" + infoPlace.id;// + ".json"; 
         ResManager.Load(
             {
@@ -199,7 +200,7 @@ export class GameLevelParse extends LevelParseBase {
         }
 
         var idx = 0;
-        var infoPlace = LevelManager.main.GetPlaceItemInfo(idx);
+        var infoPlace = LevelData.main.GetPlaceItemInfo(idx);
         var filepath = Common.GAME_RES_DIR + "/Level/" + infoPlace.id;// + ".json";
 
         ResManager.Load(

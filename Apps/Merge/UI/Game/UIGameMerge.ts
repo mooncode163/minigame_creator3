@@ -12,6 +12,7 @@ import { GameLevelParse } from '../../Data/GameLevelParse';
 import { GameMerge } from './GameMerge';
 import { UIText } from '../../../../Common/UIKit/UIText/UIText';
 import { LevelManager } from '../../../../AppBase/Game/LevelManager';
+import { LevelData } from '../../../../AppBase/Game/LevelData';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UIGameMerge')
@@ -52,7 +53,7 @@ export class UIGameMerge extends UIGameBase {
 
 
     CreateGame () {
-        this.UpdateLevel(LevelManager.main.gameLevel);
+        this.UpdateLevel(LevelData.main.gameLevel);
         // this.OnGameFinish(true);
 
     }
@@ -113,7 +114,7 @@ export class UIGameMerge extends UIGameBase {
 
  
     OnGameFinish(isFail) {
-        var info = GameLevelParse.main.GetItemInfo();  
+        var info = GameLevelParse.main.GetLevelItemInfo(LevelData.main.gameLevel);  
         var key = "UIGameWin";
         var strPrefab = "";
         //show game win

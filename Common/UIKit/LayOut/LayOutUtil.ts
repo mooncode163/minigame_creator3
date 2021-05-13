@@ -11,8 +11,8 @@ const { ccclass, property } = _decorator;
 
 
 
-enum Align {
-    UP = 0,//0
+export enum Align {
+    UP,//0
     DOWN,//1
     LEFT,//2
     RIGHT,//3
@@ -28,7 +28,7 @@ enum Align {
 //必须Enum设置才能在编辑器里设置enum的值
 Enum(Align);
 
-enum RelationType {
+export enum RelationType {
     NONE,// 
     PARENT,//相对父窗口 
     TARGET,//相对目标 
@@ -37,21 +37,21 @@ enum RelationType {
 Enum(RelationType);
  
 
-enum ScaleType {
+export enum ScaleType {
     MIN,
     MAX 
 }
 Enum(ScaleType);
 
 
-enum DispLayVertical {
+export enum DispLayVertical {
     TOP_TO_BOTTOM = 0,
     BOTTOM_TO_TOP,
 }
 //必须Enum设置才能在编辑器里设置enum的值
 Enum(DispLayVertical);
 
-enum DispLayHorizontal {
+export enum DispLayHorizontal {
     LEFT_TO_RIGHT = 0,
     RIGHT_TO_LEFT,
 }
@@ -61,7 +61,7 @@ Enum(DispLayHorizontal);
 
 
 
-enum Direction {
+export enum Direction {
     //区分大小写
     TOP_TO_BOTTOM = 0,
     BOTTOM_TO_TOP,
@@ -72,7 +72,7 @@ enum Direction {
 //必须Enum设置才能在编辑器里设置enum的值
 Enum(Direction);
 
-enum SizeType {
+export enum SizeType {
     MATCH_CONTENT = 0,//按内容设置
     MATCH_PARENT,//与父窗口等大或者按比例 
     MATCH_TARGET,//与目标等大或者按比例 
@@ -93,7 +93,7 @@ enum SizeType {
 Enum(SizeType);
 
 
-enum SideType {
+export enum SideType {
     LEFT = 0,// 
     RIGHT,
     UP,
@@ -104,16 +104,16 @@ Enum(SideType);
 
 
 @ccclass('LayOutUtil')
-export class LayOutUtil extends CCObject {
+export class LayOutUtil {
 
-    public static Align = Align;
-    public static DispLayVertical = DispLayVertical;
-    public static DispLayHorizontal = DispLayHorizontal;
-    public static Direction = Direction;
-    public static SizeType = SizeType;
-    public static SideType = SideType;
-    public static RelationType = RelationType;
-    public static ScaleType = ScaleType;
+    // public static Align = Align;
+    // public static DispLayVertical = DispLayVertical;
+    // public static DispLayHorizontal = DispLayHorizontal;
+    // public static Direction = Direction;
+    // public static SizeType = SizeType;
+    // public static SideType = SideType;
+    // public static RelationType = RelationType;
+    // public static ScaleType = ScaleType;
     
 
 

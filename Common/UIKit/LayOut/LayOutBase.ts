@@ -1,14 +1,14 @@
 
 import { _decorator, Component, Node, Vec2 } from 'cc';
 import { Device } from '../../Device';
-import { LayOutUtil } from './LayOutUtil';
+import { Align, Direction, LayOutUtil } from './LayOutUtil';
 const { ccclass, property, type } = _decorator;
 
 // TypeScript自动引入脚本插件
 // https://blog.csdn.net/u011004567/article/details/78507236
 // VS Code的插件-TypeScript Importer
-const Align = LayOutUtil.Align;
-const Direction = LayOutUtil.Direction;
+// const Align = LayOutUtil.Align;
+// const Direction = LayOutUtil.Direction;
 
 
 @ccclass('LayOutBase')

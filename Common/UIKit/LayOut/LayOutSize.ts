@@ -4,16 +4,16 @@ const { ccclass, property, integer, float, boolean, string,type } = _decorator;
 
 import { Debug } from '../../Debug';
 import { LayOutBase } from './LayOutBase';
-import { LayOutUtil } from './LayOutUtil';
+import { LayOutUtil, SideType, SizeType } from './LayOutUtil';
 import { AppSceneBase } from '../../../AppBase/Common/AppSceneBase';
 // import { serializable } from 'cc.decorator';
 
 // TypeScript自动引入脚本插件
 // https://blog.csdn.net/u011004567/article/details/78507236
 // VS Code的插件-TypeScript Importer
-const Align = LayOutUtil.Align;
-const SideType = LayOutUtil.SideType;
-const SizeType = LayOutUtil.SizeType;
+// const Align = LayOutUtil.Align;
+// const SideType = LayOutUtil.SideType;
+ 
 
 // export const NetURL = cc.Enum({
 //     eLAN : 1,//内网

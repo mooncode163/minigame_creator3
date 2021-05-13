@@ -1,5 +1,6 @@
 
 import { _decorator, Component, Node, Prefab, CCObject, Enum } from 'cc';
+import { LevelData } from '../../../AppBase/Game/LevelData';
 import { LevelManager } from '../../../AppBase/Game/LevelManager';
 import { Common } from '../../../Common/Common';
 import { Debug } from '../../../Common/Debug';
@@ -107,8 +108,8 @@ export class GameData extends CCObject {
 
 
     IsCustom() {
-        var idx = LevelManager.main.placeLevel;
-        var infoPlace = LevelManager.main.GetPlaceItemInfo(idx);
+        var idx = LevelData.main.placeLevel;
+        var infoPlace = LevelData.main.GetPlaceItemInfo(idx);
         if (infoPlace.id == GameData.Place_Custom) {
             return true;
         }

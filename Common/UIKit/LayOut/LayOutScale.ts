@@ -3,14 +3,14 @@ import { _decorator, Component, Node, UITransform } from 'cc';
 import { AppSceneBase } from '../../../AppBase/Common/AppSceneBase';
 import { Common } from '../../Common';
 import { LayOutBase } from './LayOutBase';
-import { LayOutUtil } from './LayOutUtil';
+import { LayOutUtil, ScaleType } from './LayOutUtil';
 const { ccclass, property, type } = _decorator;
 
 // TypeScript自动引入脚本插件
 // https://blog.csdn.net/u011004567/article/details/78507236
 // VS Code的插件-TypeScript Importer
 
-const ScaleType = LayOutUtil.ScaleType;
+// const ScaleType = LayOutUtil.ScaleType;
 
 @ccclass('LayOutScale')
 export class LayOutScale extends LayOutBase {
