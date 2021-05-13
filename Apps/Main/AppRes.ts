@@ -7,9 +7,8 @@ const { ccclass, property } = _decorator;
 
 @ccclass('AppRes')
 export class AppRes extends CCObject {
-
-    public static KEY_GAME_LOCK: string = "KEY_GAME_LOCK"; 
-
+    public static KEY_DOWNLOAD_CLOUNDRES: string = "KEY_DOWNLOAD_CLOUNDRES"; 
+    public static KEY_GAME_LOCK: string = "KEY_GAME_LOCK";  
 }
 
 /**

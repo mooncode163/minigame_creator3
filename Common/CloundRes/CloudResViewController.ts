@@ -1,12 +1,58 @@
 
-import { _decorator, Component, Node, Prefab } from 'cc'; 
-import { UIView } from '../../Common/UIKit/ViewController/UIView'; 
+import { _decorator, Component, Node, Prefab, instantiate } from 'cc';
+import { UIView } from '../../Common/UIKit/ViewController/UIView';
+import { PrefabCache } from '../Cache/PrefabCache';
+import { Debug } from '../Debug';
+import { PopViewController } from '../UIKit/ViewController/PopViewController';
+import { UICloudRes } from './UICloudRes';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('CloudResViewController')
-export class CloudResViewController extends UIView {
-    
+export class CloudResViewController extends PopViewController {
+    uiPrefab: Prefab;
+    ui: UICloudRes;
+    Init() {
+        Debug.Log("CloudResViewController Init");
+        //  this.LoadPrefab();
+    }
+    CreateUI() {
+        Debug.Log("CloudResViewController CreateUI");
+        var node = instantiate(this.uiPrefab);
+        this.ui = node.getComponent(UICloudRes);
+        this.ui.SetController(this);
+    }
 
+    LoadPrefab() {
+        var key = "UICloudRes"; 
+
+        PrefabCache.main.LoadByKey(
+            {
+                key: key,
+                success: (p: any, data: any) => {
+                    this.uiPrefab = data;
+                    this.CreateUI();
+                 
+                },
+                fail: () => {
+                    
+                },
+            }); 
+    }
+
+    ViewDidLoad() {
+        Debug.Log("CloudResViewController ViewDidLoad");
+        super.ViewDidLoad();
+        this.LoadPrefab();
+    }
+    ViewDidUnLoad() {
+        Debug.Log("CloudResViewController ViewDidUnLoad");
+        super.ViewDidUnLoad();
+
+    }
+    LayOut() {
+       
+
+    }
 
 }
 

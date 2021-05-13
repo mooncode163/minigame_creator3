@@ -8,6 +8,12 @@ import { Language } from '../../Common/Language/Language';
 import { Debug } from '../../Common/Debug';
 import { HomeViewController } from '../../AppBase/Home/HomeViewController';
 import { LevelManager } from '../../AppBase/Game/LevelManager';
+import { Platform } from '../../Common/Platform';
+import { Common } from '../../Common/Common';
+import { AppRes } from './AppRes';
+import { CloudResVersion } from '../../Common/CloundRes/CloudResVersion';
+import { Config } from '../../Common/Config/Config';
+import { CloudResViewController } from '../../Common/CloundRes/CloudResViewController';
 const { ccclass, property } = _decorator;
 
 
@@ -24,20 +30,51 @@ export class MainViewController extends NaviViewController {
     }
     ViewDidLoad() {
         super.ViewDidLoad();
-        
+
         var str = Language.main.GetString("BtnStartGame");
-        Debug.Log("MainViewController ViewDidLoad str="+str);
-        this.StartParsePlace();
-        
-     
+        Debug.Log("MainViewController ViewDidLoad str=" + str);
+        var isShowClound = false;
+        if (Platform.isWeiXin) {
+            Debug.Log("MainViewController 1");
+            var isDownload = Common.GetBoolOfKey(AppRes.KEY_DOWNLOAD_CLOUNDRES, false);
+            if (!isDownload) {
+                Debug.Log("MainViewController 2");
+                //第一次 下载资源
+                isShowClound = true;
+            } else {
+                Debug.Log("MainViewController 3")
+
+                CloudResVersion.main.Load(
+                    {
+                        success: (p: any, data: any) => {
+                            var versionNow = Config.main.version;
+                            var versionLocal = CloudResVersion.main.version;
+                            Debug.Log("MainViewController version: versionNow=" + versionNow + " versionLocal=" + versionLocal);
+                            if (versionNow > versionLocal) {
+                                //需要更新资源 
+                                isShowClound = true;
+                            }
+                        },
+                        fail: () => {
+
+                        },
+                    });
+            }
+        }
+
+        if (isShowClound) {
+            this.GotoCloundRes();
+        } else {
+            this.StartParsePlace();
+        }
+
     }
 
-    StartParsePlace()
-    {
-        Debug.Log("HomeViewController StartParsePlace"); 
+    StartParsePlace() {
+        Debug.Log("HomeViewController StartParsePlace");
         LevelManager.main.StartParsePlace(
             {
-                success: (p: any) => { 
+                success: (p: any) => {
                     this.StartParseGuanka();
                 },
                 fail: () => {
@@ -46,9 +83,8 @@ export class MainViewController extends NaviViewController {
             });
     }
 
-    StartParseGuanka()
-    {
-        Debug.Log("HomeViewController StartParseGuanka"); 
+    StartParseGuanka() {
+        Debug.Log("HomeViewController StartParseGuanka");
         LevelManager.main.StartParseGuanka(
             {
                 success: (p: any) => {
@@ -59,15 +95,15 @@ export class MainViewController extends NaviViewController {
                 },
             });
     }
-    
+
     GotoCloundRes() {
-      //  CloudResViewController.main().Show(null, this.CloundResDidClose.bind(this));
+        CloudResViewController.main.Show(null, this.CloundResDidClose.bind(this));
     }
     GotoHome() {
-        // cc.ImageRes.main().GetImage({
+        // ImageRes.main().GetImage({
         //     key: "apppreload",
         //     success: function (image) {
-                
+
         //     }.bind(this),
         // });
         this.Push(HomeViewController.main);//HomeViewController
