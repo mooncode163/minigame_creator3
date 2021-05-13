@@ -83,11 +83,11 @@ fail: (p:any) => {
     LoadWithCloud(obj: any) {
 
         if (obj.isCloud) {
-            ResManager.LoadUrl(
+            ResManager.LoadUrlTexture(
                 {
                     url: obj.filepath,
                     success: (p: any, tex: any) => {
-                        if (obj.success != null) {
+                        if (obj.success != null) { 
                             obj.success(this, tex);
                         }
                     },

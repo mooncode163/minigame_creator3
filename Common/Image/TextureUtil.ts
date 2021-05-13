@@ -101,6 +101,9 @@ fail: (p:any) => {
 
     }
 
+
+
+
     static UpdateImageTexture(image: Sprite, tex: Texture2D, isUpdateSize: boolean, border: Vec4) {
         if (tex) {
             const spriteFrame = new SpriteFrame();

@@ -1,5 +1,6 @@
 
 import { _decorator, Component, Node, CCObject, resources, Texture2D, assetManager } from 'cc';
+import { Debug } from '../Debug';
 import { FileUtil } from '../File/FileUtil';
 import { LoadTexture } from '../File/LoadTexture';
 
@@ -42,18 +43,18 @@ export class ResManager extends CCObject {
     }
 
 
-     /*
-      {
-        filepath:"", 
-        success: (p:any,data:string) => {
-            
-        }, 
-        fail: (p:any) => {
-            
-        },
-      }
-      */
-      public static LoadText(obj: any) {
+    /*
+     {
+       filepath:"", 
+       success: (p:any,data:string) => {
+           
+       }, 
+       fail: (p:any) => {
+           
+       },
+     }
+     */
+    public static LoadText(obj: any) {
         var key = FileUtil.GetFileBeforeExtWithOutDot(obj.filepath);
         resources.load(key, (err: any, data: any) => {
             if (data == null) {
@@ -64,7 +65,7 @@ export class ResManager extends CCObject {
                 }
             } else {
                 var type = typeof data;
-                console.log("ResManager Load is not null type="+type);
+                console.log("ResManager Load is not null type=" + type);
                 if (obj.success != null) {
                     obj.success(this, data.text);
                 }
@@ -118,8 +119,53 @@ export class ResManager extends CCObject {
     
   }
   */
+    public static LoadUrlTexture(obj: any) {
+        this.LoadUrl(
+            {
+                url: obj.url,
+                success: (p: any, tex: any) => {
+                    if (obj.success != null) {
 
+
+                        /*
+                        let remoteUrl = "http://unknown.org/someres.png";
+                    assetManager.loadRemote<ImageAsset>(remoteUrl, function (err, imageAsset) {
+                        const spriteFrame = new SpriteFrame();
+                        const texture = new Texture2D();
+                        texture.image = imageAsset;
+                        spriteFrame.texture = texture;
+                        // ...
+                    });
+                    */
+                        const texture = new Texture2D();
+                        texture.image = tex;
+                        obj.success(this, texture);
+                    }
+                },
+                fail: () => {
+                    if (obj.fail != null) {
+                        obj.fail(this);
+                    }
+                },
+            });
+    }
+
+    /*
+  {
+      url:"", 
+      success: function (p:any,data:any) {
+      },
+      fail: function (p) {
+      }, 
+    
+  }
+  */
+
+    //   weixin http://usr/moonma/CloudRes/Image/Star/Earth.png
     public static LoadUrl(obj: any) {
+        Debug.Log("ResManager LoadUrl obj.url=" + obj.url);
+
+        // return;
         // var pic = "/Users/moon/sourcecode/cocos/product/minigame/minigameCreator/assets/resources/App/UI/Bg/GameBg.png" 
         //    pic = "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1942783278,2082140028&fm=26&gp=0.jpg";
         // var p = this;
