@@ -9,7 +9,9 @@ const { ccclass, property } = _decorator;
 
 @ccclass('LayOutElement')
 export class LayOutElement extends Component {
+    @property
     ignoreLayout= false;
+    
     start () {
         // [3]
     }

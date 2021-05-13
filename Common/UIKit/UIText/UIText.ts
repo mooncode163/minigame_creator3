@@ -29,7 +29,7 @@ export class UIText extends UIView {
 
 
 
-
+    @type(Number)
     //get 的用法
     get fontSize() {
         return this.label.fontSize;
@@ -42,6 +42,7 @@ export class UIText extends UIView {
 
     }
 
+    @type(Color)
     //get 的用法
     get color() {
         return this.label.color;
