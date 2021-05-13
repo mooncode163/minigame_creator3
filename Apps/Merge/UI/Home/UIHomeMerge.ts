@@ -11,26 +11,43 @@ import { Luna } from './Luna';
 import { TestCallAndThis } from './TestCallAndThis';
 import { DEBUG } from 'cc/env';
 import { GameViewController } from '../../../../AppBase/Game/GameViewController';
+import { GameLevelParse } from '../../Data/GameLevelParse';
+import { Language } from '../../../../Common/Language/Language';
+import { Device } from '../../../../Common/Device';
 
 
 @ccclass('UIHomeMerge')
 export class UIHomeMerge extends UIHomeBase {
-    @type(Node)
-    nodeBg: Node | null = null;
-
     @type(UIImage)
-    imageBg: UIImage = null;
+    imageLogo: UIImage = null;
 
-    // imageBg: UIImage | null = null;
-    test() {
-        Debug.Log("test 2 bind");
+    onLoad() {
+        super.onLoad();
+
+
+        var info = GameLevelParse.main.GetLastItemInfo();
+        var pic = GameLevelParse.main.GetImagePath(info.id);
+        Debug.Log("UIHomeMerge pic=" + pic);
+        this.imageLogo.UpdateImageCloud(pic);
+
+        var name = Language.main.GetString("APP_NAME");
+        if (Device.main.isLandscape) {
+            name = Language.main.GetString("APP_NAME_HD");
+        }
+
+        this.textTitle.text = name;
+ 
+        Debug.Log("UIHomeMerge onLoad");
+        this.LayOut();
+        // this.LoadCenterBar();
+        this.LoadSideBar();
     }
-    success() {
-        Debug.Log("success bind");
-        this.test();
-    }
+
+
+
     start() {
-       super.start();
+        super.start();
+        this.LayOut();
     }
 
     OnBtnClickPlay(event: Event, customEventData: string) {
@@ -40,7 +57,7 @@ export class UIHomeMerge extends UIHomeBase {
 
     GotoGame() {
         this.GotoGameByModeInteranl();
-        // cc.LevelManager.main().StartParsePlace(function () {
+        // LevelManager.main().StartParsePlace(function () {
 
         // }.bind(this)
         // );
@@ -51,7 +68,7 @@ export class UIHomeMerge extends UIHomeBase {
             var navi = this.controller.naviController;
             Debug.Log("GotoGame GameViewController");
             navi.Push(GameViewController.main);
-        }else{
+        } else {
             Debug.Log("GotoGame controller = null");
         }
     }

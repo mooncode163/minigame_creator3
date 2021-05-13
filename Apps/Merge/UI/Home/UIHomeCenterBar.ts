@@ -1,22 +1,14 @@
 
-import { _decorator, Component, Node } from 'cc';
-const { ccclass, property } = _decorator;
-
-// TypeScript自动引入脚本插件
-// https://blog.csdn.net/u011004567/article/details/78507236
-// VS Code的插件-TypeScript Importer
+import { _decorator, Component, Node } from 'cc';  
+import { UIView } from '../../../../Common/UIKit/ViewController/UIView';
+const { ccclass, property,type } = _decorator;
  
 
-@ccclass('LayOutElement')
-export class LayOutElement extends Component {
-    ignoreLayout= false;
-    start () {
-        // [3]
-    }
-
-    // update (deltaTime: number) {
-    //     // [4]
-    // }
+@ccclass('UIHomeCenterBar')
+export class UIHomeCenterBar extends UIView {
+   
+ 
+ 
 }
 
 /**

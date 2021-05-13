@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, UITransform, Vec3 } from 'cc';
+import { _decorator, Component, Node, UITransform } from 'cc';
 import { AppSceneBase } from '../../../AppBase/Common/AppSceneBase';
 import { Common } from '../../Common';
 import { LayOutBase } from './LayOutBase';
@@ -103,9 +103,8 @@ export class LayOutScale extends LayOutBase {
             scale = Common.GetBestFitScale(w, h, w_parent, h_parent);
         }
         scale = scale * this.ratio; 
-        // node.scale.x = scale;
-        // node.scale.y = scale;
-        node.scale = new Vec3(scale, scale, 1);
+        node.scale.x = scale;
+        node.scale.y = scale;
     }
 
     // update (deltaTime: number) {

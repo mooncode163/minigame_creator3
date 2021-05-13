@@ -1,16 +1,11 @@
 
-import { _decorator, Component, Node } from 'cc';
-import { HorizontalOrVerticalLayoutBase } from './HorizontalOrVerticalLayoutBase';
-import { LayOutBase } from './LayOutBase';
-import { LayOutUtil } from './LayOutUtil';
-const { ccclass, property } = _decorator;
-
-// TypeScript自动引入脚本插件
-// https://blog.csdn.net/u011004567/article/details/78507236
-// VS Code的插件-TypeScript Importer
+import { _decorator, Component, Node } from 'cc';  
+import { UIView } from '../../../../Common/UIKit/ViewController/UIView';
+const { ccclass, property,type } = _decorator;
  
-@ccclass('LayOutVertical')
-export class LayOutVertical extends HorizontalOrVerticalLayoutBase {
+
+@ccclass('UIHomeSideBar')
+export class UIHomeSideBar extends UIView {
     onLoad() {
         super.onLoad(); 
         // this.LayOut();
@@ -22,13 +17,15 @@ export class LayOutVertical extends HorizontalOrVerticalLayoutBase {
         this.LayOut();
     }
     LayOut () { 
-       
-        if (!this.Enable()) {
-            return;
-        } 
-        this.row = LayOutUtil.main.GetChildCount(this.node,this.enableHide);
         super.LayOut();
-    } 
+  
+    }
+    OnBtnClickShare(event: Event, customEventData: string) {
+ 
+    }
+    OnBtnClickSetting(event: Event, customEventData: string) {
+   
+    }
 }
 
 /**

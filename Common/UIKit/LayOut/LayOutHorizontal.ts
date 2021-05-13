@@ -1,6 +1,9 @@
 
 import { _decorator, Component, Node } from 'cc';
+import { Debug } from '../../Debug';
 import { LayOutBase } from './LayOutBase';
+import { LayOutUtil } from './LayOutUtil';
+import { HorizontalOrVerticalLayoutBase } from './HorizontalOrVerticalLayoutBase';
 const { ccclass, property } = _decorator;
 
 // TypeScript自动引入脚本插件
@@ -9,21 +12,29 @@ const { ccclass, property } = _decorator;
  
 
 @ccclass('LayOutHorizontal')
-export class LayOutHorizontal extends LayOutBase {
-    // [1]
-    // dummy = '';
-
-    // [2]
-    // @property
-    // serializableDummy = 0;
-  
-    start () {
-        // [3]
+export class LayOutHorizontal extends HorizontalOrVerticalLayoutBase {
+    onLoad() {
+        super.onLoad(); 
+        // this.LayOut();
     }
+    start() {
+        
+        // [3] super.LayOut();
+        super.start();
+        this.LayOut();
+    }
+    LayOut () { 
+       
+        if (!this.Enable()) {
+            return;
+        }
+        super.LayOut();
+        this.row = 1;
+        this.col = LayOutUtil.main.GetChildCount(this.node, this.enableHide);
+        Debug.Log("LayOutHorizontal LayOut");
+        super.LayOut();
 
-    // update (deltaTime: number) {
-    //     // [4]
-    // }
+    }
 }
 
 /**

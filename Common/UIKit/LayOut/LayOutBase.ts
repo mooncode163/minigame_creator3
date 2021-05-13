@@ -13,10 +13,10 @@ const Direction = LayOutUtil.Direction;
 
 @ccclass('LayOutBase')
 export class LayOutBase extends Component {
-
-
-    target: Node | null = null;
-    target2: Node | null = null;
+    @type(Node)
+    target: Node = null;
+    @type(Node)
+    target2: Node = null; 
 
 
     @property
