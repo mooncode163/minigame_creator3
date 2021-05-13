@@ -7,6 +7,7 @@ import { FileUtil } from '../../File/FileUtil';
 import { UIView } from '../ViewController/UIView';
 import { TextureUtil } from '../../Image/TextureUtil';
 import { TextureCache } from '../../Cache/TextureCache';
+import { Platform } from '../../Platform';
 const { ccclass, property, type } = _decorator;
 
 // TypeScript自动引入脚本插件
@@ -66,8 +67,25 @@ export class UIImage extends UIView {
         // rctan.sizeDelta = new Vector2(tex.width, tex.height);
     }
 
-    UpdateImageCloud(pic: string) {
-        this.UpdateImage(pic,this.keyImage);
+    UpdateImageCloud(pic: string) { 
+
+        var isCloud = false;
+        if (Platform.isWeiXin) {
+            // isCloud = true;
+        }
+        var board = Vec4.ZERO;
+        TextureCache.main.LoadWithCloud(
+            {
+                filepath: pic,
+                isCloud: isCloud,
+                success: (p: any, tex: Texture2D) => {
+                    TextureUtil.UpdateImageTexture(this.image, tex, true, board);
+                },
+                fail: (p: any) => {
+
+                },
+            });
+
     }
 
 
@@ -118,7 +136,7 @@ export class UIImage extends UIView {
         // }
         this.LayOut();
     }
-
+ 
     LayOut() {
         super.LayOut();
     }

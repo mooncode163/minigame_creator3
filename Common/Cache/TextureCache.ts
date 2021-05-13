@@ -68,6 +68,56 @@ fail: (p:any) => {
     }
 
 
+    /*
+{ 
+filepath:"", 
+isCloud:false,
+success: (p:any,tex:Texture2D) => {
+ 
+}, 
+fail: (p:any) => {
+ 
+},
+}
+*/
+    LoadWithCloud(obj: any) {
+
+        if (obj.isCloud) {
+            ResManager.LoadUrl(
+                {
+                    url: obj.filepath,
+                    success: (p: any, tex: any) => {
+                        if (obj.success != null) {
+                            obj.success(this, tex);
+                        }
+                    },
+                    fail: () => {
+                        if (obj.fail != null) {
+                            obj.fail(this);
+                        }
+                    },
+                });
+        } else {
+
+            ResManager.LoadTexture(
+                {
+                    filepath: obj.filepath,
+                    success: (p: any, tex: any) => {
+                        if (obj.success != null) {
+                            obj.success(this, tex);
+                        }
+                    },
+                    fail: () => {
+                        if (obj.fail != null) {
+                            obj.fail(this);
+                        }
+                    },
+                });
+
+        }
+    }
+
+
 }
 
 /**
