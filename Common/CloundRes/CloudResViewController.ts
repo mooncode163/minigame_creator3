@@ -11,6 +11,16 @@ const { ccclass, property, type } = _decorator;
 export class CloudResViewController extends PopViewController {
     uiPrefab: Prefab;
     ui: UICloudRes;
+
+    static _main: CloudResViewController;
+    //静态方法
+    static get main() { 
+        if (this._main == null) {
+            this._main = new CloudResViewController();
+        }
+        return this._main;
+    }
+
     Init() {
         Debug.Log("CloudResViewController Init");
         //  this.LoadPrefab();

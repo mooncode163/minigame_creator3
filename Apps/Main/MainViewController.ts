@@ -61,7 +61,7 @@ export class MainViewController extends NaviViewController {
                     });
             }
         }
-
+        // isShowClound = true;
         if (isShowClound) {
             this.GotoCloundRes();
         } else {
@@ -96,8 +96,14 @@ export class MainViewController extends NaviViewController {
             });
     }
 
-    GotoCloundRes() {
-        CloudResViewController.main.Show(null, this.CloundResDidClose.bind(this));
+    GotoCloundRes() { 
+        CloudResViewController.main.Show(
+            {
+                controller:this, 
+                close: (p: any) => {
+                    this.GotoHome();
+                }, 
+            });
     }
     GotoHome() {
         // ImageRes.main().GetImage({

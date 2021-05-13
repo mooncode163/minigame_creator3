@@ -10,17 +10,22 @@ import { Common } from '../Common';
 import { CommonRes } from '../CommonRes';
 import { Debug } from '../Debug';
 import { Config } from '../Config/Config';
+import { PopViewController } from '../UIKit/ViewController/PopViewController';
 
-const { ccclass, property } = _decorator;
+const { ccclass, property, type } = _decorator;
 // 动态加载资源文档
 // https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
 
 @ccclass('UICloudRes')
 export class UICloudRes extends UIView {
-    imageBg: UIImage;
-    textTitle: UIText;
-    textStatus: UIText;
-    uiProgress: UIProgress;
+    @type(UIImage)
+    imageBg: UIImage | null = null;
+    @type(UIText)
+    textTitle: UIText | null = null;
+    @type(UIText)
+    textStatus: UIText | null = null;
+    @type(UIProgress)
+    uiProgress: UIProgress | null = null;
 
 
     onLoad() {
@@ -34,7 +39,7 @@ export class UICloudRes extends UIView {
             {
                 url: Config.main.cloudResUrl,
                 progress: (res: any) => {
-                    this.UpdateProgress(res.progress / 100.0);
+                    // this.UpdateProgress(res.progress / 100.0);
                 },
                 unzipSuccess: () => {
                     Debug.Log(" unzipSuccess ");
@@ -63,7 +68,8 @@ export class UICloudRes extends UIView {
     OnCloudResDidFinish() {
         Common.SetBoolOfKey(CommonRes.KEY_DOWNLOAD_CLOUNDRES, true);
         if (this.controller != null) {
-            this.controller.Close();
+            var p = this.controller as PopViewController;
+            p.Close();
         }
     }
 
@@ -73,6 +79,7 @@ export class UICloudRes extends UIView {
     }
 
 }
+
 
 /**
  * [1] Class member could be defined like this.

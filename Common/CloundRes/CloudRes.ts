@@ -57,53 +57,61 @@ export class CloudRes extends UIView {
     StartDownload (obj:any) {
         this.objDownload = obj;
         console.log("CloudRes StartDownload url=" + obj.url);
-        FileSystem.main.DownloadFile({
-            url: obj.url,
-            success (res) {
-                var filePath = res.tempFilePath;
-                console.log("downloadFile=" + filePath)
-                this.UnzipFile(filePath);
-                if (obj.success != null) {
-                    obj.success(res);
-                }
-            },
-            fail (res) {
-                console.log("readFile fail=" + obj.url)
-                if (obj.fail != null) {
-                    obj.fail(res);
-                }
-            },
-            progress (res) {
-                // console.log('CloudRes  下载进度=  ', res.progress)
-                // console.log('CloudRes已经下载的数据长度=', res.totalBytesWritten)
-                // console.log('CloudRes预期需要下载的数据总长度=', res.totalBytesExpectedToWrite)
-                if (obj.progress != null) {
-                    obj.progress(res);
-                }
-            },
-        });
+          FileSystem.main.DownloadFile(
+            {
+                url: obj.url,
+                success: (res: any) => {
+                    var filePath = res.tempFilePath;
+                    console.log("downloadFile=" + filePath)
+                    this.UnzipFile(filePath);
+                    if (obj.success != null) {
+                        obj.success(res);
+                    }
+                },
+
+                fail: (res: any) => {
+                    console.log("readFile fail=" + obj.url)
+                    if (obj.fail != null) {
+                        obj.fail(res);
+                    }
+                },
+                progress: (res: any) => { 
+                    console.log('CloudRes  下载进度=  ', res.progress)
+                    console.log('CloudRes已经下载的数据长度=', res.totalBytesWritten)
+                    console.log('CloudRes预期需要下载的数据总长度=', res.totalBytesExpectedToWrite)
+                    if (obj.progress != null) {
+                        obj.progress(res);
+                    }
+                },
+               
+            });
+
     }
 
     UnzipFile (filePath:string) {
         var dir = FileSystem.main.GetRootDirPath();
-        this.tmp_filepath = filePath;
-        FileSystem.main.UnzipFile({
-            zipFilePath: filePath,
-            targetPath: dir,
-            success (res) {
-                console.log("CloudRes unzip success=" + this.tmp_filepath);
-                // this.readFile(dir + "/CloudRes/image/Bird/Albatross.png");
-                FileSystem.main.DeleteFile(this.tmp_filepath);
-                if (this.objDownload != null) {
-                    if (this.objDownload.unzipSuccess != null) {
-                        this.objDownload.unzipSuccess();
+        this.tmp_filepath = filePath; 
+        FileSystem.main.UnzipFile(
+            {
+                zipFilePath: filePath,
+                targetPath: dir,
+                success: (res: any) => {
+                    console.log("CloudRes unzip success=" + this.tmp_filepath);
+                    // this.readFile(dir + "/CloudRes/image/Bird/Albatross.png");
+                    FileSystem.main.DeleteFile(this.tmp_filepath);
+                    if (this.objDownload != null) {
+                        if (this.objDownload.unzipSuccess != null) {
+                            this.objDownload.unzipSuccess();
+                        }
                     }
-                }
-            },
-            fail (res) {
-                console.log("CloudRes unzip fail");
-            },
-        });
+                },
+
+                fail: (res: any) => {
+                    console.log("CloudRes unzip fail");
+                }, 
+               
+            });
+
     }
 }
 

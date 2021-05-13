@@ -3,24 +3,40 @@ import { _decorator, Component, Node } from 'cc';
 const { ccclass, property } = _decorator;
 
 import { UIViewController } from "./UIViewController";
+import { AppScene } from '../../../AppBase/AppScene';
+import { AppSceneBase } from '../../../AppBase/Common/AppSceneBase';
 
 @ccclass('PopViewController')
 export class PopViewController extends UIViewController {
-    // [1]
-    // dummy = '';
-
-    // [2]
-    // @property
-    // serializableDummy = 0;
-
-    // rootViewController:UIViewController
-    start () {
-        // [3]
+    // iDelegate: IPopViewControllerDelegate,
+        // _closeCallback: null,
+        objCallback=null;
+     /*
+      {
+        controller:any, 
+        close: (p:any) => {
+            
+        },  
+    }
+      */
+    Show (obj:any) { 
+        this.objCallback = obj;
+        //this.iDelegate = dele;
+        var root = obj.controller;
+        if (root == null) {
+            root = AppSceneBase.main.rootViewController;
+        }
+        // this.SetViewParent(root.objController);
+        this.SetViewParent(AppSceneBase.main.rootNode);
     }
 
-    // update (deltaTime: number) {
-    //     // [4]
-    // }
+    Close () { 
+        if(this.objCallback.close){
+            this.objCallback.close(this);
+        }
+        this.DestroyObjController();
+    }
+
 }
 
 /**

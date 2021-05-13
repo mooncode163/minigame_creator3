@@ -246,6 +246,7 @@
       "__id__": 7
     },
     "_enabled": true,
+    "__prefab": null,
     "canvasMain": {
       "__id__": 9
     },
