@@ -18,7 +18,7 @@ export class FileSystemWeixin extends FileSystemPlatformWrapper {
     }
  
     GetRootDirPath () {
-        // return `${wx.env.USER_DATA_PATH}/` + cc.FileSystemPlatformWrapper.FILE_ROOT_DIR;
+        // return `${wx.env.USER_DATA_PATH}/` + FileSystemPlatformWrapper.FILE_ROOT_DIR;
         // return `${wx.env.USER_DATA_PATH}`;
         return "";
     }
