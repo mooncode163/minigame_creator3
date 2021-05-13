@@ -1,5 +1,7 @@
 
 import { _decorator, Component, Node } from 'cc';  
+import { Config } from '../../../../Common/Config/Config';
+import { Share } from '../../../../Common/Share/Share';
 import { UIView } from '../../../../Common/UIKit/ViewController/UIView';
 const { ccclass, property,type } = _decorator;
  
@@ -21,7 +23,7 @@ export class UIHomeSideBar extends UIView {
   
     }
     OnBtnClickShare(event: Event, customEventData: string) {
- 
+        Share.main.ShareImageText("", Config.main.shareTitle, Config.main.shareUrl, "");
     }
     OnBtnClickSetting(event: Event, customEventData: string) {
    
