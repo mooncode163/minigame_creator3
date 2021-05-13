@@ -10,7 +10,7 @@ const { ccclass, property } = _decorator;
 // VS Code的插件-TypeScript Importer
 
 
-
+// 微信小程序 const Align = LayOutUtil.Align; 会异常 所以用export enum的方式
 export enum Align {
     UP,//0
     DOWN,//1
@@ -60,7 +60,7 @@ Enum(DispLayHorizontal);
 
 
 
-
+// weixin小程序 上的enum要用export的方式
 export enum Direction {
     //区分大小写
     TOP_TO_BOTTOM = 0,
