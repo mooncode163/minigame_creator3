@@ -66,15 +66,17 @@ export class CloudResViewController extends PopViewController {
     }
 
     Close() {
-        ImageRes.main.LoadCloudConfig(
-            {
-                success: (p: any) => {
-                    super.Close();
-                },
-                fail: () => {
-                    super.Close();
-                },
-            });
+
+        // ImageRes.main.LoadCloudConfig(
+        //     {
+        //         success: (p: any) => {
+        //             super.Close();
+        //         },
+        //         fail: () => {
+        //             super.Close();
+        //         },
+        //     }); 
+        super.Close();
     }
 
 

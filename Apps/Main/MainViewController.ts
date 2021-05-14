@@ -66,18 +66,18 @@ export class MainViewController extends NaviViewController {
         if (isShowClound) {
             this.GotoCloundRes();
         } else {
-            // this.StartParsePlace();
+            this.StartParsePlace();
         }
 
-        ImageRes.main.LoadCloudConfig(
-            {
-                success: (p: any) => {
-                    this.StartParsePlace();
-                },
-                fail: () => {
-                    this.StartParsePlace();
-                },
-            });
+        // ImageRes.main.LoadCloudConfig(
+        //     {
+        //         success: (p: any) => {
+        //             this.StartParsePlace();
+        //         },
+        //         fail: () => {
+        //             this.StartParsePlace();
+        //         },
+        //     });
 
     }
 
@@ -117,13 +117,16 @@ export class MainViewController extends NaviViewController {
             });
     }
     GotoHome() {
-        // ImageRes.main().GetImage({
-        //     key: "apppreload",
-        //     success: function (image) {
-
-        //     }.bind(this),
-        // });
-        this.Push(HomeViewController.main);//HomeViewController
+        ImageRes.main.LoadCloudConfig(
+            {
+                success: (p: any) => {
+                    this.Push(HomeViewController.main);//HomeViewController
+                },
+                fail: () => {
+                    this.Push(HomeViewController.main);//HomeViewController
+                },
+            });
+      
     }
 
 }
