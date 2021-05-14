@@ -29,6 +29,10 @@ export class Platform extends CCObject {
         return (sys.platform == sys.BYTEDANCE_MINI_GAME) ? true : false;
     }
 
+    public static get isCloudRes(): boolean {
+        return (sys.platform == sys.WECHAT_GAME) ? true : false;
+    }
+
 }
 
 /**

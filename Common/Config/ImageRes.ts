@@ -3,6 +3,7 @@ import { _decorator, Component, Node, CCObject, resources, Prefab, Vec4 } from '
 import { Common } from '../Common';
 import { ImageResInternal } from './ImageResInternal';
 import { ConfigBase } from './ConfigBase';
+import { Platform } from '../Platform';
 
 const { ccclass, property } = _decorator;
 // 动态加载资源文档
@@ -211,6 +212,11 @@ export class ImageRes extends ConfigBase {
         if (Common.BlankString(ret)) {
             if (this.imageResCloudRes != null) {
                 ret = this.imageResCloudRes.GetImage(key);
+                if(!Platform.isCloudRes)
+                {
+                    ret =Common.CLOUD_RES_DIR+"/"+ret;
+                }
+               
             }
         }
 

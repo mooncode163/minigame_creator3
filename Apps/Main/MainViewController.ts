@@ -34,7 +34,7 @@ export class MainViewController extends NaviViewController {
         var str = Language.main.GetString("BtnStartGame");
         Debug.Log("MainViewController ViewDidLoad str=" + str);
         var isShowClound = false;
-        if (Platform.isWeiXin) {
+        if (Platform.isCloudRes) {
             Debug.Log("MainViewController 1");
             var isDownload = Common.GetBoolOfKey(AppRes.KEY_DOWNLOAD_CLOUNDRES, false);
             if (!isDownload) {
