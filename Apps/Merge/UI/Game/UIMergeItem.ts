@@ -86,7 +86,7 @@ export class UIMergeItem extends UIView {
     }
 
     UpdateImage(pic) {
-        this.imageItem.UpdateImageCloud(pic);
+        this.imageItem.UpdateImage(pic);
     }
 
     EnableGravity(isEnable) {

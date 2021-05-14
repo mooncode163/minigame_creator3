@@ -23,6 +23,7 @@ export class TextureCache extends CCObject {
     /*
 { 
      filepath:"", 
+     isCloud:false,
   success: (p:any,tex:Texture2D) => {
       
   }, 
@@ -42,6 +43,7 @@ export class TextureCache extends CCObject {
     /*
 { 
    filepath:"", 
+   isCloud:false,
 success: (p:any,tex:Texture2D) => {
     
 }, 
@@ -60,8 +62,12 @@ fail: (p:any) => {
                     }
                 },
                 fail: () => {
-                    if (obj.fail != null) {
-                        obj.fail(this);
+                    // if (obj.fail != null) {
+                    //     obj.fail(this);
+                    // }
+                    if(obj.isCloud)
+                    {
+                        this.LoadWithCloud(obj);
                     }
                 },
             });
@@ -87,7 +93,7 @@ fail: (p:any) => {
                 {
                     url: obj.filepath,
                     success: (p: any, tex: any) => {
-                        if (obj.success != null) { 
+                        if (obj.success != null) {
                             obj.success(this, tex);
                         }
                     },

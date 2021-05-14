@@ -79,7 +79,7 @@ export class UIImage extends UIView {
                 filepath: pic,
                 isCloud: isCloud,
                 success: (p: any, tex: Texture2D) => {
-               
+
                     TextureUtil.UpdateImageTexture(this.image, tex, true, board);
                 },
                 fail: (p: any) => {
@@ -92,7 +92,7 @@ export class UIImage extends UIView {
 
 
     // 绝对路径
-    UpdateImage(pic: string, key: string) {
+    UpdateImage(pic: string, key: string="") {
         var strKey = key;
         if (Common.BlankString(key)) {
             strKey = this.keyImage;
@@ -112,10 +112,14 @@ export class UIImage extends UIView {
         // Vector2 offsetMin = rctranOrigin.offsetMin;
         // Vector2 offsetMax = rctranOrigin.offsetMax;
 
-
+        var isCloud = false;
+        if (Platform.isWeiXin) {
+            isCloud = true;
+        }
         TextureCache.main.Load(
             {
                 filepath: pic,
+                isCloud: isCloud,
                 success: (p: any, tex: Texture2D) => {
                     TextureUtil.UpdateImageTexture(this.image, tex, true, board);
                 },

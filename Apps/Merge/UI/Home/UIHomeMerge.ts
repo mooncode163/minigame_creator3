@@ -28,7 +28,7 @@ export class UIHomeMerge extends UIHomeBase {
         var info = GameLevelParse.main.GetLastItemInfo();
         var pic = GameLevelParse.main.GetImagePath(info.id);
         Debug.Log("UIHomeMerge pic=" + pic);
-        this.imageLogo.UpdateImageCloud(pic);
+        this.imageLogo.UpdateImage(pic);
 
         var name = Language.main.GetString("APP_NAME");
         if (Device.main.isLandscape) {

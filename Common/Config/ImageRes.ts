@@ -13,6 +13,10 @@ export class ImageRes extends ConfigBase {
     imageResApp: ImageResInternal = null;
     imageResAppCommon: ImageResInternal = null;
     imageResCommon: ImageResInternal = null;
+    imageResCloudRes: ImageResInternal = null;
+
+
+
 
     static _main: ImageRes;
     //静态方法
@@ -49,6 +53,14 @@ export class ImageRes extends ConfigBase {
             this.listItem.push(this.imageResCommon);
         }
 
+        strDir = Common.CLOUD_RES_DIR;
+        fileName = "ImageResCloudRes.json";
+        {
+            this.imageResCloudRes = new ImageResInternal();
+            this.imageResCloudRes.fileJson = strDir + "/" + fileName;
+            this.listItem.push(this.imageResCloudRes);
+        }
+
     }
 
 
@@ -81,7 +93,14 @@ export class ImageRes extends ConfigBase {
                 }
             }
         }
-
+        if (Common.BlankString(ret)) {
+            if (this.imageResCloudRes != null) {
+                var key = this.imageResCloudRes.FindKeyByPath(path);
+                if (!Common.BlankString(key)) {
+                    ret = this.imageResCloudRes.GetImageBoardString(key);
+                }
+            }
+        }
         return ret;
     }
 
@@ -113,6 +132,12 @@ export class ImageRes extends ConfigBase {
 
         }
 
+
+        if (ret == false) {
+            if (this.imageResCloudRes != null) {
+                ret = this.imageResCloudRes.IsHasBoard(key);
+            }
+        }
 
 
         return ret;
@@ -147,6 +172,11 @@ export class ImageRes extends ConfigBase {
 
         }
 
+        if (ret == false) {
+            if (this.imageResCloudRes != null) {
+                ret = this.imageResCloudRes.IsHasKey(key);
+            }
+        }
         return ret;
     }
 
@@ -175,6 +205,12 @@ export class ImageRes extends ConfigBase {
                     }
                 }
 
+            }
+        }
+
+        if (Common.BlankString(ret)) {
+            if (this.imageResCloudRes != null) {
+                ret = this.imageResCloudRes.GetImage(key);
             }
         }
 
