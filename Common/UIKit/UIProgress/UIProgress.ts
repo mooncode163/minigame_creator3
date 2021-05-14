@@ -1,5 +1,7 @@
 
-import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject } from 'cc';
+import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject, Size } from 'cc';
+import { UIView } from '../ViewController/UIView';
+import { UIImage } from '../UIImage/UIImage';
 
 const { ccclass, property, type, string } = _decorator;
 
@@ -8,18 +10,42 @@ const { ccclass, property, type, string } = _decorator;
 // VS Code的插件-TypeScript Importer
 
 @ccclass('UIProgress')
-export class UIProgress extends CCObject {
-    static _main: UIProgress;
-    //静态方法
-    static get main() {
-        if (this._main == null) {
-            this._main = new UIProgress();
-            // this._main.Init();
-        }
-        return this._main;
-    }
- 
+export class UIProgress extends UIView {
+    @type(UIImage)
+    imageBg: UIImage | null = null;
+    @type(UIImage)
+    imageFt: UIImage | null = null;
 
+    progress= 0;
+ 
+    onLoad() {
+        super.onLoad();
+        this.LayOut();
+    }
+    LayOutDidFinish () {
+        this.UpdateProgressInternal(this.progress);
+    }
+    UpdateProgress (value) {
+        this.progress = value;
+        this.UpdateProgressInternal(this.progress);
+    }
+    //0-1f
+    UpdateProgressInternal (value) {
+        var x, y, w, h;
+        var size = this.GetContentSize();
+        w = size.width * value;
+        h = size.height;
+        // cc.Debug.Log("UpdateProgress w=" + w + " h=" + h + " size.width=" + size.width);
+ 
+        this.imageFt.SetContentSize(w,h);
+        x = -size.width / 2 + w / 2;
+        y = 0;
+        this.imageFt.node.setPosition(x, y);
+    }
+    LayOut() {
+        super.LayOut();
+
+    }
 }
 
 

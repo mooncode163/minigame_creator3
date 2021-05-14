@@ -39,7 +39,7 @@ export class UICloudRes extends UIView {
             {
                 url: Config.main.cloudResUrl,
                 progress: (res: any) => {
-                    // this.UpdateProgress(res.progress / 100.0);
+                    this.UpdateProgress(res.progress / 100.0);
                 },
                 unzipSuccess: () => {
                     Debug.Log(" unzipSuccess ");
@@ -59,7 +59,7 @@ export class UICloudRes extends UIView {
         }
         var percent = Math.floor(progress * 100);
         // progress = 0.5;
-        // this.uiProgress.UpdateProgress(progress);
+        this.uiProgress.UpdateProgress(progress);
         //下载进度:xxx%
         var str = Language.main.GetString("STR_CLOUDRES_STATUS");
         str = str.replace("xxx", percent.toString());
