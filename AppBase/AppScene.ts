@@ -1,8 +1,8 @@
 
 import { _decorator, Component, Node, Texture2D, resources, SpriteFrame } from 'cc';
-import { AppSceneBase } from './Common/AppSceneBase';
-import { MainViewController } from '../Apps/Main/MainViewController';
+import { AppSceneBase } from './Common/AppSceneBase'; 
 import { Debug } from '../Common/Debug';
+import { InitViewController } from './Common/InitViewController';
 const { ccclass, property } = _decorator;   
 
 @ccclass('AppScene')
@@ -29,7 +29,7 @@ export class AppScene extends AppSceneBase  {
     RunApp () {
         super.RunApp();
         Debug.Log("AppScene RunApp");
-        var p = MainViewController.main; 
+        var p = InitViewController.main; 
         Debug.Log("AppScene RunApp Main");
         this.SetRootViewController(p);
 

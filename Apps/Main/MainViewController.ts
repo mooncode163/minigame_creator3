@@ -10,7 +10,6 @@ import { HomeViewController } from '../../AppBase/Home/HomeViewController';
 import { LevelManager } from '../../AppBase/Game/LevelManager';
 import { Platform } from '../../Common/Platform';
 import { Common } from '../../Common/Common';
-import { AppRes } from './AppRes';
 import { CloudResVersion } from '../../Common/CloundRes/CloudResVersion';
 import { Config } from '../../Common/Config/Config';
 import { CloudResViewController } from '../../Common/CloundRes/CloudResViewController';
@@ -22,8 +21,7 @@ const { ccclass, property } = _decorator;
 export class MainViewController extends NaviViewController {
     static _main: MainViewController;
     //静态方法
-    static get main() {
-        console.log("AppScene MainViewController Main");
+    static get main() { 
         if (this._main == null) {
             this._main = new MainViewController();
         }
@@ -31,104 +29,10 @@ export class MainViewController extends NaviViewController {
     }
     ViewDidLoad() {
         super.ViewDidLoad();
-
-        var str = Language.main.GetString("BtnStartGame");
-        Debug.Log("MainViewController ViewDidLoad str=" + str);
-        var isShowClound = false;
-        if (Platform.isCloudRes) {
-            Debug.Log("MainViewController 1");
-            var isDownload = Common.GetBoolOfKey(AppRes.KEY_DOWNLOAD_CLOUNDRES, false);
-            if (!isDownload) {
-                Debug.Log("MainViewController 2");
-                //第一次 下载资源
-                isShowClound = true;
-            } else {
-                Debug.Log("MainViewController 3")
-
-                CloudResVersion.main.Load(
-                    {
-                        success: (p: any, data: any) => {
-                            var versionNow = Config.main.version;
-                            var versionLocal = CloudResVersion.main.version;
-                            Debug.Log("MainViewController version: versionNow=" + versionNow + " versionLocal=" + versionLocal);
-                            if (versionNow > versionLocal) {
-                                //需要更新资源 
-                                isShowClound = true;
-                            }
-                        },
-                        fail: () => {
-
-                        },
-                    });
-            }
-        }
-        // isShowClound = true;
-        if (isShowClound) {
-            this.GotoCloundRes();
-        } else {
-            this.StartParsePlace();
-        }
-
-        // ImageRes.main.LoadCloudConfig(
-        //     {
-        //         success: (p: any) => {
-        //             this.StartParsePlace();
-        //         },
-        //         fail: () => {
-        //             this.StartParsePlace();
-        //         },
-        //     });
-
+        this.Push(HomeViewController.main);//HomeViewController
     }
 
-    StartParsePlace() {
-        Debug.Log("HomeViewController StartParsePlace");
-        LevelManager.main.StartParsePlace(
-            {
-                success: (p: any) => {
-                    this.StartParseGuanka();
-                },
-                fail: () => {
-                    this.StartParseGuanka();
-                },
-            });
-    }
-
-    StartParseGuanka() {
-        Debug.Log("HomeViewController StartParseGuanka");
-        LevelManager.main.StartParseGuanka(
-            {
-                success: (p: any) => {
-                    this.GotoHome();
-                },
-                fail: () => {
-                    this.GotoHome();
-                },
-            });
-    }
-
-    GotoCloundRes() { 
-        CloudResViewController.main.Show(
-            {
-                controller:this, 
-                close: (p: any) => { 
-                    this.StartParsePlace();
-                }, 
-            });
-    }
-    GotoHome() {
-        ImageRes.main.LoadCloudConfig(
-            {
-                success: (p: any) => {
-                    this.Push(HomeViewController.main);//HomeViewController
-                },
-                fail: () => {
-                    this.Push(HomeViewController.main);//HomeViewController
-                },
-            });
-      
-    }
-
+     
 }
 
 /**
