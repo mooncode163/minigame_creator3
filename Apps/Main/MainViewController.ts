@@ -112,7 +112,7 @@ export class MainViewController extends NaviViewController {
             {
                 controller:this, 
                 close: (p: any) => { 
-                    this.GotoHome();
+                    this.StartParsePlace();
                 }, 
             });
     }
