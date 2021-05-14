@@ -16,6 +16,8 @@ export class ShareWeiXin extends CCObject {
             imageUrl: pic,
         }))
     }
+
+    // image 分辨率 5:4  如 1000 × 800
     ShareImageText (source:string, title:string, pic:string, url:string) {
         this.SetWeiXinMPShareMenu(title, pic);
         wx.shareAppMessage({

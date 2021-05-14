@@ -14,6 +14,7 @@ import { AppRes } from './AppRes';
 import { CloudResVersion } from '../../Common/CloundRes/CloudResVersion';
 import { Config } from '../../Common/Config/Config';
 import { CloudResViewController } from '../../Common/CloundRes/CloudResViewController';
+import { ImageRes } from '../../Common/Config/ImageRes';
 const { ccclass, property } = _decorator;
 
 
@@ -100,7 +101,7 @@ export class MainViewController extends NaviViewController {
         CloudResViewController.main.Show(
             {
                 controller:this, 
-                close: (p: any) => {
+                close: (p: any) => { 
                     this.GotoHome();
                 }, 
             });

@@ -4,6 +4,7 @@ import { Common } from '../Common';
 import { ImageResInternal } from './ImageResInternal';
 import { ConfigBase } from './ConfigBase';
 import { Platform } from '../Platform';
+import { CloudRes } from '../CloundRes/CloudRes';
 
 const { ccclass, property } = _decorator;
 // 动态加载资源文档
@@ -54,16 +55,59 @@ export class ImageRes extends ConfigBase {
             this.listItem.push(this.imageResCommon);
         }
 
-        strDir = Common.CLOUD_RES_DIR;
-        fileName = "ImageResCloudRes.json";
-        {
-            this.imageResCloudRes = new ImageResInternal();
-            this.imageResCloudRes.fileJson = strDir + "/" + fileName;
-            this.listItem.push(this.imageResCloudRes);
+
+        if (!Platform.isCloudRes) {
+
+            strDir = Common.CLOUD_RES_DIR;
+            fileName = "ImageResCloudRes.json";
+            {
+                this.imageResCloudRes = new ImageResInternal();
+                this.imageResCloudRes.fileJson = strDir + "/" + fileName;
+                this.listItem.push(this.imageResCloudRes);
+            }
+
         }
 
     }
 
+      /*
+       { 
+         success: (p:any) => {
+             
+         }, 
+         fail: (p:any) => {
+             
+         },
+       }
+       */
+    LoadCloudConfig(obj:any) {
+        if (Platform.isCloudRes) {
+            var strDir = CloudRes.main.rootPath;
+            var fileName = "ImageResCloudRes.json";
+            {
+                this.imageResCloudRes = new ImageResInternal();
+                this.imageResCloudRes.fileJson = strDir + "/" + fileName;
+                this.listItem.push(this.imageResCloudRes);
+
+                this.imageResCloudRes.Load(
+                    {
+                        success: (p: any) => {
+                            // this.OnFinish(obj,false);
+                            if (obj.success != null) {
+                                obj.success(this);
+                            }
+                        },
+                        fail: () => {
+                            // this.OnFinish(obj,true);
+                            if (obj.fail != null) {
+                                obj.fail(this);
+                            }
+                        },
+                    });
+            }
+
+        }
+    }
 
     GetImageBoardString(path: string) {
         var ret = "";
@@ -212,11 +256,10 @@ export class ImageRes extends ConfigBase {
         if (Common.BlankString(ret)) {
             if (this.imageResCloudRes != null) {
                 ret = this.imageResCloudRes.GetImage(key);
-                if(!Platform.isCloudRes)
-                {
-                    ret =Common.CLOUD_RES_DIR+"/"+ret;
+                if (!Platform.isCloudRes) {
+                    ret = Common.CLOUD_RES_DIR + "/" + ret;
                 }
-               
+
             }
         }
 

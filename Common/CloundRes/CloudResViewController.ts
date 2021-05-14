@@ -5,6 +5,7 @@ import { PrefabCache } from '../Cache/PrefabCache';
 import { Debug } from '../Debug';
 import { PopViewController } from '../UIKit/ViewController/PopViewController';
 import { UICloudRes } from './UICloudRes';
+import { ImageRes } from '../Config/ImageRes';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('CloudResViewController')
@@ -14,7 +15,7 @@ export class CloudResViewController extends PopViewController {
 
     static _main: CloudResViewController;
     //静态方法
-    static get main() { 
+    static get main() {
         if (this._main == null) {
             this._main = new CloudResViewController();
         }
@@ -33,7 +34,7 @@ export class CloudResViewController extends PopViewController {
     }
 
     LoadPrefab() {
-        var key = "UICloudRes"; 
+        var key = "UICloudRes";
 
         PrefabCache.main.LoadByKey(
             {
@@ -41,12 +42,12 @@ export class CloudResViewController extends PopViewController {
                 success: (p: any, data: any) => {
                     this.uiPrefab = data;
                     this.CreateUI();
-                 
+
                 },
                 fail: () => {
-                    
+
                 },
-            }); 
+            });
     }
 
     ViewDidLoad() {
@@ -60,9 +61,22 @@ export class CloudResViewController extends PopViewController {
 
     }
     LayOut() {
-       
+
 
     }
+
+    Close() {
+        ImageRes.main.LoadCloudConfig(
+            {
+                success: (p: any) => {
+                    super.Close();
+                },
+                fail: () => {
+                    super.Close();
+                },
+            });
+    }
+
 
 }
 
