@@ -62,7 +62,7 @@ export class MainViewController extends NaviViewController {
                     });
             }
         }
-        isShowClound = true;
+        // isShowClound = true;
         if (isShowClound) {
             this.GotoCloundRes();
         } else {

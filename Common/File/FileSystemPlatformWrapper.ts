@@ -1,12 +1,9 @@
 
-import { _decorator, Component, Node, Prefab } from 'cc'; 
-import { UIView } from '../../Common/UIKit/ViewController/UIView'; 
-import { Common } from '../Common';
-import { Platform } from '../Platform'; 
+import { _decorator, Component, Node, Prefab, CCObject } from 'cc';  
 const { ccclass, property, type } = _decorator;
 
 @ccclass('FileSystemPlatformWrapper')
-export class FileSystemPlatformWrapper extends UIView { 
+export class FileSystemPlatformWrapper extends CCObject { 
     public static FILE_ROOT_DIR = "moonma";
 
     static _main: FileSystemPlatformWrapper;
