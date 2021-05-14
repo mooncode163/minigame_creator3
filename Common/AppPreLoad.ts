@@ -55,6 +55,7 @@ export class AppPreLoad extends CCObject {
         this.listItem.forEach((item) => {
             item.Load(
                 {
+                    isCloud:false,
                     success: (p: any) => {
                         Debug.Log("AppPreLoad success this.countLoad="+this.countLoad);
                         this.OnFinish(obj,false);

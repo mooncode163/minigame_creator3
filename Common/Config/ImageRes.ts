@@ -70,17 +70,17 @@ export class ImageRes extends ConfigBase {
 
     }
 
-      /*
-       { 
-         success: (p:any) => {
-             
-         }, 
-         fail: (p:any) => {
-             
-         },
-       }
-       */
-    LoadCloudConfig(obj:any) {
+    /*
+     { 
+       success: (p:any) => {
+           
+       }, 
+       fail: (p:any) => {
+           
+       },
+     }
+     */
+    LoadCloudConfig(obj: any) {
         if (Platform.isCloudRes) {
             var strDir = CloudRes.main.rootPath;
             var fileName = "ImageResCloudRes.json";
@@ -91,6 +91,7 @@ export class ImageRes extends ConfigBase {
 
                 this.imageResCloudRes.Load(
                     {
+                        isCloud: true,
                         success: (p: any) => {
                             // this.OnFinish(obj,false);
                             if (obj.success != null) {
@@ -110,79 +111,110 @@ export class ImageRes extends ConfigBase {
     }
 
     GetImageBoardString(path: string) {
+
         var ret = "";
-        if (Common.BlankString(ret)) {
-            if (this.imageResCommon != null) {
-                var key = this.imageResCommon.FindKeyByPath(path);
-                if (!Common.BlankString(key)) {
-                    ret = this.imageResCommon.GetImageBoardString(key);
+        this.listItem.forEach((item) => {
+            var p = item as ImageResInternal;
+            if (Common.BlankString(ret)) {
+                if (p != null) {
+                    var key = p.FindKeyByPath(path);
+                    if (!Common.BlankString(key)) {
+                        ret = p.GetImageBoardString(key);
+                    }
                 }
+            } else {
+                return ret;
             }
-        }
+
+        });
 
 
-        if (Common.BlankString(ret)) {
-            if (this.imageResApp != null) {
-                var key = this.imageResApp.FindKeyByPath(path);
-                if (!Common.BlankString(key)) {
-                    ret = this.imageResApp.GetImageBoardString(key);
-                }
-            }
-        }
+        // if (Common.BlankString(ret)) {
+        //     if (this.imageResCommon != null) {
+        //         var key = this.imageResCommon.FindKeyByPath(path);
+        //         if (!Common.BlankString(key)) {
+        //             ret = this.imageResCommon.GetImageBoardString(key);
+        //         }
+        //     }
+        // }
 
-        if (Common.BlankString(ret)) {
-            if (this.imageResAppCommon != null) {
-                var key = this.imageResAppCommon.FindKeyByPath(path);
-                if (!Common.BlankString(key)) {
-                    ret = this.imageResAppCommon.GetImageBoardString(key);
-                }
-            }
-        }
-        if (Common.BlankString(ret)) {
-            if (this.imageResCloudRes != null) {
-                var key = this.imageResCloudRes.FindKeyByPath(path);
-                if (!Common.BlankString(key)) {
-                    ret = this.imageResCloudRes.GetImageBoardString(key);
-                }
-            }
-        }
+
+        // if (Common.BlankString(ret)) {
+        //     if (this.imageResApp != null) {
+        //         var key = this.imageResApp.FindKeyByPath(path);
+        //         if (!Common.BlankString(key)) {
+        //             ret = this.imageResApp.GetImageBoardString(key);
+        //         }
+        //     }
+        // }
+
+        // if (Common.BlankString(ret)) {
+        //     if (this.imageResAppCommon != null) {
+        //         var key = this.imageResAppCommon.FindKeyByPath(path);
+        //         if (!Common.BlankString(key)) {
+        //             ret = this.imageResAppCommon.GetImageBoardString(key);
+        //         }
+        //     }
+        // }
+        // if (Common.BlankString(ret)) {
+        //     if (this.imageResCloudRes != null) {
+        //         var key = this.imageResCloudRes.FindKeyByPath(path);
+        //         if (!Common.BlankString(key)) {
+        //             ret = this.imageResCloudRes.GetImageBoardString(key);
+        //         }
+        //     }
+        // }
         return ret;
     }
 
     IsHasBoard(key: string) {
         var ret = false;
-        if (this.imageResApp.IsHasKey(key)) {
-            ret = this.imageResApp.IsHasBoard(key);
+        if (Common.BlankString(key)) {
+            return ret;
         }
-        else {
-            if (this.imageResAppCommon != null) {
-                ret = this.imageResAppCommon.IsHasBoard(key);
-            }
-            else {
-                if (this.imageResCommon != null) {
-                    ret = this.imageResCommon.IsHasBoard(key);
+        this.listItem.forEach((item) => {
+            var p = item as ImageResInternal;
+            if (ret == false) {
+                if (p != null) {
+                    ret = p.IsHasBoard(key);
                 }
+            } else {
+                return ret;
             }
-        }
+        });
 
-        //old
-        if (ret == false) {
+        // if (this.imageResApp.IsHasKey(key)) {
+        //     ret = this.imageResApp.IsHasBoard(key);
+        // }
+        // else {
+        //     if (this.imageResAppCommon != null) {
+        //         ret = this.imageResAppCommon.IsHasBoard(key);
+        //     }
+        //     else {
+        //         if (this.imageResCommon != null) {
+        //             ret = this.imageResCommon.IsHasBoard(key);
+        //         }
+        //     }
+        // }
+
+        // //old
+        // if (ret == false) {
 
 
-            if (!ret) {
-                if (this.imageResCommon != null) {
-                    ret = this.imageResCommon.IsHasBoard(key);
-                }
-            }
+        //     if (!ret) {
+        //         if (this.imageResCommon != null) {
+        //             ret = this.imageResCommon.IsHasBoard(key);
+        //         }
+        //     }
 
-        }
+        // }
 
 
-        if (ret == false) {
-            if (this.imageResCloudRes != null) {
-                ret = this.imageResCloudRes.IsHasBoard(key);
-            }
-        }
+        // if (ret == false) {
+        //     if (this.imageResCloudRes != null) {
+        //         ret = this.imageResCloudRes.IsHasBoard(key);
+        //     }
+        // }
 
 
         return ret;
@@ -191,77 +223,112 @@ export class ImageRes extends ConfigBase {
 
     IsContainsKey(key: string) {
         var ret = false;
-        if (this.imageResApp.IsHasKey(key)) {
-            ret = true;
+        if (Common.BlankString(key)) {
+            return ret;
         }
-        else {
-            if (this.imageResAppCommon != null) {
-                ret = this.imageResAppCommon.IsHasKey(key);
-            }
-            else {
-                if (this.imageResCommon != null) {
-                    ret = this.imageResCommon.IsHasKey(key);
+        this.listItem.forEach((item) => {
+            var p = item as ImageResInternal;
+            if (ret == false) {
+                if (p != null) {
+                    ret = p.IsHasKey(key);
                 }
+            } else {
+                return ret;
             }
-        }
+        });
 
-        //old
-        if (ret == false) {
+        // if (this.imageResApp.IsHasKey(key)) {
+        //     ret = true;
+        // }
+        // else {
+        //     if (this.imageResAppCommon != null) {
+        //         ret = this.imageResAppCommon.IsHasKey(key);
+        //     }
+        //     else {
+        //         if (this.imageResCommon != null) {
+        //             ret = this.imageResCommon.IsHasKey(key);
+        //         }
+        //     }
+        // }
+
+        // //old
+        // if (ret == false) {
 
 
-            if (!ret) {
-                if (this.imageResCommon != null) {
-                    ret = this.imageResCommon.IsHasKey(key);
-                }
-            }
+        //     if (!ret) {
+        //         if (this.imageResCommon != null) {
+        //             ret = this.imageResCommon.IsHasKey(key);
+        //         }
+        //     }
 
-        }
+        // }
 
-        if (ret == false) {
-            if (this.imageResCloudRes != null) {
-                ret = this.imageResCloudRes.IsHasKey(key);
-            }
-        }
+        // if (ret == false) {
+        //     if (this.imageResCloudRes != null) {
+        //         ret = this.imageResCloudRes.IsHasKey(key);
+        //     }
+        // }
         return ret;
     }
 
     GetImage(key: string) {
         var ret = "";
-        if (this.imageResApp.IsHasKey(key)) {
-            ret = this.imageResApp.GetImage(key);
+
+        if (Common.BlankString(key)) {
+            return ret;
         }
-        else {
-            if (this.imageResAppCommon != null) {
-                ret = this.imageResAppCommon.GetImage(key);
-            }
-            else {
-                if (this.imageResCommon != null) {
-                    ret = this.imageResCommon.GetImage(key);
-                }
-            }
-
-            // if (ret == "_NO_KEY_")
+        this.listItem.forEach((item) => {
+            var p = item as ImageResInternal;
             if (Common.BlankString(ret)) {
-
-                // if (ret == "_NO_KEY_")
-                if (Common.BlankString(ret)) {
-                    if (this.imageResCommon != null) {
-                        ret = this.imageResCommon.GetImage(key);
+                if (p != null) {
+                    ret = p.GetImage(key);
+                    if (!Platform.isCloudRes) {
+                        if (p == this.imageResCloudRes) {
+                            ret = Common.CLOUD_RES_DIR + "/" + ret;
+                        }
                     }
                 }
-
+            } else {
+                return ret;
             }
-        }
+        });
 
-        if (Common.BlankString(ret)) {
-            if (this.imageResCloudRes != null) {
-                ret = this.imageResCloudRes.GetImage(key);
-                if (!Platform.isCloudRes) {
-                    ret = Common.CLOUD_RES_DIR + "/" + ret;
-                }
+        // if (this.imageResApp.IsHasKey(key)) {
+        //     ret = this.imageResApp.GetImage(key);
+        // }
+        // else {
+        //     if (this.imageResAppCommon != null) {
+        //         ret = this.imageResAppCommon.GetImage(key);
+        //     }
+        //     else {
+        //         if (this.imageResCommon != null) {
+        //             ret = this.imageResCommon.GetImage(key);
+        //         }
+        //     }
 
-            }
-        }
+        //     // if (ret == "_NO_KEY_")
+        //     if (Common.BlankString(ret)) {
+
+        //         // if (ret == "_NO_KEY_")
+        //         if (Common.BlankString(ret)) {
+        //             if (this.imageResCommon != null) {
+        //                 ret = this.imageResCommon.GetImage(key);
+        //             }
+        //         }
+
+        //     }
+        // }
+
+        // if (Common.BlankString(ret)) {
+        //     if (this.imageResCloudRes != null) {
+        //         ret = this.imageResCloudRes.GetImage(key);
+        //         if (!Platform.isCloudRes) {
+        //             ret = Common.CLOUD_RES_DIR + "/" + ret;
+        //         }
+
+        //     }
+        // }
+
 
         return ret;
     }
@@ -270,28 +337,43 @@ export class ImageRes extends ConfigBase {
 
     GetImageBoard(key: string) {
         var ret = Vec4.ZERO;
-        if (this.imageResApp.IsHasKey(key)) {
-            ret = this.imageResApp.GetImageBoard(key);
-        }
-        else {
 
-            if (this.imageResAppCommon != null) {
-                if (this.imageResAppCommon.IsHasKey(key)) {
-                    ret = this.imageResAppCommon.GetImageBoard(key);
+        if (Common.BlankString(key)) {
+            return ret;
+        }
+        this.listItem.forEach((item) => {
+            var p = item as ImageResInternal;
+            if (ret == Vec4.ZERO) {
+                if (p != null) {
+                    ret = p.GetImageBoard(key);
                 }
-
+            } else {
+                return ret;
             }
+        });
 
-        }
+        // if (this.imageResApp.IsHasKey(key)) {
+        //     ret = this.imageResApp.GetImageBoard(key);
+        // }
+        // else {
+
+        //     if (this.imageResAppCommon != null) {
+        //         if (this.imageResAppCommon.IsHasKey(key)) {
+        //             ret = this.imageResAppCommon.GetImageBoard(key);
+        //         }
+
+        //     }
+
+        // }
 
 
-        if (ret == Vec4.ZERO) {
-            if (this.imageResCommon != null) {
-                if (this.imageResCommon.IsHasKey(key)) {
-                    ret = this.imageResCommon.GetImageBoard(key);
-                }
-            }
-        }
+        // if (ret == Vec4.ZERO) {
+        //     if (this.imageResCommon != null) {
+        //         if (this.imageResCommon.IsHasKey(key)) {
+        //             ret = this.imageResCommon.GetImageBoard(key);
+        //         }
+        //     }
+        // }
 
         return ret;
     }

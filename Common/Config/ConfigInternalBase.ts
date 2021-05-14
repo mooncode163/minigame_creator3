@@ -17,6 +17,7 @@ export class ConfigInternalBase extends CCObject {
 
     /*
       { 
+        isCloud:false,
         success: (p:any) => {
             
         }, 
@@ -26,28 +27,49 @@ export class ConfigInternalBase extends CCObject {
       }
       */
     Load(obj: any) {
-        var key = FileUtil.GetFileBeforeExtWithOutDot(this.fileJson);
-        ResManager.Load(
-            {
-                filepath: key,
-                success: (p: any, data: any) => {
-                    Debug.Log("ConfigInternalBase success key="+key);
-                    // this.OnFinish(obj);
-                    this.rootJson = data.json;
-                    this.ParseData();
-                    if (obj.success != null) {
-                        obj.success(this);
-                    }
-                },
-                fail: () => {
-                    Debug.Log("ConfigInternalBase fail ");
-                    // this.OnFinish(obj);
-                    if (obj.fail != null) {
-                        // Debug.Log("ConfigInternalBase fail this");
-                        obj.fail(this);
-                    }
-                },
-            });
+        if (obj.isCloud) {
+            ResManager.LoadUrl(
+                {
+                    url: this.fileJson,
+                    success: (p: any, data: any) => {
+                        this.rootJson = data.json;
+                        this.ParseData();
+                        if (obj.success != null) {
+                            obj.success(this);
+                        }
+                    },
+                    fail: () => {
+                        if (obj.fail != null) {
+                            obj.fail(this);
+                        }
+                    },
+                });
+        } else {
+
+            var key = FileUtil.GetFileBeforeExtWithOutDot(this.fileJson);
+            ResManager.Load(
+                {
+                    filepath: key,
+                    success: (p: any, data: any) => {
+                        Debug.Log("ConfigInternalBase success key=" + key);
+                        // this.OnFinish(obj);
+                        this.rootJson = data.json;
+                        this.ParseData();
+                        if (obj.success != null) {
+                            obj.success(this);
+                        }
+                    },
+                    fail: () => {
+                        Debug.Log("ConfigInternalBase fail ");
+                        // this.OnFinish(obj);
+                        if (obj.fail != null) {
+                            // Debug.Log("ConfigInternalBase fail this");
+                            obj.fail(this);
+                        }
+                    },
+                });
+        }
+
     }
     GetString(key: string, def: string) {
         return JsonUtil.GetItem(this.rootJson, key, def);
@@ -58,7 +80,7 @@ export class ConfigInternalBase extends CCObject {
     }
 
     ParseData() {
-        
+
     }
 }
 
