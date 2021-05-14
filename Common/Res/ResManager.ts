@@ -91,6 +91,7 @@ export class ResManager extends CCObject {
 
     public static LoadTexture(obj: any) {
         // texture spriteFrame
+        console.log("ResManager LoadTexture obj.filepath="+obj.filepath);
         var pic = FileUtil.GetFileBeforeExtWithOutDot(obj.filepath) + "/texture";
         resources.load(pic, Texture2D, (err: any, texture: Texture2D) => {
             if (texture == null) {

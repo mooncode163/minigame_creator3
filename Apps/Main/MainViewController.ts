@@ -66,8 +66,18 @@ export class MainViewController extends NaviViewController {
         if (isShowClound) {
             this.GotoCloundRes();
         } else {
-            this.StartParsePlace();
+            // this.StartParsePlace();
         }
+
+        ImageRes.main.LoadCloudConfig(
+            {
+                success: (p: any) => {
+                    this.StartParsePlace();
+                },
+                fail: () => {
+                    this.StartParsePlace();
+                },
+            });
 
     }
 

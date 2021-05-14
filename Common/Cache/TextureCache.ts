@@ -53,6 +53,12 @@ fail: (p:any) => {
 }
 */
     LoadNotCache(obj: any) {
+        // if(obj.isCloud)
+        // {
+        //     this.LoadWithCloud(obj);
+        //     return;
+        // }
+
         ResManager.LoadTexture(
             {
                 filepath: obj.filepath,
@@ -61,7 +67,7 @@ fail: (p:any) => {
                         obj.success(this, tex);
                     }
                 },
-                fail: () => {
+                fail: (p: any) => {
                     // if (obj.fail != null) {
                     //     obj.fail(this);
                     // }
@@ -97,7 +103,7 @@ fail: (p:any) => {
                             obj.success(this, tex);
                         }
                     },
-                    fail: () => {
+                    fail: (p: any) => {
                         if (obj.fail != null) {
                             obj.fail(this);
                         }
@@ -113,7 +119,7 @@ fail: (p:any) => {
                             obj.success(this, tex);
                         }
                     },
-                    fail: () => {
+                    fail: (p: any) => {
                         if (obj.fail != null) {
                             obj.fail(this);
                         }

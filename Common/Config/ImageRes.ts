@@ -5,6 +5,7 @@ import { ImageResInternal } from './ImageResInternal';
 import { ConfigBase } from './ConfigBase';
 import { Platform } from '../Platform';
 import { CloudRes } from '../CloundRes/CloudRes';
+import { Debug } from '../Debug';
 
 const { ccclass, property } = _decorator;
 // 动态加载资源文档
@@ -88,18 +89,20 @@ export class ImageRes extends ConfigBase {
                 this.imageResCloudRes = new ImageResInternal();
                 this.imageResCloudRes.fileJson = strDir + "/" + fileName;
                 this.listItem.push(this.imageResCloudRes);
-
+                Debug.Log("ImageRes imageResCloudRes.fileJson=" + this.imageResCloudRes.fileJson);
                 this.imageResCloudRes.Load(
                     {
                         isCloud: true,
                         success: (p: any) => {
                             // this.OnFinish(obj,false);
+                            Debug.Log("ImageRes imageResCloudRes success=");
                             if (obj.success != null) {
                                 obj.success(this);
                             }
                         },
                         fail: () => {
                             // this.OnFinish(obj,true);
+                            Debug.Log("ImageRes imageResCloudRes fail=");
                             if (obj.fail != null) {
                                 obj.fail(this);
                             }
@@ -107,6 +110,10 @@ export class ImageRes extends ConfigBase {
                     });
             }
 
+        } else {
+            if (obj.success != null) {
+                obj.success(this);
+            }
         }
     }
 
@@ -282,11 +289,16 @@ export class ImageRes extends ConfigBase {
             if (Common.BlankString(ret)) {
                 if (p != null) {
                     ret = p.GetImage(key);
-                    if (!Platform.isCloudRes) {
-                        if (p == this.imageResCloudRes) {
+                    if (p == this.imageResCloudRes) {
+                        if (Platform.isCloudRes) {
+                            // 从CloudRes缓存目录读取
+                            ret = CloudRes.main.rootPath+"/" + ret;
+                        }else{
+                            // 在resoureces目录
                             ret = Common.CLOUD_RES_DIR + "/" + ret;
                         }
                     }
+
                 }
             } else {
                 return ret;

@@ -8,6 +8,7 @@ import { UIView } from '../ViewController/UIView';
 import { TextureUtil } from '../../Image/TextureUtil';
 import { TextureCache } from '../../Cache/TextureCache';
 import { Platform } from '../../Platform';
+import { Debug } from '../../Debug';
 const { ccclass, property, type } = _decorator;
 
 // TypeScript自动引入脚本插件
@@ -55,6 +56,7 @@ export class UIImage extends UIView {
         if (!Common.BlankString(key)) {
             pic = ImageRes.main.GetImage(key);
         }
+        Debug.Log("UIImage UpdateImageByKey pic="+pic+" key="+key);
 
         if (!Common.BlankString(pic)) {
             this.UpdateImage(pic, key);
