@@ -1,5 +1,6 @@
 
 import { _decorator } from 'cc';
+// import { debug } from 'cocos_core_platform_debug';
 
 const { ccclass, property } = _decorator;
 
@@ -8,6 +9,7 @@ export class Debug {
     //静态方法
     static Log(str: string) {
         console.log(str);
+        // debug.setDisplayStats(false);
     } 
 
 }

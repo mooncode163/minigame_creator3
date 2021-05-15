@@ -1,10 +1,11 @@
 
 import { _decorator, Component, Node, Prefab } from 'cc'; 
 import { UIView } from '../../../../Common/UIKit/ViewController/UIView';
+import { UIViewPop } from '../../../../Common/UIKit/PopUp/UIViewPop';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UIPopProp')
-export class UIPopProp extends UIView {
+export class UIPopProp extends UIViewPop {
     
     onLoad () {
         super.onLoad();

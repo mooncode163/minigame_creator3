@@ -272,7 +272,7 @@ export class GameMerge extends GameBase {
 
         var rectParent = this.GetBoundingBox();
         x = 0;
-        y = rectParent.height / 2 - ui.GetBoundingBox().height;
+        y = rectParent.height / 2 - ui.GetBoundingBox().height/2;
 
         // y = 512;
         this.posYInit = y;

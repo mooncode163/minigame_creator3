@@ -1,4 +1,4 @@
-
+// import { debug  } from 'cocos_core_platform_debug';
 import { _decorator, Component, Node, Canvas, View, Size, director, size, view, math, UITransform, Button, Vec2, Label } from 'cc';
 const { ccclass, property, integer, float, boolean, string, type } = _decorator;
 import { UIViewController } from "../../Common/UIKit/ViewController/UIViewController";
@@ -49,6 +49,8 @@ export class AppSceneBase extends Component {
         Debug.Log("AppSceneBase onLoad");
         this.isHasRunApp = false;
         // debug.setDisplayStats(false);  
+        // debug.setDisplayStats(false);
+        
         this.InitValue();
         AppPreLoad.main.Load(
             {
@@ -195,7 +197,5 @@ export class AppSceneBase extends Component {
  * Learn more about life-cycle callbacks: https://docs.cocos.com/creator/3.0/manual/en/scripting/life-cycle-callbacks.html
  */
 
-export function setDisplayStats(arg0: boolean) {
-    throw new Error('Function not implemented.');
-}
+ 
 
