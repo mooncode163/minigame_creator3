@@ -1,5 +1,6 @@
 
 import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject } from 'cc';
+import { Debug } from '../../Debug';
 import { Source } from '../../Source';
 import { AdConfig } from '../AdConfig/AdConfig';
 import { AdInfo, AdType } from '../AdConfig/AdInfo';
@@ -22,6 +23,7 @@ export class AdVideoWeiXin extends AdVideoPlatformWrapper {
     }
     InitAd(source) {
         var adkey = AdConfig.main.GetAdKey(Source.WEIXIN, AdType.VIDEO);
+        Debug.Log("AdVideoWeiXin adkey="+adkey);
         // 在页面中定义激励视频广告 
         // 在页面onLoad回调事件中创建激励视频广告实例
         if (wx.createRewardedVideoAd) {

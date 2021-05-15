@@ -14,6 +14,7 @@ import { GameViewController } from '../../../../AppBase/Game/GameViewController'
 import { GameLevelParse } from '../../Data/GameLevelParse';
 import { Language } from '../../../../Common/Language/Language';
 import { Device } from '../../../../Common/Device';
+import { AdKitCommon } from '../../../../Common/AdKit/AdKitCommon';
 
 
 @ccclass('UIHomeMerge')
@@ -41,6 +42,10 @@ export class UIHomeMerge extends UIHomeBase {
         this.LayOut();
         // this.LoadCenterBar();
         this.LoadSideBar();
+
+        AdKitCommon.main.InitAdBanner();
+        AdKitCommon.main.ShowAdBanner(true);
+
     }
 
 

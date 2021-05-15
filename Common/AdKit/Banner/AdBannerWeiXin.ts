@@ -7,6 +7,7 @@ import { AdBannerPlatformWrapper } from './AdBannerPlatformWrapper';
 import { AdConfig } from '../AdConfig/AdConfig';
 import { Source } from '../../Source'; 
 import { AdType } from '../AdConfig/AdInfo';
+import { Debug } from '../../Debug';
 // TypeScript自动引入脚本插件
 // https=//blog.csdn.net/u011004567/article/details/78507236
 // VS Code的插件-TypeScript Importer 
@@ -29,6 +30,8 @@ export class AdBannerWeiXin extends AdBannerPlatformWrapper {
   */
     InitAd(obj: any) { 
         let adkey = AdConfig.main.GetAdKey(Source.WEIXIN, AdType.BANNER); 
+        Debug.Log("AdBannerWeiXin adkey="+adkey);
+        
         let winSize = wx.getSystemInfoSync();
         this.objAd = obj;
         console.log(winSize);
