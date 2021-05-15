@@ -28,8 +28,11 @@ export class Device extends CCObject {
         return false;
     }
     get screenSize(): Size {           
-        let frameSize = view.getFrameSize()
-        let screenSize = director.getWinSizeInPixels(); 
+        var frameSize = view.getFrameSize()
+        Debug.Log("screen frameSize width=" + frameSize.width + ",height=" + frameSize.height);
+        var ratio = view.getDevicePixelRatio();
+        var screenSize = new Size(frameSize.width*ratio,frameSize.height*ratio);
+        // let screenSize = director.getWinSizeInPixels(); 
         Debug.Log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
         return screenSize;
     }

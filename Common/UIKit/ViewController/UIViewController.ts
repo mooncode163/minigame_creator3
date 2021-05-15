@@ -70,7 +70,11 @@ export class UIViewController extends CCObject {
     // }
 
     //virtual
-    LayOutView() {
+    LayOut() {
+        if(this.view!=null)
+        {
+            this.view.LayOut();
+        }
     }
     ViewDidLoad() {
     }

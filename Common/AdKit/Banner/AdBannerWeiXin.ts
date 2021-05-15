@@ -63,7 +63,7 @@ export class AdBannerWeiXin extends AdBannerPlatformWrapper {
             // 屏幕单位
             this.width = this.bannerAd.style.realWidth * winSize.pixelRatio;
             this.height = this.bannerAd.style.realHeight * winSize.pixelRatio;
-
+            Debug.Log("screen winSize.windowWidth ="+winSize.windowWidth+" winSize.windowHeight ="+winSize.windowHeight+" winSize.pixelRatio="+winSize.pixelRatio);
             if (this.objAd.success != null) {
                 this.objAd.success(this, this.width, this.height);
             }

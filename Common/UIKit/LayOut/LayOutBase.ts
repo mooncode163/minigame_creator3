@@ -25,9 +25,14 @@ export class LayOutBase extends Component {
     enableHide = true; //是否包含Hide true 包含 false  不包含
 
     // 选择横屏配置参数
+    @property
     enableLandscape = false;
+    @property
+    enableOffsetAdBanner = false; 
 
+    @property
     isOnlyForPortrait = false;
+    @property
     isOnlyForLandscape = false;
 
     space = Vec2.ZERO;

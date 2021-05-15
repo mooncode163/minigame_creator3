@@ -1,41 +1,41 @@
 
-import { _decorator, Component, Node, Sprite, Label, Prefab, instantiate, UITransform } from 'cc'; 
-import { Debug } from '../../Debug'; 
+import { _decorator, Component, Node, Sprite, Label, Prefab, instantiate, UITransform } from 'cc';
+import { Debug } from '../../Debug';
 import { UIViewController } from '../ViewController/UIViewController';
 import { UINaviBar } from './UINaviBar';
 import { AppSceneBase } from '../../../AppBase/Common/AppSceneBase';
-const { ccclass, property,type,string } = _decorator;
+const { ccclass, property, type, string } = _decorator;
 
 // TypeScript自动引入脚本插件
 // https://blog.csdn.net/u011004567/article/details/78507236
 // VS Code的插件-TypeScript Importer
- 
+
 @ccclass('NaviViewController')
-export class NaviViewController extends UIViewController {  
+export class NaviViewController extends UIViewController {
     // @type(Node) // Declare that the cc type of the attribute _targetNode is Node
     objContent: Node | null = null;
 
     uiNaviBarPrefab: Prefab | null = null;
- 
+
     uiNaviBar: UINaviBar | null = null;
     rootController: UIViewController | null = null;
 
-    listController: UIViewController[] = []; 
+    listController: UIViewController[] = [];
 
 
-    LoadPrefab () { 
- 
+    LoadPrefab() {
+
     }
 
-    ViewDidLoad () {
+    ViewDidLoad() {
         super.ViewDidLoad();
         this.CreateContent();
         this.LoadPrefab();
     }
-    CreateBar () {
+    CreateBar() {
 
         //this.listItem = new Array();
-        Debug.Log("NaviViewController CreateBar"); 
+        Debug.Log("NaviViewController CreateBar");
         const node = instantiate(this.uiNaviBarPrefab);
         this.uiNaviBar = node.getComponent(UINaviBar);
         this.uiNaviBar.SetController(this);
@@ -43,7 +43,7 @@ export class NaviViewController extends UIViewController {
 
     }
 
-    CreateContent () { 
+    CreateContent() {
         this.objContent = new Node("Content");
         var uitran = this.objContent.addComponent(UITransform);
         this.objContent.parent = this.objController;
@@ -53,7 +53,7 @@ export class NaviViewController extends UIViewController {
 
     }
 
-    Push (controller:UIViewController) {
+    Push(controller: UIViewController) {
 
         if (controller == null) {
             return;
@@ -64,25 +64,25 @@ export class NaviViewController extends UIViewController {
         this.UpdateController();
 
     }
-    Pop () {
+    Pop() {
         if (this.listController.length == 0) {
             return;
-        } 
-        this.listController.splice(this.listController.length - 1,1);
+        }
+        this.listController.splice(this.listController.length - 1, 1);
         this.UpdateController();
     }
-    HideNavibar (isHide) {
+    HideNavibar(isHide) {
         if (this.uiNaviBar != null) {
             this.uiNaviBar.node.active = !isHide;
         }
     }
-    DestroyController () {
+    DestroyController() {
         if (this.rootController != null) {
             this.rootController.DestroyObjController();
             this.rootController = null;
         }
     }
-    UpdateController () {
+    UpdateController() {
 
         if (this.listController.length == 0) {
             return;
@@ -103,9 +103,17 @@ export class NaviViewController extends UIViewController {
         }
 
     }
+
+    LayOut() {
+        super.LayOut();
+        if (this.rootController != null) {
+            this.rootController.LayOut();
+        }
+
+    }
 }
 
- 
+
 /**
  * [1] Class member could be defined like this.
  * [2] Use `property` decorator if your want the member to be serializable.

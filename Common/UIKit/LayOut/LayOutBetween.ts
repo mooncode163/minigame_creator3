@@ -1,5 +1,6 @@
 
 import { _decorator, Component, Node } from 'cc';
+import { AdKitCommon } from '../../AdKit/AdKitCommon';
 import { Debug } from '../../Debug';
 import { LayOutBase } from './LayOutBase';
 import { Align, LayOutUtil } from './LayOutUtil';
@@ -12,16 +13,16 @@ const { ccclass, property } = _decorator;
 
 @ccclass('LayOutBetween')
 export class LayOutBetween extends LayOutBase {
-    onLoad () {
+    onLoad() {
         super.onLoad();
         this.LayOut();
 
     }
-    start () {
+    start() {
         super.start();
         this.LayOut();
     }
-    LayOut () {
+    LayOut() {
         /// this.col = this.GetChildCount(); 
         if (!this.Enable()) {
             return;
@@ -36,7 +37,7 @@ export class LayOutBetween extends LayOutBase {
             return;
         }
 
-      
+
         //左右
         if (this.align == Align.Horizontal) {
             x = LayOutUtil.main.GetBetweenCenterX(this.target, this.target2) + this.offset.x;
@@ -49,8 +50,13 @@ export class LayOutBetween extends LayOutBase {
         if ((this.align == Align.LEFT) || (this.align == Align.RIGHT)) {
             x = LayOutUtil.main.GetBetweenScreenCenter(this.target, this.align) + this.offset.x;
         }
-        if ((this.align == Align.UP) || (this.align == Align.DOWN)) {
+        if (this.align == Align.UP) {
             y = LayOutUtil.main.GetBetweenScreenCenter(this.target, this.align) + this.offset.y;
+
+        }
+        if (this.align == Align.DOWN) {
+            y = LayOutUtil.main.GetBetweenScreenCenter(this.target, this.align, this.enableOffsetAdBanner) + this.offset.y;
+
         }
         Debug.Log("LayOutBetween x=" + x + " y=" + y + " align=" + this.align);
         this.node.setPosition(x, y);

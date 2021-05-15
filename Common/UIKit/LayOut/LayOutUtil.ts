@@ -1,6 +1,7 @@
 
 import { _decorator, Component, Node, CCObject, UITransform, Enum } from 'cc';
 import { AppSceneBase } from '../../../AppBase/Common/AppSceneBase';
+import { AdKitCommon } from '../../AdKit/AdKitCommon';
 import { UIView } from '../ViewController/UIView';
 import { LayOutElement } from './LayOutElement';
 const { ccclass, property } = _decorator;
@@ -164,7 +165,7 @@ export class LayOutUtil {
     }
 
     //node和屏幕边界之间的中心位置x或者y
-    GetBetweenScreenCenter(node, align) {
+    GetBetweenScreenCenter(node:Node, align:Align,enableAdBanner:boolean=false) {
         var v1 = 0, v2 = 0;
         var sizeCanvas = AppSceneBase.main.sizeCanvas;
      
@@ -196,6 +197,11 @@ export class LayOutUtil {
                 {
                     //下边界
                     v1 = -sizeCanvas.height / 2;
+                    if(enableAdBanner)
+                    {
+                        // AdKitCommon.main.heightCanvasAdBanner = 256;
+                        v1 += AdKitCommon.main.heightCanvasAdBanner;
+                    }
                     v2 = node.getPosition().y - rctran.height / 2;
                 }
                 break;

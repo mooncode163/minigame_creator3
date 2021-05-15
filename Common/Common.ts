@@ -61,6 +61,7 @@ export class Common extends CCObject {
     static ScreenToCanvasHeigt(canvasSize, h) {
         let screenSize = Device.main.screenSize;
         var ret = h * canvasSize.height / screenSize.height;
+        Debug.Log("ScreenToCanvasHeigt canvasSize.height="+canvasSize.height+ " screenSize.height="+screenSize.height);
         return ret;
     }
 
