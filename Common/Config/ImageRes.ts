@@ -48,7 +48,8 @@ export class ImageRes extends ConfigBase {
             this.listItem.push(this.imageResAppCommon);
         }
 
-        strDir = Common.RES_CONFIG_DATA_COMMON + "/Image";
+        // strDir = Common.RES_CONFIG_DATA_COMMON + "/Image";
+        strDir = "/Common/UI"  
         fileName = "ImageRes.json";
         {
             this.imageResCommon = new ImageResInternal();
@@ -301,7 +302,7 @@ export class ImageRes extends ConfigBase {
 
                 }
             } else {
-                return ret;
+                return;
             }
         });
 
