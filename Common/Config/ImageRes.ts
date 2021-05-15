@@ -361,7 +361,7 @@ export class ImageRes extends ConfigBase {
                     ret = p.GetImageBoard(key);
                 }
             } else {
-                return ret;
+                return;
             }
         });
 

@@ -22,85 +22,7 @@ export class TextureUtil extends CCObject {
     //     this.UpdateImageTexture(image, tex, isUpdateSize, Vec4.ZERO);
     // }
 
-
-    /*
-{
-
-
-  sprite:cc.Sprite,
-    pic: "",
-    isCloud:false,
-    def: "",
-    type:cc.Sprite.Type.SIMPLE,//SLICED
-    left:0,
-    right:0,
-    top:0,
-    bottom:0,
-     success: (p:any) => {
-   
-}, 
-fail: (p:any) => {
-   
-}, 
  
-}
-*/
-
-    static UpdateSpriteImage(obj: any) {
-        var pic = obj.pic;
-        Debug.Log("UpdateSpriteImage pic=" + pic);
-
-        TextureCache.main.LoadWithCloud(
-            {
-                url: pic,
-                isCloud: obj.isCloud,
-                success: function (p, data) {
-                    var tex = data;
-                    Debug.Log("UpdateSpriteImage success");
-                    obj.sprite.spriteFrame = new cc.SpriteFrame(tex);
-                    var spf = obj.sprite.spriteFrame;
-
-                    if (obj.type == cc.Sprite.Type.SLICED) {
-                        cc.Debug.Log("pic=" + pic + " spf=" + spf + " obj.top=" + obj.top);
-                        spf.type = obj.type;
-                        // 纹理的四个边距
-                        spf.insetBottom = obj.bottom;
-                        spf.insetTop = obj.top;
-                        spf.insetLeft = obj.left;
-                        spf.insetRight = obj.right;
-                    }
-
-                    // spf.type = cc.Sprite.Type.SLICED;
-                    // spf.insetBottom = 64;
-                    // spf.insetTop = 64;
-                    // spf.insetLeft = 64;
-                    // spf.insetRight = 64;
-                    if (obj.sprite.node != null) {
-                        obj.sprite.node.setContentSize(tex.width, tex.height);
-                        var lyscale = obj.sprite.node.getComponent(cc.LayOutScale);
-                        if (lyscale) {
-                            lyscale.LayOut();
-                        }
-                    }
-
-                    if (obj.success != null) {
-                        obj.success(tex);
-                    }
-
-
-                    // if (obj.success) {
-                    //     obj.success(this, data);
-                    // }
-                }.bind(this),
-                fail: function (p) {
-                    if (obj.fail) {
-                        obj.fail();
-                    }
-                }.bind(this),
-            });
-
-    }
-
 
 
 
@@ -120,7 +42,24 @@ fail: (p:any) => {
                 console.log("TextureUtil success sp is null");
             }
 
+            if (border != Vec4.ZERO) 
+            {
+                // Debug.Log("pic=" + pic + " spf=" + spf + " obj.top=" + obj.top);
+                image.type = Sprite.Type.SLICED; 
+             
+                // 纹理的四个边距
+                spriteFrame.insetLeft = border.x;
+                spriteFrame.insetRight = border.y;
+                
+                spriteFrame.insetTop = border.z;
+                spriteFrame.insetBottom = border.w;
 
+                // spriteFrame.insetLeft = 32;
+                // spriteFrame.insetRight = 32;
+                // spriteFrame.insetTop = 32;
+                // spriteFrame.insetBottom = 32;
+              
+            }
             // RectTransform rctranOrigin = image.GetComponent<RectTransform>();
             // Vector2 offsetMin = rctranOrigin.offsetMin;
             // Vector2 offsetMax = rctranOrigin.offsetMax;

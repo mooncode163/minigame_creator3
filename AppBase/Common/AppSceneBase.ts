@@ -1,5 +1,5 @@
 // import { debug  } from 'cocos_core_platform_debug';
-import { _decorator, Component, Node, Canvas, View, Size, director, size, view, math, UITransform, Button, Vec2, Label } from 'cc';
+import { _decorator, Component, Node, Canvas, View, Size, director, size, view, math, UITransform, Button, Vec2, Label, setDisplayStats } from 'cc';
 const { ccclass, property, integer, float, boolean, string, type } = _decorator;
 import { UIViewController } from "../../Common/UIKit/ViewController/UIViewController";
 import { LoadItemInfo } from "./LoadItemInfo";
@@ -49,9 +49,10 @@ export class AppSceneBase extends Component {
         // [3]
         AppSceneBase._main = this;
         Debug.Log("AppSceneBase onLoad");
-        this.isHasRunApp = false;
-        // debug.setDisplayStats(false);  
-        // debug.setDisplayStats(false);
+        this.isHasRunApp = false; 
+
+        // 关闭左下角的fps和调试信息
+        setDisplayStats(false);  
         
         this.InitValue();
         AppPreLoad.main.Load(

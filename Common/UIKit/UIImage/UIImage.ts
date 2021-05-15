@@ -22,6 +22,8 @@ export class UIImage extends UIView {
     image: Sprite | null = null;
     isCache: boolean = true;
 
+    @property
+    isFitTexture: boolean = false;
 
     onLoad() {
         super.onLoad();
@@ -70,31 +72,7 @@ export class UIImage extends UIView {
         // RectTransform rctan = this.GetComponent<RectTransform>();
         // rctan.sizeDelta = new Vector2(tex.width, tex.height);
     }
-
-    UpdateImageCloud(pic: string) {
-
-        var isCloud = false;
-        if (Platform.isWeiXin) {
-            isCloud = true;
-        }
-        var board = Vec4.ZERO;
-        TextureCache.main.LoadWithCloud(
-            {
-                filepath: pic,
-                isCloud: isCloud,
-                success: (p: any, tex: Texture2D) => {
-
-                    TextureUtil.UpdateImageTexture(this.image, tex, true, board);
-                },
-                fail: (p: any) => {
-
-                },
-            });
-
-    }
-
-
-
+  
     // 绝对路径
     UpdateImage(pic: string, key: string="") {
         var strKey = key;
@@ -106,7 +84,8 @@ export class UIImage extends UIView {
         }
         var isBoard = ImageRes.main.IsHasBoard(strKey);
         var board = Vec4.ZERO;
-        if (isBoard) {
+        // if (isBoard) 
+        {
             board = ImageRes.main.GetImageBoard(strKey);
         }
         if (board != Vec4.ZERO) {
