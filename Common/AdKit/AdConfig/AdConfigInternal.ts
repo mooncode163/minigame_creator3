@@ -4,18 +4,16 @@ import { ConfigInternalBase } from '../../Config/ConfigInternalBase';
 import { Debug } from '../../Debug';
 import { JsonUtil } from '../../File/JsonUtil';
 import { Source } from '../../Source';
-import { AdInfo } from './AdInfo';
- 
+import { AdInfo, AdType } from './AdInfo';
+
 
 const { ccclass, property } = _decorator;
 // 动态加载资源文档
 // https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
-const AdType = AdInfo.AdType;
+
 
 @ccclass('AdConfigInternal')
 export class AdConfigInternal extends ConfigInternalBase {
-
-
 
     public static COUNTRY_CN: string = "cn";
     public static COUNTRY_OTHER: string = "other";
@@ -55,7 +53,7 @@ export class AdConfigInternal extends ConfigInternalBase {
         this.listPlatform.forEach((info) => {
             if (info.source == src) {
                 ret = true;
-                return ret;
+                return;
             }
         });
         return ret;
@@ -71,16 +69,24 @@ export class AdConfigInternal extends ConfigInternalBase {
 
 
     GetAdInfo(source: string) {
+        // Debug.Log("AdConfigInternal GetAdInfo source= " + source);
         if (this.listPlatform == null) {
+            Debug.Log("AdConfigInternal GetAdInfo null ");
             return null;
         }
-
+        var ret = null;
         this.listPlatform.forEach((info) => {
+            // Debug.Log("AdConfigInternal GetAdInfo forEach info.source= " + info.source);
             if (info.source == source) {
-                return info;
+                // Debug.Log("AdConfigInternal GetAdInfo forEach return= " + info.source);
+                ret = info;
+                // 这里的return是跳出return循环不是整个函数 相当于c中break
+                return;
             }
         });
-        return null;
+
+        // Debug.Log("AdConfigInternal GetAdInfo  return null ");
+        return ret;
     }
     IsInChina() {
         var ret = true;
@@ -137,6 +143,7 @@ export class AdConfigInternal extends ConfigInternalBase {
     GetAdKey(source: string, type: number) {
         var ret = "0";
         var info = this.GetAdInfo(source);
+        Debug.Log("AdConfigInternal GetAdKey info= " + info.source);
         if (info != null) {
             switch (type) {
                 case AdType.SPLASH:
@@ -256,17 +263,22 @@ export class AdConfigInternal extends ConfigInternalBase {
     // }
 
     ParseData() {
+        Debug.Log("AdConfigInternal ParseData");
         var key = "platform";
+        Debug.Log("AdConfigInternal 0");
         if (!JsonUtil.ContainsKey(this.rootJson, key)) {
+            Debug.Log("AdConfigInternal 1 key= " + key);
             return;
         }
+        Debug.Log("AdConfigInternal 1");
         var jsonItems = this.rootJson[key];
 
-        for (var i = 0; i < jsonItems.Count; i++) {
+        for (var i = 0; i < jsonItems.length; i++) {
             var info = new AdInfo();
             var current = jsonItems[i];
             info.source = current["source"];
             if (this.IsInPlatformList(info.source)) {
+                Debug.Log("AdConfigInternal 2 source= " + info.source);
                 continue;
             }
 
@@ -280,7 +292,7 @@ export class AdConfigInternal extends ConfigInternalBase {
             info.key_video = this.GetJsonKey(current, "key_video");
             info.key_insert_video = this.GetJsonKey(current, "key_insert_video");
             this.listPlatform.push(info);
-
+            Debug.Log("AdConfigInternal length= " + this.listPlatform.length);
         }
     }
     GetAppIdOfStore(store: string) {

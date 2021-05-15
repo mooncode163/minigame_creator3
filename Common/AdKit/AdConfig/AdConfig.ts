@@ -27,7 +27,7 @@ export class AdConfig extends ConfigBase {
     Init() {
 
         var strDir = Common.RES_CONFIG_DATA + "/adconfig";
-        var fileName = "ad_config_ios";
+        var fileName = "ad_config_weixin";
         {
             if (Platform.isAndroid) {
                 fileName = "ad_config_android";

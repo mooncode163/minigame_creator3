@@ -80,7 +80,7 @@ export class ConfigInternalBase extends CCObject {
     }
 
     ParseData() {
-
+        Debug.Log("ConfigInternalBase ParseData");
     }
 }
 
