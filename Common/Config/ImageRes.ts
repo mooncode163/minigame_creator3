@@ -356,15 +356,21 @@ export class ImageRes extends ConfigBase {
         }
         this.listItem.forEach((item) => {
             var p = item as ImageResInternal;
-            if (ret == Vec4.ZERO) {
+            // Debug.Log("GetImageBoard ScoreBg 0 ret="+ret);
+            if ((ret.x == 0)&&(ret.y == 0)&&(ret.z == 0)&&(ret.w == 0)) {
                 if (p != null) {
                     ret = p.GetImageBoard(key);
+                    // Debug.Log("GetImageBoard ScoreBg 2 ret="+ret);
                 }
             } else {
+                // Debug.Log("GetImageBoard ScoreBg 1 ret="+ret);
                 return;
             }
         });
 
+        // ScoreBg
+        // ret = this.imageResCloudRes.GetImageBoard("ScoreBg");
+        // Debug.Log("ScoreBg ret="+ret+ " key="+key);
         // if (this.imageResApp.IsHasKey(key)) {
         //     ret = this.imageResApp.GetImageBoard(key);
         // }

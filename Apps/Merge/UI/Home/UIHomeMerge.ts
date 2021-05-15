@@ -18,6 +18,7 @@ import { AdKitCommon } from '../../../../Common/AdKit/AdKitCommon';
 import { AdConfig } from '../../../../Common/AdKit/AdConfig/AdConfig';
 import { Source } from '../../../../Common/Source';
 import { AdType } from '../../../../Common/AdKit/AdConfig/AdInfo';
+import { ImageRes } from '../../../../Common/Config/ImageRes';
 
 
 @ccclass('UIHomeMerge')
@@ -40,12 +41,12 @@ export class UIHomeMerge extends UIHomeBase {
         }
 
         this.textTitle.text = name;
- 
-        Debug.Log("UIHomeMerge onLoad");
+        //    var ret = ImageRes.main.GetImageBoard("ScoreBg");
+        //         Debug.Log("UIHomeMerge onLoad ScoreBg ret="+ret);
         this.LayOut();
         // this.LoadCenterBar();
         this.LoadSideBar();
-        let adkey = AdConfig.main.GetAdKey(Source.WEIXIN, AdType.BANNER); 
+        let adkey = AdConfig.main.GetAdKey(Source.WEIXIN, AdType.BANNER);
         // Debug.Log("AdBannerWeiXin adkey="+adkey);
         AdKitCommon.main.InitAdBanner();
         AdKitCommon.main.ShowAdBanner(true);
