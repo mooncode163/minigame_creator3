@@ -11,6 +11,8 @@ import { AppPreLoad } from '../../Common/AppPreLoad';
 // typescript 提示 Object is possibly ‘null‘ 的N种解决方法
 // https://blog.csdn.net/iamlujingtao/article/details/110573421
 
+
+// 设计分辨率 editor project settings -> project data : Design Width = 1536  Design Height = 2048  Fit Width 勾选  Fit Height 不勾选 
 @ccclass('AppSceneBase')
 export class AppSceneBase extends Component {
     static _main: AppSceneBase;

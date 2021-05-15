@@ -44,11 +44,13 @@ export class UIImage extends UIView {
             }
         }
         this.UpdateImageByKey(keyPic);
+        this.LayOut();
     }
 
     start() {
         // [3]
         super.start();
+        this.LayOut();
     }
 
     UpdateImageByKey(key: string) {
