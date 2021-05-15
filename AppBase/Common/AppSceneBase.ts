@@ -48,6 +48,7 @@ export class AppSceneBase extends Component {
         AppSceneBase._main = this;
         Debug.Log("AppSceneBase onLoad");
         this.isHasRunApp = false;
+        // debug.setDisplayStats(false);  
         this.InitValue();
         AppPreLoad.main.Load(
             {
@@ -193,3 +194,8 @@ export class AppSceneBase extends Component {
  * Learn more about CCClass: https://docs.cocos.com/creator/3.0/manual/en/scripting/ccclass.html
  * Learn more about life-cycle callbacks: https://docs.cocos.com/creator/3.0/manual/en/scripting/life-cycle-callbacks.html
  */
+
+export function setDisplayStats(arg0: boolean) {
+    throw new Error('Function not implemented.');
+}
+
