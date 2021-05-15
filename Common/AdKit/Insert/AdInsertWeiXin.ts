@@ -2,37 +2,37 @@
 import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject } from 'cc';
 import { Source } from '../../Source';
 import { AdConfig } from '../AdConfig/AdConfig';
-import { AdInfo } from '../AdConfig/AdInfo';
+import {AdType } from '../AdConfig/AdInfo';
+import { AdInsertPlatformWrapper } from './AdInsertPlatformWrapper';
  
 
 const { ccclass, property, type, string } = _decorator;
 
 // TypeScript自动引入脚本插件
 // https://blog.csdn.net/u011004567/article/details/78507236
-// VS Code的插件-TypeScript Importer
-const AdType = AdInfo.AdType;
+// VS Code的插件-TypeScript Importer 
 @ccclass('AdInsertWeiXin')
-export class AdInsertWeiXin extends CCObject {
+export class AdInsertWeiXin extends AdInsertPlatformWrapper {
 
     interstitialAd = null;
-    InitAd(source) {
-        var adkey = AdConfig.main.GetAdKey(Source.WEIXIN,AdType.INSERT);
+    InitAd(source) { 
+        var adkey = AdConfig.main.GetAdKey(Source.WEIXIN, AdType.INSERT);
         // 在页面中定义插屏广告 
         // 在页面onLoad回调事件中创建插屏广告实例
-        // if (wx.createInterstitialAd) {
-        //     this.interstitialAd = wx.createInterstitialAd({
-        //         adUnitId: AdInfo.ID_Insert
-        //     })
+        if (wx.createInterstitialAd) {
+            this.interstitialAd = wx.createInterstitialAd({
+                adUnitId: adkey
+            })
 
-        //     this.interstitialAd.onError(res => {
+            this.interstitialAd.onError(res => {
 
-        //     }) 
-        //     this.interstitialAd.onClose(res => {
+            }) 
+            this.interstitialAd.onClose(res => {
 
-        //     }) 
+            }) 
 
 
-        // }
+        }
 
     }
     SetObjectInfo(objName) {

@@ -1,8 +1,6 @@
 
 import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject } from 'cc';
-import { Platform } from '../../Platform';
-import { AdVideoWeiXin } from './AdVideoWeiXin';
-
+ 
 const { ccclass, property, type, string } = _decorator;
 
 // TypeScript自动引入脚本插件

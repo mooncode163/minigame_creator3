@@ -1,7 +1,6 @@
 
 import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject } from 'cc';
-import { Platform } from '../../Platform';
-import { AdInsertWeiXin } from './AdInsertWeiXin';
+ 
 
 const { ccclass, property, type, string } = _decorator;
 

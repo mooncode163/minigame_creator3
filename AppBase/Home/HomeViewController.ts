@@ -9,7 +9,7 @@ import { Source } from '../../Common/Source';
 import { UIViewController } from '../../Common/UIKit/ViewController/UIViewController';
 import { LevelManager } from '../Game/LevelManager';
 import { UIHomeBase } from './UIHomeBase';
-import { AdInfo } from '../../Common/AdKit/AdConfig/AdInfo';
+import { AdType } from '../../Common/AdKit/AdConfig/AdInfo';
 const { ccclass, property } = _decorator;
 
 
@@ -86,7 +86,7 @@ export class HomeViewController extends UIViewController {
             // }
 
             // 至少在home界面显示一次开机插屏
-            var type = AdInfo.AdType.INSERT;
+            var type = AdType.INSERT;
             var source = Source.GDT;
             AdInsert.main.InitAd(source);
             AdKitCommon.main.ShowAdInsert(100);

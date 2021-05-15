@@ -5,12 +5,11 @@ const { ccclass, property, type, string } = _decorator;
 import { Platform } from '../../Platform';
 import { AdBannerPlatformWrapper } from './AdBannerPlatformWrapper';
 import { AdConfig } from '../AdConfig/AdConfig';
-import { Source } from '../../Source';
-import { AdInfo } from '../AdConfig/AdInfo';
+import { Source } from '../../Source'; 
+import { AdType } from '../AdConfig/AdInfo';
 // TypeScript自动引入脚本插件
 // https=//blog.csdn.net/u011004567/article/details/78507236
-// VS Code的插件-TypeScript Importer
-const AdType = AdInfo.AdType;
+// VS Code的插件-TypeScript Importer 
 @ccclass('AdBannerWeiXin')
 export class AdBannerWeiXin extends AdBannerPlatformWrapper {
     bannerAd = null;
@@ -28,44 +27,44 @@ export class AdBannerWeiXin extends AdBannerPlatformWrapper {
     },
   }
   */
-    InitAd(obj: any) {
-        var adkey = AdConfig.main.GetAdKey(Source.WEIXIN,AdType.BANNER);
-        // let winSize = wx.getSystemInfoSync();
-        // this.objAd = obj;
-        // console.log(winSize);
-        // let bannerHeight = 80;
-        // let bannerWidth = 300;
-        // this.height = bannerHeight;
-        // this.bannerAd = wx.createBannerAd({
-        //     adUnitId= AdInfo.ID_Banner; //填写广告id
-        //     style= {
-        //         left= (winSize.windowWidth - bannerWidth) / 2;
-        //         top= winSize.windowHeight - bannerHeight;
-        //         width= bannerWidth;
-        //     }
-        // });
+    InitAd(obj: any) { 
+        let adkey = AdConfig.main.GetAdKey(Source.WEIXIN, AdType.BANNER); 
+        let winSize = wx.getSystemInfoSync();
+        this.objAd = obj;
+        console.log(winSize);
+        let bannerHeight = 80;
+        let bannerWidth = 300;
+        this.height = bannerHeight;
+        this.bannerAd = wx.createBannerAd({
+            adUnitId: adkey, //填写广告id
+            style: {
+                left: (winSize.windowWidth-bannerWidth)/2,
+                top: winSize.windowHeight - bannerHeight,
+                width: bannerWidth,
+            }
+        });
 
-        // this.bannerAd.onError((res) => {
-
-        // })
+        this.bannerAd.onError((res) => {
+        
+         }) 
 
     }
 
     ShowAd(isShow:boolean) {
-        // let winSize = wx.getSystemInfoSync();
-        // this.bannerAd.show(); //banner 默认隐藏(hide) 要打开
-        // //微信缩放后得到banner的真实高度，从新设置banner的top 属性
-        // this.bannerAd.onResize((res) => {
-        //     this.bannerAd.style.top = winSize.windowHeight - this.bannerAd.style.realHeight;
+        let winSize = wx.getSystemInfoSync();
+        this.bannerAd.show(); //banner 默认隐藏(hide) 要打开
+        //微信缩放后得到banner的真实高度，从新设置banner的top 属性
+        this.bannerAd.onResize((res) => {
+            this.bannerAd.style.top = winSize.windowHeight - this.bannerAd.style.realHeight;
 
-        //     // 屏幕单位
-        //     this.width = this.bannerAd.style.realWidth * winSize.pixelRatio;
-        //     this.height = this.bannerAd.style.realHeight * winSize.pixelRatio;
+            // 屏幕单位
+            this.width = this.bannerAd.style.realWidth * winSize.pixelRatio;
+            this.height = this.bannerAd.style.realHeight * winSize.pixelRatio;
 
-        //     if (this.objAd.success != null) {
-        //         this.objAd.success(this, this.width, this.height);
-        //     }
-        // })
+            if (this.objAd.success != null) {
+                this.objAd.success(this, this.width, this.height);
+            }
+        })
     }
 
 

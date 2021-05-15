@@ -5,7 +5,7 @@ const { ccclass, property } = _decorator;
 // 动态加载资源文档
 // https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
 
-enum AdType {
+export enum AdType {
     SPLASH= 0,
     BANNER,
     INSERT,
@@ -18,7 +18,7 @@ Enum(AdType);
 
 @ccclass('AdInfo')
 export class AdInfo extends CCObject {
-    public static AdType = AdType;
+    // public static AdType = AdType;
     source = '';
     appid = '';
     appkey = '';
