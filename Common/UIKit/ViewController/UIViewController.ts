@@ -60,6 +60,7 @@ export class UIViewController extends CCObject {
         } else {
             this.objController.setParent(node); 
             var size = node.getComponent(UITransform).contentSize;
+            this.objController.addComponent(UIView);
             this.objController.addComponent(UITransform);
             this.objController?.getComponent(UITransform)?.setContentSize(size);
         }

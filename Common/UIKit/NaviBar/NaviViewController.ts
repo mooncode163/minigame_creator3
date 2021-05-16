@@ -4,6 +4,7 @@ import { Debug } from '../../Debug';
 import { UIViewController } from '../ViewController/UIViewController';
 import { UINaviBar } from './UINaviBar';
 import { AppSceneBase } from '../../../AppBase/Common/AppSceneBase';
+import { UIView } from '../ViewController/UIView';
 const { ccclass, property, type, string } = _decorator;
 
 // TypeScript自动引入脚本插件
@@ -45,6 +46,7 @@ export class NaviViewController extends UIViewController {
 
     CreateContent() {
         this.objContent = new Node("Content");
+        this.objContent.addComponent(UIView);
         var uitran = this.objContent.addComponent(UITransform);
         this.objContent.parent = this.objController;
 
