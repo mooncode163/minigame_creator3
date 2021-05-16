@@ -17,7 +17,8 @@ const { ccclass, property, type } = _decorator;
 export class GameMerge extends GameBase {
     @type(Node)
     nodeDeadline: Node | null = null;
-
+    @type(UIImage)
+    imageProp: UIImage | null = null;
     static TimeStep = 0.8;
 
     ScaleStart = 0.4;
@@ -32,8 +33,7 @@ export class GameMerge extends GameBase {
     isMouseUp = false;
     isAutoClick = false;
     posYInit: 0;
-
-    uiProp: UIImage;
+ 
 
     static _main: GameMerge;
     //静态方法
@@ -46,7 +46,7 @@ export class GameMerge extends GameBase {
         this.time = 0;
         this.LoadPrefab();
         // this.setContentSize(this.node.parent.getContentSize());
-
+        this.imageProp.SetActive(false);
         PhysicsSystem2D.instance.enable = true;
         PhysicsSystem2D.instance.debugDrawFlags = EPhysics2DDrawFlags.All;
         this.LayOut();
@@ -291,16 +291,16 @@ export class GameMerge extends GameBase {
 
     }
     ShowProp(isShow: boolean) {
-        this.uiProp.SetActive(isShow);
+        this.imageProp.SetActive(isShow);
         if (isShow) {
-            var z = this.uiProp.node.getPosition().z;
+            var z = this.imageProp.node.getPosition().z;
             var pos = new Vec3(0,0,0);
             pos.z = z;
-            this.uiProp.node.setPosition(pos);
+            this.imageProp.node.setPosition(pos);
         }
     }
     UpdateProp(keypic: string) {
-        this.uiProp.UpdateImageByKey(keypic);
+        this.imageProp.UpdateImageByKey(keypic);
     }
     OnTouchDown(pos) {
     }

@@ -11,6 +11,7 @@ import { PopUpManager } from '../../../../Common/UIKit/PopUp/PopUpManager';
 import { ConfigPrefab } from '../../../../Common/Config/ConfigPrefab';
 import { AdKitCommon } from '../../../../Common/AdKit/AdKitCommon';
 import { UIImage } from '../../../../Common/UIKit/UIImage/UIImage';
+import { Debug } from '../../../../Common/Debug';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UIToolBar')
@@ -56,7 +57,7 @@ export class UIToolBar extends UIView {
     }
     ShowPop(type: PropType) {
         if (!GameMerge.main.IsHasFalledBall()) {
-            return;
+            // return;
         }
         GameData.main.status = GameStatus.Prop;
 
@@ -97,6 +98,7 @@ export class UIToolBar extends UIView {
 
     // 锤子 摧毁指定球兵获得积分
     OnClickBtnHammer(event: Event, customEventData: string) {
+        Debug.Log("PopUpManager OnClickBtnHammer");
         this.ShowPop(PropType.Hammer);
     }
 

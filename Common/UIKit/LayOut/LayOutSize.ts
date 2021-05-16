@@ -224,14 +224,14 @@ export class LayOutSize extends LayOutBase {
                 {
 
                     if ((this.sideType == SideType.LEFT) || (this.sideType == SideType.RIGHT)) {
-                        w = LayOutUtil.Main().GetBetweenSideAndTargetSize(this.target, this.sideType) * this.ratioW;
+                        w = LayOutUtil.main.GetBetweenSideAndTargetSize(this.target, this.sideType) * this.ratioW;
                     }
 
                 }
                 break;
             case SizeType.BETWEEN_TWO_TARGET:
                 {
-                    w = LayOutUtil.Main().GetBetweenTwoTargetSize(this.target, this.target2, false);
+                    w = LayOutUtil.main.GetBetweenTwoTargetSize(this.target, this.target2, false);
 
                 }
                 break;
@@ -310,14 +310,14 @@ export class LayOutSize extends LayOutBase {
                 {
 
                     if ((this.sideType == SideType.UP) || (this.sideType == SideType.DOWN)) {
-                        h = LayOutUtil.Main().GetBetweenSideAndTargetSize(this.target, this.sideType) * this.ratioH;
+                        h = LayOutUtil.main.GetBetweenSideAndTargetSize(this.target, this.sideType) * this.ratioH;
                     }
 
                 }
                 break;
             case SizeType.BETWEEN_TWO_TARGET:
                 {
-                    h = LayOutUtil.Main().GetBetweenTwoTargetSize(this.target, this.target2, true);
+                    h = LayOutUtil.main.GetBetweenTwoTargetSize(this.target, this.target2, true);
 
                 }
                 break;

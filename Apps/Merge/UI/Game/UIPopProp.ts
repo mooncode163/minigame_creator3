@@ -51,7 +51,9 @@ export class UIPopProp extends UIViewPop {
 
     listItem: UIImage[] = [];
 
-    objItemList: Node;
+    @type(Node)
+    objItemList: Node | null = null;
+ 
 
     type: PropType;
     indexSelect = 0;
@@ -65,15 +67,14 @@ export class UIPopProp extends UIViewPop {
         this.listItem.push(this.imageItem3);
         this.listItem.push(this.imageItem4);
 
-        for (var i = 0; i < this.listItem.length; i++)
-        {
+        for (var i = 0; i < this.listItem.length; i++) {
             {
                 var info = GameLevelParse.main.GetLevelItemInfo(i);
                 var pic = GameLevelParse.main.GetImagePath(info.id);
                 var ui = this.listItem[i];
                 ui.index = i;
                 ui.id = info.id;
-                var ev = ui.node.addComponent(UITouchEvent); 
+                var ev = ui.node.addComponent(UITouchEvent);
                 ev.callBackTouch = this.OnUITouchEvent.bind(this);
                 ui.UpdateImage(pic);
             }
@@ -83,7 +84,7 @@ export class UIPopProp extends UIViewPop {
         super.start();
     }
 
-     UpdateType(  ty:PropType) {
+    UpdateType(ty: PropType) {
         this.type = ty;
         this.objItemList.active = false;
         this.textGuideSelect.SetActive(false);
@@ -102,7 +103,7 @@ export class UIPopProp extends UIViewPop {
                 break;
             case PropType.Magic:
                 {
-                    keyImageIcon = "Magic"; 
+                    keyImageIcon = "Magic";
                     this.objItemList.active = true;
                     this.textGuideSelect.SetActive(true);
                     this.textGuide1.SetActive(false);
@@ -132,57 +133,52 @@ export class UIPopProp extends UIViewPop {
 
         this.SetSelectImage(this.imageItem0);
     }
-   
-OnUITouchEvent(ui: UITouchEvent, status: number, event?: EventTouch) {
-    switch (status) {
 
-        case UITouchEvent.STATUS_Click:
-            {
-                var image = ui.node.getComponent(UIImage);
-                this.SetSelectImage(image);
-            }
-            break;
+    OnUITouchEvent(ui: UITouchEvent, status: number, event?: EventTouch) {
+        switch (status) {
 
-    } 
-}
+            case UITouchEvent.STATUS_Click:
+                {
+                    var image = ui.node.getComponent(UIImage);
+                    this.SetSelectImage(image);
+                }
+                break;
 
-  SetSelectImage(  ui:UIImage)
-{
-    this.idChangeTo = ui.id;
-    // this.imageSelect.transform.position = ui.transform.position;
-    // this.imageSelect.transform.localScale = ui.transform.localScale * 1.15f;
-}
-LayOut() {
-    super.LayOut();
-    var ratio = 0.8;
-    var w = this.GetParent().GetContentSize().width * ratio;
-    var h = this.GetParent().GetContentSize().height * ratio;
-    this.SetContentSize(w, h);
-    super.LayOut();
-}
+        }
+    }
+
+    SetSelectImage(ui: UIImage) {
+        this.idChangeTo = ui.id;
+        // this.imageSelect.transform.position = ui.transform.position;
+        // this.imageSelect.transform.localScale = ui.transform.localScale * 1.15f;
+    }
+    LayOut() {
+        super.LayOut();
+        var ratio = 0.8;
+        // var w = this.GetParent().GetContentSize().width * ratio;
+        // var h = this.GetParent().GetContentSize().height * ratio;
+        // this.SetContentSize(w, h);
+        super.LayOut();
+    }
 
 
-   OnClose()
-{
-    this.Close(); 
+    OnClose() {
+        this.Close();
 
-}
-   OnClickBtnClose(event: Event, customEventData: string)
-{
-    GameData.main.status = GameStatus.Play;
-    this.OnClose();
-}
-   OnClickBtnYes(event: Event, customEventData: string)
-{
-    this.OnClose();
-    UIGameMerge.main.game.ShowProp(true);
-    UIGameMerge.main.OnGameProp(this, this.type);
+    }
+    OnClickBtnClose(event: Event, customEventData: string) {
+        GameData.main.status = GameStatus.Play;
+        this.OnClose();
+    }
+    OnClickBtnYes(event: Event, customEventData: string) {
+        this.OnClose();
+        UIGameMerge.main.game.ShowProp(true);
+        UIGameMerge.main.OnGameProp(this, this.type);
 
-} 
-    OnClickBtnNo(event: Event, customEventData: string)
-{
-    this.OnClickBtnClose(event,customEventData);
-}
+    }
+    OnClickBtnNo(event: Event, customEventData: string) {
+        this.OnClickBtnClose(event, customEventData);
+    }
 
 }
 

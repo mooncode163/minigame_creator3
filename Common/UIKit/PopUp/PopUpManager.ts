@@ -35,22 +35,40 @@ export class PopUpManager extends CCObject {
 
 
 
-    Show(obj) {
+    Show(obj:any) {
         this.objPop = obj;
-        this.LoadBg();
+        // this.LoadBg();
+
+        PrefabCache.main.Load(
+            {
+                filepath: this.objPop.prefab,
+                success: (p: any, data: any) => {
+                    Debug.Log("PopUpManager LoadBgInternal success");
+                    // this.LoadBgInternal(data);
+                    this.OpenPopup(data);
+
+                },
+                fail: () => {
+                    Debug.Log("PopUpManager LoadBgInternal fail");
+                },
+            });
+
     }
 
 
     LoadBg() {
+        Debug.Log("PopUpManager LoadBg");
         // var strPrefab = "Common/Prefab/UIKit/UIPopUp/PopUpBgPannel"; 
         PrefabCache.main.LoadByKey(
             {
                 key: "PopUpBgPannel",
                 success: (p: any, data: any) => {
+                    Debug.Log("PopUpManager LoadBg success");
                     this.LoadBgInternal(data);
 
                 },
                 fail: () => {
+                    Debug.Log("PopUpManager LoadBg fail");
                 },
             });
 
@@ -70,10 +88,13 @@ export class PopUpManager extends CCObject {
             {
                 filepath: this.objPop.prefab,
                 success: (p: any, data: any) => {
-                    this.LoadBgInternal(data);
+                    Debug.Log("PopUpManager LoadBgInternal success");
+                    this.OpenPopup(data);
+                    // this.LoadBgInternal(data);
 
                 },
                 fail: () => {
+                    Debug.Log("PopUpManager LoadBgInternal fail");
                 },
             });
     }
