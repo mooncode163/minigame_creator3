@@ -9,9 +9,16 @@ const { ccclass, property, type } = _decorator;
 
 @ccclass('UIGameFail')
 export class UIGameFail extends UIViewPop {
-    textTitle: UIText;
-    textMsg: UIText;
-    textAgain: UIText;
+
+    @type(UIText)
+    textTitle: UIText | null = null; 
+
+    @type(UIText)
+    textMsg: UIText | null = null; 
+
+    @type(UIText)
+    textAgain: UIText | null = null; 
+ 
 
     onLoad() {
         super.onLoad();
@@ -38,7 +45,7 @@ export class UIGameFail extends UIViewPop {
     }
 
 
-    OnClickBtnAgain(event, customEventData) {
+    OnClickBtnAgain(event: Event, customEventData: string) {
         this.Close();
         GameManager.main.GotoPlayAgain();
     }

@@ -1,18 +1,126 @@
 
-import { _decorator, Component, Node, Prefab } from 'cc'; 
+import { _decorator, Component, Node, Prefab, Layout } from 'cc';
+import { UIButton } from '../../../../Common/UIKit/UIButton/UIButton';
 import { UIView } from '../../../../Common/UIKit/ViewController/UIView';
+import { GameData, GameStatus } from '../../Data/GameData';
+import { LayOutUtil } from '../../../../Common/UIKit/LayOut/LayOutUtil';
+import { GameMerge } from './GameMerge';
+import { PropType } from './UIPopProp';
+import { UIGameMerge } from './UIGameMerge';
+import { PopUpManager } from '../../../../Common/UIKit/PopUp/PopUpManager';
+import { ConfigPrefab } from '../../../../Common/Config/ConfigPrefab';
+import { AdKitCommon } from '../../../../Common/AdKit/AdKitCommon';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UIToolBar')
 export class UIToolBar extends UIView {
-    
-    onLoad () {
+    @type(UIButton)
+    btnImageSelect: UIButton | null = null;
+    onLoad() {
         super.onLoad();
     }
-    start () {
+    start() {
         super.start();
+
+        if (!GameData.main.IsCustom()) {
+            this.btnImageSelect.SetActive(false);
+        }
+        this.LayOut();
     }
-     
+
+
+
+    LayOut() {
+        super.LayOut();
+
+        var rctran = this.GetContentSize();
+        var w = rctran.width;
+        var h = rctran.height;
+
+        var btn = this.node.getComponentInChildren(UIButton);
+        var rctranBtn = btn.GetContentSize();
+
+        var count = LayOutUtil.main.GetChildCount(this.node, false);
+        h = count * (rctranBtn.height + 24);
+        this.SetContentSize(w, h);
+
+        super.LayOut();
+    }
+    ShowPop(type: PropType) {
+        if (!GameMerge.main.IsHasFalledBall()) {
+            return;
+        }
+        GameData.main.status = GameStatus.Prop;
+
+
+
+        var key = "UIPopProp";
+        var strPrefab = ConfigPrefab.main.GetPrefab(key);
+
+        PopUpManager.main.Show(
+            {
+                prefab: strPrefab,
+                open: (ui: any) => {
+                    ui.UpdateType(type);
+                    AdKitCommon.main.ShowAdVideo();
+                },
+                close: (ui: any) => {
+                },
+            });
+
+    }
+
+    ShowImageSelect( isAd:boolean) { 
+        GameData.main.status = GameStatus.Prop;
+        var strPrefab = ConfigPrefab.main.GetPrefab("UIOptionImageSelect");
+
+        PopUpManager.main.Show(
+            {
+                prefab: strPrefab,
+                open: (ui: any) => {
+                    if (isAd) {
+                        // AdKitCommon.main.ShowAdVideo();
+                    }
+                },
+                close: (ui: any) => {
+                },
+            });
+    }
+
+    // 锤子 摧毁指定球兵获得积分
+    OnClickBtnHammer(event: Event, customEventData: string) {
+        this.ShowPop(PropType.Hammer);
+    }
+
+
+    //  万能球 将下落的球变为指定类型球
+    OnClickBtnMagic(event: Event, customEventData: string) { 
+        this.ShowPop(PropType.Magic);
+    }
+
+
+    // 大木zhui  摧毁所有的同类球并获得积分
+    OnClickBtnBomb(event: Event, customEventData: string) { 
+        this.ShowPop(PropType.Bomb);
+    }
+    OnClickBtnOptionImageSelect(event: Event, customEventData: string) {
+        this.ShowImageSelect(true);
+    }
+
+    OnClickBtnOptiongGame(event: Event, customEventData: string) { 
+        GameData.main.status = GameStatus.Prop;
+        var strPrefab = ConfigPrefab.main.GetPrefab("UIOptionGame");
+
+        PopUpManager.main.Show(
+            {
+                prefab: strPrefab,
+                open: (ui: any) => {
+                  
+                },
+                close: (ui: any) => {
+                },
+            });
+    }
 
 }
 

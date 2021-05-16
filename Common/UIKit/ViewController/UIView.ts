@@ -102,7 +102,7 @@ export class UIView extends Component {
     }
 
     static GetNodeBoundingBox(node: Node) {
-       return node.getComponent(UITransform)?.getBoundingBox();
+        return node.getComponent(UITransform)?.getBoundingBox();
     }
 
     onLoad() {
@@ -178,11 +178,11 @@ export class UIView extends Component {
         this.LayOut();
     }
     GetContentSize() {
-       return this.node?.getComponent(UITransform)?.contentSize; 
+        return this.node?.getComponent(UITransform)?.contentSize;
     }
 
-    GetBoundingBox() { 
-      return  UIView.GetNodeBoundingBox(this.node);
+    GetBoundingBox() {
+        return UIView.GetNodeBoundingBox(this.node);
     }
 
     // UIView parent
@@ -192,9 +192,15 @@ export class UIView extends Component {
     }
 
     GetParent() {
-       return this.node.parent.getComponent(UIView); 
-    } 
-
+        return this.node.parent.getComponent(UIView);
+    }
+    SetActive(active: boolean) {
+        this.node.active = active;
+    }
+    
+    OnUIDidFinish() {
+         
+    }
     //js 默认参数方法： https://www.cnblogs.com/luotingliang/p/7250990.html
     GetKeyColor(def: Color) {
         var ret = Color.BLACK;

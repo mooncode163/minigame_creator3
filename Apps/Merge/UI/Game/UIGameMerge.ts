@@ -13,7 +13,11 @@ import { GameMerge } from './GameMerge';
 import { UIText } from '../../../../Common/UIKit/UIText/UIText';
 import { LevelManager } from '../../../../AppBase/Game/LevelManager';
 import { LevelData } from '../../../../AppBase/Game/LevelData';
+import { UIToolBar } from './UIToolBar';
+import { UIPopProp, PropType } from './UIPopProp';
 const { ccclass, property, type } = _decorator;
+
+
 
 @ccclass('UIGameMerge')
 export class UIGameMerge extends UIGameBase {
@@ -24,7 +28,11 @@ export class UIGameMerge extends UIGameBase {
     game:GameMerge = null;
     // nodeImageBg:Node,
     isShowGame= false; 
-    
+ 
+    uiToolBar:UIToolBar;
+
+    typeProp:PropType;
+
     static _main: UIGameMerge;
     //静态方法
     static get main() {
@@ -138,6 +146,36 @@ export class UIGameMerge extends UIGameBase {
         }
     }
 
+     ShowProp()
+    {
+        this.uiToolBar.OnClickBtnBomb(null,null);
+        this.OnUIDidFinish();
+    }
+
+     OnGameProp(  ui:UIPopProp,   type:PropType)
+    {
+        this.typeProp = type;
+
+        Debug.Log("OnGameProp typeProp=" + this.typeProp);
+        switch (type)
+        {
+            case PropType.Hammer:
+                {
+
+                }
+                break;
+            case PropType.Magic:
+                {
+                    GameMerge.main.ChangeItem(ui.idChangeTo);
+                }
+                break;
+            case PropType.Bomb:
+                {
+
+                }
+                break;
+        }
+    }
 }
 
 /**

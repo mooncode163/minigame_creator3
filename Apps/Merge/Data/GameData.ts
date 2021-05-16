@@ -7,19 +7,20 @@ import { Debug } from '../../../Common/Debug';
 const { ccclass, property, type } = _decorator;
 
 
-enum GameStatus {
+export enum GameStatus {
     //区分大小写
     Play = 0,
     Prop,
 
 }
+
+
 //必须Enum设置才能在编辑器里设置enum的值
 Enum(GameStatus);
 
 @ccclass('GameData')
 export class GameData extends CCObject {
-
-    public static GameStatus = GameStatus;
+ 
     public static NameDeadLine: string = "DeadLine";
     public static NameBoardLine: string = "BoardLine";
     public static Place_Custom: string = "Custom";

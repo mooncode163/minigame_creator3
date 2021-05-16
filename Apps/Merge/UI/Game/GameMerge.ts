@@ -6,10 +6,11 @@ import { Common } from '../../../../Common/Common';
 import { Debug } from '../../../../Common/Debug';
 import { UITouchEvent } from '../../../../Common/UIKit/UITouchEvent';
 import { UIView } from '../../../../Common/UIKit/ViewController/UIView';
-import { GameData } from '../../Data/GameData';
+import { GameData, GameStatus } from '../../Data/GameData';
 import { GameLevelParse } from '../../Data/GameLevelParse';
 import { UIMergeItem } from './UIMergeItem';
 import { AppSceneBase } from '../../../../AppBase/Common/AppSceneBase';
+import { UIImage } from '../../../../Common/UIKit/UIImage/UIImage';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('GameMerge')
@@ -31,6 +32,8 @@ export class GameMerge extends GameBase {
     isMouseUp = false;
     isAutoClick = false;
     posYInit: 0;
+
+    uiProp: UIImage;
 
     static _main: GameMerge;
     //静态方法
@@ -243,7 +246,7 @@ export class GameMerge extends GameBase {
     }
 
     // string return UIMergeItem
-    CreateItem(key:string) {
+    CreateItem(key: string) {
         var keyid = key;
         // keyid ="juzi";
 
@@ -265,18 +268,18 @@ export class GameMerge extends GameBase {
         this.ScaleStart = 0.2;
         // var scale = (this.ScaleStart + 0.05 * this.GetIndexOfItem(key)) * 0.8; 
         var scale = (this.ScaleStart + 0.1 * this.GetIndexOfItem(key));
-     
+
         // ui.node.scale.x = scale;
         // ui.node.scale.y = scale;
         ui.node.scale = new Vec3(scale, scale, 1);
 
         var rectParent = this.GetBoundingBox();
         x = 0;
-        y = rectParent.height / 2 - ui.GetBoundingBox().height/2;
+        y = rectParent.height / 2 - ui.GetBoundingBox().height / 2;
 
         // y = 512;
         this.posYInit = y;
-        Debug.Log("OnCollisionEnter2D this.posYInit=" + this.posYInit + " key=" + key+" scale="+scale);
+        Debug.Log("OnCollisionEnter2D this.posYInit=" + this.posYInit + " key=" + key + " scale=" + scale);
         ui.node.setPosition(x, y);
         // ui.transform.localScale = new Vector3(scale, scale, 1);
         // ui.transform.localPosition = new Vector3(0, posYInit, -1);
@@ -287,7 +290,18 @@ export class GameMerge extends GameBase {
 
 
     }
-
+    ShowProp(isShow: boolean) {
+        this.uiProp.SetActive(isShow);
+        if (isShow) {
+            var z = this.uiProp.node.getPosition().z;
+            var pos = new Vec3(0,0,0);
+            pos.z = z;
+            this.uiProp.node.setPosition(pos);
+        }
+    }
+    UpdateProp(keypic: string) {
+        this.uiProp.UpdateImageByKey(keypic);
+    }
     OnTouchDown(pos) {
     }
     OnTouchMove(pos) {
@@ -298,7 +312,7 @@ export class GameMerge extends GameBase {
         var pos = ui.GetPosition(event);
         var posnodeAR = ui.GetPositionOnNode(event);//坐标原点在node的锚点
         var posui = ui.GetUIPosition(event);
-        Debug.Log("OnUITouchEvent posnodeAR = "+posnodeAR+ " posui="+posui+" sizeCanvas="+AppSceneBase.main.sizeCanvas);
+        Debug.Log("OnUITouchEvent posnodeAR = " + posnodeAR + " posui=" + posui + " sizeCanvas=" + AppSceneBase.main.sizeCanvas);
         switch (status) {
             case UITouchEvent.TOUCH_DOWN:
                 this.OnTouchDown(posnodeAR);
@@ -311,14 +325,14 @@ export class GameMerge extends GameBase {
             case UITouchEvent.TOUCH_UP:
                 this.OnTouchUp(posnodeAR);
                 break;
-        } 
+        }
         this.UpdateEvent(status, posnodeAR);
     }
 
 
     UpdateEvent(status, point) {
 
-        if (GameData.main.status == GameData.GameStatus.Prop) {
+        if (GameData.main.status == GameStatus.Prop) {
             return;
         }
 
@@ -333,7 +347,7 @@ export class GameMerge extends GameBase {
 
 
 
-            if (this.isMouseDown && (GameData.main.status == GameData.GameStatus.Play)) {
+            if (this.isMouseDown && (GameData.main.status == GameStatus.Play)) {
 
                 // string key = RandomFruitImageKey();
                 // uiItem = CreateItem(key);
@@ -388,7 +402,7 @@ export class GameMerge extends GameBase {
                 this.isMouseUp = true;
             }
 
-            if (this.isMouseUp && (GameData.main.status == GameData.GameStatus.Play)) {
+            if (this.isMouseUp && (GameData.main.status == GameStatus.Play)) {
                 // Debug.Log("autoclick MouseClickUp isMouseUp ");
                 this.isMouseUp = false;
                 //让水果获得重力下降
@@ -407,7 +421,11 @@ export class GameMerge extends GameBase {
 
 
     }
-
+  // 判断场景里是否有掉落下来的球
+   IsHasFalledBall()
+  {
+      return this.listItem.length > 1 ? true : false;
+  }
 }
 
 /**
