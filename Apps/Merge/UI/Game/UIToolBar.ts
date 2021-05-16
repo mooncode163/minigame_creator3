@@ -10,10 +10,14 @@ import { UIGameMerge } from './UIGameMerge';
 import { PopUpManager } from '../../../../Common/UIKit/PopUp/PopUpManager';
 import { ConfigPrefab } from '../../../../Common/Config/ConfigPrefab';
 import { AdKitCommon } from '../../../../Common/AdKit/AdKitCommon';
+import { UIImage } from '../../../../Common/UIKit/UIImage/UIImage';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UIToolBar')
 export class UIToolBar extends UIView {
+    @type(UIImage)
+    imageBg: UIImage | null = null;
+
     @type(UIButton)
     btnImageSelect: UIButton | null = null;
     onLoad() {
@@ -26,6 +30,7 @@ export class UIToolBar extends UIView {
             this.btnImageSelect.SetActive(false);
         }
         this.LayOut();
+
     }
 
 
@@ -45,6 +50,9 @@ export class UIToolBar extends UIView {
         this.SetContentSize(w, h);
 
         super.LayOut();
+
+
+        this.imageBg.LayOut();
     }
     ShowPop(type: PropType) {
         if (!GameMerge.main.IsHasFalledBall()) {

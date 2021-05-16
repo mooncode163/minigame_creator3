@@ -107,7 +107,10 @@ export class LayOutRelation extends LayOutBase {
                         // var sizeCanvas = AppSceneBase.Main().sizeCanvas;
                         // y = - sizeCanvas.height/2  + this.offset.y;
                     }
-
+                    if (this.align == Align.DOWN_LEFT) {
+                        x = - w_parent / 2 + w / 2 + this.offset.x;
+                        y = - h_parent / 2 + h / 2 + this.offset.y;
+                    }
 
                 }
                 break;
