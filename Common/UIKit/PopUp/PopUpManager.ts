@@ -96,7 +96,6 @@ export class PopUpManager extends CCObject {
                 success: (p: any, data: any) => {
                     Debug.Log("PopUpManager LoadBgInternal success");
                     this.OpenPopup(data); 
-
                 },
                 fail: () => {
                     Debug.Log("PopUpManager LoadBgInternal fail");
@@ -104,7 +103,7 @@ export class PopUpManager extends CCObject {
             });
     }
 
-    OpenPopup(prefab) {
+    OpenPopup(prefab:any) {
         Debug.Log("OpenPopup");
         var nodeRoot = AppSceneBase.main.rootNode;
         var nodePop = instantiate(prefab);

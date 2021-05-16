@@ -60,7 +60,7 @@ export class UIPopProp extends UIViewPop {
     idChangeTo = "";
     onLoad() {
         super.onLoad();
-
+        // return;
         this.listItem.push(this.imageItem0);
         this.listItem.push(this.imageItem1);
         this.listItem.push(this.imageItem2);
@@ -79,9 +79,11 @@ export class UIPopProp extends UIViewPop {
                 ui.UpdateImage(pic);
             }
         }
+        this.LayOut();
     }
     start() {
         super.start();
+        this.LayOut();
     }
 
     UpdateType(ty: PropType) {

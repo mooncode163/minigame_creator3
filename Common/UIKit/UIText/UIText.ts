@@ -9,6 +9,8 @@ const { ccclass, property, type, string } = _decorator;
 // https://blog.csdn.net/u011004567/article/details/78507236
 // VS Code的插件-TypeScript Importer
 
+
+// label Overflow 需要设置为RESIZE_HEIGHT 才能设置UIText 的显示大小
 @ccclass('UIText')
 export class UIText extends UIView {
 

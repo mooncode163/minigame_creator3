@@ -15,6 +15,7 @@ import { LevelManager } from '../../../../AppBase/Game/LevelManager';
 import { LevelData } from '../../../../AppBase/Game/LevelData';
 import { UIToolBar } from './UIToolBar';
 import { UIPopProp, PropType } from './UIPopProp';
+import { PrefabCache } from '../../../../Common/Cache/PrefabCache';
 const { ccclass, property, type } = _decorator;
 
 
@@ -58,7 +59,21 @@ export class UIGameMerge extends UIGameBase {
  
         // this.ShowGameWinAlert();
     }
+    LoadUIPopProp() {
+        var key = "UIPopProp";
+        PrefabCache.main.LoadByKey(
+            {
+                key: key,
+                success: (p: any, data: any) => { 
+                    var node = instantiate(data); 
+                    node.parent = this.node;
+                },
+                fail: () => {
+                },
+            });
 
+
+    }
 
     CreateGame () {
         this.UpdateLevel(LevelData.main.gameLevel);
@@ -116,7 +131,7 @@ export class UIGameMerge extends UIGameBase {
         // };
 
         // this.game.LoadGame(GameManager.gameMode);
-
+        // this.LoadUIPopProp();
 
     }
 

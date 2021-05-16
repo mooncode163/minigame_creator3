@@ -10,18 +10,7 @@ const { ccclass, property, type, string } = _decorator;
 // VS Code的插件-TypeScript Importer
 
 @ccclass('UIViewPop')
-export class UIViewPop extends UIView {
-    static _main: UIViewPop;
-    //静态方法
-    static get main() {
-        if (this._main == null) {
-            this._main = new UIViewPop();
-            // this._main.Init();
-        }
-        return this._main;
-    }
- 
-
+export class UIViewPop extends UIView {  
     onLoad () {
         super.onLoad();
         this.LayOut();
@@ -33,7 +22,7 @@ export class UIViewPop extends UIView {
         this.scheduleOnce(this.ShowInitAnimate, 0.1); 
     }
     update () { 
-        // this.LayOut();
+        this.LayOut();
     }
 
     ShowInitAnimate () { 
