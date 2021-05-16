@@ -316,7 +316,7 @@ export class GameMerge extends GameBase {
     }
     OnUITouchEvent(ui: UITouchEvent, status: number, event?: EventTouch) {
         var pos = ui.GetPosition(event);
-        var posnodeAR = ui.GetPositionOnNode(event);//坐标原点在node的锚点
+        var posnodeAR = ui.GetPositionOnNode(this.node,event);//坐标原点在node的锚点
         var posui = ui.GetUIPosition(event);
         Debug.Log("OnUITouchEvent posnodeAR = " + posnodeAR + " posui=" + posui + " sizeCanvas=" + AppSceneBase.main.sizeCanvas);
         switch (status) {

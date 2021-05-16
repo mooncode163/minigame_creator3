@@ -36,8 +36,8 @@ export class UITouchEvent extends Component {
         return event.getUILocation();
     }
     //坐标原点在node的锚点
-    GetPositionOnNode(event?: EventTouch) {
-        var uiTrans = this.node.getComponent(UITransform);
+    GetPositionOnNode(node:Node,event?: EventTouch) {
+        var uiTrans = node.getComponent(UITransform);
         // var pos = this.GetPosition(event);
         var posui = this.GetUIPosition(event);
         // pos = event.wo  convertToNodeSpaceAR convertToWorldSpaceAR

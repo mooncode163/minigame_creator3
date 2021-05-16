@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Prefab, director, RigidBody, UITransform, RigidBody2D, ERigidBody2DType, EventTouch, tween } from 'cc';
+import { _decorator, Component, Node, Prefab, director, RigidBody, UITransform, RigidBody2D, ERigidBody2DType, EventTouch, tween, Vec3 } from 'cc';
 import { Debug } from '../../../../Common/Debug';
 import { UISprite } from '../../../../Common/UIKit/UIImage/UISprite';
 import { UITouchEvent } from '../../../../Common/UIKit/UITouchEvent';
@@ -108,12 +108,15 @@ export class UIMergeItem extends UIView {
     OnUITouchEvent(ui: UITouchEvent, status: number, event?: EventTouch) {
 
         var pos = ui.GetPosition(event);
-        var posnodeAR = ui.GetPositionOnNode(event);//坐标原点在node的锚点
+        var posnodeAR = ui.GetPositionOnNode(this.node,event);//坐标原点在node的锚点
         var posui = ui.GetUIPosition(event);
 
         var imageProp = UIGameMerge.main.game.imageProp;
-        var duration = 0.5;
-        var toPos = posnodeAR;
+        var duration = 0.5; 
+
+        // var uiTrans = GameMerge.main.node.getComponent(UITransform);
+        // var toPos = uiTrans.convertToNodeSpaceAR(new Vec3(posui.x, posui.y, 0)); 
+        var toPos =ui.GetPositionOnNode(GameMerge.main.node,event);
         switch (status) {
             case UITouchEvent.TOUCH_DOWN:
                 this.OnTouchDown(posnodeAR);
@@ -128,7 +131,7 @@ export class UIMergeItem extends UIView {
                 {
                     if (GameData.main.status == GameStatus.Prop) {
                         if (UIGameMerge.main.typeProp == PropType.Hammer) {
-                            tween(this.node)
+                            tween(imageProp.node)
                                 .to(duration / 2, { position: toPos })
                                 .call(() => {
                                     GameMerge.main.DeleteItem(this);
@@ -138,7 +141,7 @@ export class UIMergeItem extends UIView {
 
                         if (UIGameMerge.main.typeProp == PropType.Bomb) {
 
-                            tween(this.node)
+                            tween(imageProp.node)
                                 .to(duration / 2, { position: toPos })
                                 .call(() => {
                                     GameMerge.main.DeleteAllItemsOfId(this.id);
