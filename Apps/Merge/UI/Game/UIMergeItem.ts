@@ -1,13 +1,14 @@
 
-import { _decorator, Component, Node, Prefab, director, RigidBody, UITransform, RigidBody2D, ERigidBody2DType } from 'cc';
+import { _decorator, Component, Node, Prefab, director, RigidBody, UITransform, RigidBody2D, ERigidBody2DType, EventTouch, tween } from 'cc';
 import { Debug } from '../../../../Common/Debug';
 import { UISprite } from '../../../../Common/UIKit/UIImage/UISprite';
 import { UITouchEvent } from '../../../../Common/UIKit/UITouchEvent';
 import { UIView } from '../../../../Common/UIKit/ViewController/UIView';
-import { GameData } from '../../Data/GameData';
+import { GameData, GameStatus } from '../../Data/GameData';
 import { GameMerge } from './GameMerge';
 import { UIGameMerge } from './UIGameMerge';
 import { UIImage } from '../../../../Common/UIKit/UIImage/UIImage';
+import { PropType } from './UIPopProp';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UIMergeItem')
@@ -100,13 +101,19 @@ export class UIMergeItem extends UIView {
     OnTouchMove(pos) {
     }
     OnTouchUp(pos) {
+
+
+
     }
-    OnUITouchEvent(ev, status, event) {
+    OnUITouchEvent(ui: UITouchEvent, status: number, event?: EventTouch) {
 
-        var pos = event.getLocation();//canvas坐标原点在屏幕左下角 
-        // var posnode = this.node.convertToNodeSpace(pos);//坐标原点在node左下角
-        var posnodeAR = this.node.getComponent(UITransform).convertToNodeSpaceAR(pos);//坐标原点在node的锚点
+        var pos = ui.GetPosition(event);
+        var posnodeAR = ui.GetPositionOnNode(event);//坐标原点在node的锚点
+        var posui = ui.GetUIPosition(event);
 
+        var imageProp = UIGameMerge.main.game.imageProp;
+        var duration = 0.5;
+        var toPos = posnodeAR;
         switch (status) {
             case UITouchEvent.TOUCH_DOWN:
                 this.OnTouchDown(posnodeAR);
@@ -118,6 +125,30 @@ export class UIMergeItem extends UIView {
 
             case UITouchEvent.TOUCH_UP:
                 this.OnTouchUp(posnodeAR);
+                {
+                    if (GameData.main.status == GameStatus.Prop) {
+                        if (UIGameMerge.main.typeProp == PropType.Hammer) {
+                            tween(this.node)
+                                .to(duration / 2, { position: toPos })
+                                .call(() => {
+                                    GameMerge.main.DeleteItem(this);
+                                })
+                                .start()
+                        }
+
+                        if (UIGameMerge.main.typeProp == PropType.Bomb) {
+
+                            tween(this.node)
+                                .to(duration / 2, { position: toPos })
+                                .call(() => {
+                                    GameMerge.main.DeleteAllItemsOfId(this.id);
+                                })
+                                .start() 
+
+                        }
+                    }
+
+                }
                 break;
         }
     }

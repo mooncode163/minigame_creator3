@@ -302,7 +302,13 @@ export class GameMerge extends GameBase {
     UpdateProp(keypic: string) {
         this.imageProp.UpdateImageByKey(keypic);
     }
-    OnTouchDown(pos) {
+    OnTouchDown(pos:Vec3) {
+
+        // Debug.Log("GameMerge down id=" + this.id);
+        // var z = this.imageProp.node.getPosition().z;
+        // var posnew = new Vec3(pos.x,pos.y,0);
+        // posnew.z = z;
+        // this.imageProp.node.setPosition(posnew);
     }
     OnTouchMove(pos) {
     }
