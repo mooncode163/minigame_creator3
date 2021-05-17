@@ -15,18 +15,13 @@ export class UIGameFail extends UIViewPop {
 
     @type(UIText)
     textMsg: UIText | null = null; 
-
-    @type(UIText)
-    textAgain: UIText | null = null; 
+ 
  
 
     onLoad() {
         super.onLoad();
         this.LayOut();
-
-        this.textTitle.text = Language.main.GetString("STR_GameFail_TITLE");
-        this.textMsg.text = Language.main.GetString("STR_GameFail_Detail");
-        this.textAgain.text = Language.main.GetString("Restart");
+ 
     }
     start() {
         super.start();
