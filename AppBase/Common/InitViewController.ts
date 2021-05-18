@@ -19,6 +19,7 @@ import { MainViewController } from '../../Apps/Main/MainViewController';
 import { AppScene } from '../AppScene';
 import { AppSceneBase } from './AppSceneBase';
 import { CommonRes } from '../../Common/CommonRes';
+import { ConfigAudio } from '../../Common/Config/ConfigAudio';
 const { ccclass, property } = _decorator;
 
 
@@ -120,14 +121,31 @@ export class InitViewController extends NaviViewController {
                 }, 
             });
     }
+
+    OnImageResFinish() {
+        ConfigAudio.main.LoadCloudConfig(
+            {
+                success: (p: any) => {
+                    this.OnConfigAudioFinish();
+                },
+                fail: () => {
+                    this.OnConfigAudioFinish();
+                },
+            });
+    }
+
+    OnConfigAudioFinish() {
+        this.GotoGame();
+    }
+
     ParseLevelFinish() {
         ImageRes.main.LoadCloudConfig(
             {
                 success: (p: any) => {
-                    this.GotoGame();
+                    this.OnImageResFinish();
                 },
                 fail: () => {
-                    this.GotoGame();
+                    this.OnImageResFinish();
                 },
             });
       

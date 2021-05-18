@@ -2,6 +2,7 @@
 import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc';
 import { CloudRes } from '../CloundRes/CloudRes';
 import { Common } from '../Common';
+import { Debug } from '../Debug';
 import { Platform } from '../Platform';
 import { ConfigAudioInternal } from './ConfigAudioInternal';
 import { ConfigBase } from './ConfigBase';
@@ -75,6 +76,52 @@ export class ConfigAudio extends ConfigBase {
 
 
         return ret;
+    }
+
+    /*
+     { 
+       success: (p:any) => {
+           
+       }, 
+       fail: (p:any) => {
+           
+       },
+     }
+     */
+     LoadCloudConfig(obj: any) {
+        if (Platform.isCloudRes) {
+            var strDir = CloudRes.main.rootPath;
+            var fileName = "AudioCloudRes.json";
+            {
+                this.configAudioCloudRes = new ConfigAudioInternal();
+                this.configAudioCloudRes.fileJson = strDir + "/" + fileName;
+                this.listItem.push(this.configAudioCloudRes);
+                Debug.Log("ImageRes AudioCloudRes .fileJson=" + this.configAudioCloudRes.fileJson);
+                this.configAudioCloudRes.Load(
+                    {
+                        isCloud: true,
+                        success: (p: any) => {
+                            // this.OnFinish(obj,false);
+                            Debug.Log("ImageRes AudioCloudRes success=");
+                            if (obj.success != null) {
+                                obj.success(this);
+                            }
+                        },
+                        fail: () => {
+                            // this.OnFinish(obj,true);
+                            Debug.Log("ImageRes AudioCloudRes fail=");
+                            if (obj.fail != null) {
+                                obj.fail(this);
+                            }
+                        },
+                    });
+            }
+
+        } else {
+            if (obj.success != null) {
+                obj.success(this);
+            }
+        }
     }
 }
 
