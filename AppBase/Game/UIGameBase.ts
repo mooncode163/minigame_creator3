@@ -47,9 +47,7 @@ export class UIGameBase extends UIView {
         super.start();
         this.LayOut();
     }
-    UpdateLevel(level: number) {
 
-    }
     OnClickBtnBack(event: Event, customEventData: string) {
         if (this.controller != null) {
             var navi = this.controller.naviController;
@@ -104,16 +102,17 @@ export class UIGameBase extends UIView {
         }
     }
     OnClickBtnShare(event, customEventData) {
-        Share.main.ShareImageText("", Config.main.shareTitle, Config.main.shareUrl, "");
+        // LevelData.main.gameLevel = 0;
+        // LevelData.main.gameLevelFinish = -1;
+        // GameManager.main.GotoPlayAgain(); 
+       Share.main.ShareImageText("", Config.main.shareTitle, Config.main.shareUrl, "");
     }
 
     //guanka  
 
-
-
-    UpdateGuankaLevel(level) {
-        var idx = LevelData.main.gameLevel;
-        Debug.Log("UIGameBase::UpdateGuankaLevel idx=" + idx);
+    UpdateLevel(level: number) {
+        var idx = level;
+        Debug.Log("UIGameBase::UpdateLevel idx=" + idx);
         if (idx >= 3) {
             var isLock = Common.GetBoolOfKey(AppRes.KEY_GAME_LOCK, true);
             if (isLock) {

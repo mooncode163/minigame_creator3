@@ -60,12 +60,10 @@ export class UIToolBar extends UIView {
     }
     ShowPop(type: PropType) {
         if (!GameMerge.main.IsHasFalledBall()) {
-            // return;
+            return;
         }
         GameData.main.status = GameStatus.Prop;
-
-
-
+ 
         var key = "UIPopProp";
         var strPrefab = ConfigPrefab.main.GetPrefab(key);
 

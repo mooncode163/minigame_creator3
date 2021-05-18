@@ -3,6 +3,7 @@ import { _decorator, Component, Node, Prefab, CCObject } from 'cc';
 import { ItemInfo } from '../../Common/ItemInfo';
 import { GameViewController } from './GameViewController';
 import { LevelManager } from './LevelManager';
+import { LevelData } from './LevelData';
 const { ccclass, property, type } = _decorator;
 
 
@@ -38,7 +39,7 @@ export class GameManager extends CCObject {
     }  
  
     GotoPlayAgain () {
-        GameViewController.main.gameBase.UpdateGuankaLevel(LevelManager.main.gameLevel);
+        GameViewController.main.gameBase.UpdateLevel(LevelData.main.gameLevel);
     }
 
 }

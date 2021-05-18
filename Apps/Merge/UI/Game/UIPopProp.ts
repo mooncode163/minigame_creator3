@@ -150,7 +150,7 @@ export class UIPopProp extends UIViewPop {
     }
 
     SetSelectImage(ui: UIImage) {
-        // this.idChangeTo = ui.id;
+        this.idChangeTo = ui.id;
         this.imageSelect.node.setPosition(ui.node.parent.getPosition());
         var scale =  1.15;
         this.imageSelect.node.scale = new Vec3(scale, scale, 1); 

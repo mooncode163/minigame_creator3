@@ -5,6 +5,7 @@ import { Common } from '../../Common/Common';
 import { Debug } from '../../Common/Debug';
 import { ItemInfo } from '../../Common/ItemInfo';
 import { GameViewController } from './GameViewController';
+import { LevelData } from './LevelData';
 const { ccclass, property, type } = _decorator;
 
 
@@ -75,28 +76,28 @@ fail: (p:any) => {
 
     GotoPreLevel() {
 
-        this.gameLevel--;
-        if (this.gameLevel < 0) {
+        LevelData.main.gameLevel--;
+        if (LevelData.main.gameLevel < 0) {
             this.GotoPrePlace();
             return;
 
         }
         // GameManager.GotoGame();
-        GameViewController.main.gameBase.UpdateGuankaLevel(this.gameLevel);
+        GameViewController.main.gameBase.UpdateGuankaLevel(LevelData.main.gameLevel);
 
     }
 
     GotoNextLevel() {
-        Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + this.maxGuankaNum);
-        this.gameLevel++;
-        Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + this.maxGuankaNum);
-        if (this.gameLevel >= this.maxGuankaNum) {
-            Debug.Log("GotoNextPlace:gameLevel=" + this.gameLevel + " maxGuankaNum=" + this.maxGuankaNum);
+        Debug.Log("gameLevel=" + LevelData.main.gameLevel + " maxGuankaNum=" + this.maxGuankaNum);
+        LevelData.main.gameLevel++;
+        Debug.Log("gameLevel=" + LevelData.main.gameLevel + " maxGuankaNum=" + this.maxGuankaNum);
+        if (LevelData.main.gameLevel >= this.maxGuankaNum) {
+            Debug.Log("GotoNextPlace:gameLevel=" + LevelData.main.gameLevel + " maxGuankaNum=" + this.maxGuankaNum);
             this.GotoNextPlace();
             return;
 
         }
-        GameViewController.main.gameBase.UpdateGuankaLevel(this.gameLevel);
+        GameViewController.main.gameBase.UpdateGuankaLevel(LevelData.main.gameLevel);
 
     }
 
@@ -105,15 +106,15 @@ fail: (p:any) => {
 
         this.placeLevel++;
 
-        if (this.placeLevel >= this.placeTotal) {
+        if (this.placeLevel >= LevelData.main.placeTotal) {
             this.placeLevel = 0;
 
         }
         //必须在placeLevel设置之后再设置gameLevel
-        this.gameLevel = 0;
+        LevelData.main.gameLevel = 0;
 
         this.StartParseGuanka(this.objGuanka);
-        GameViewController.main.gameBase.UpdateGuankaLevel(this.gameLevel);
+        GameViewController.main.gameBase.UpdateGuankaLevel(LevelData.main.gameLevel);
 
     }
 
@@ -121,37 +122,37 @@ fail: (p:any) => {
 
         this.placeLevel--;
         if (this.placeLevel < 0) {
-            this.placeLevel = this.placeTotal - 1;
+            this.placeLevel = LevelData.main.placeTotal - 1;
 
         }
         //必须在placeLevel设置之后再设置gameLevel
-        this.gameLevel = 0;
+        LevelData.main.gameLevel = 0;
 
         this.StartParseGuanka(this.objGuanka);
-        GameViewController.main.gameBase.UpdateGuankaLevel(this.gameLevel);
+        GameViewController.main.gameBase.UpdateGuankaLevel(LevelData.main.gameLevel);
 
     }
     //关卡循环
     GotoNextLevelWithoutPlace() {
-        Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + this.maxGuankaNum);
-        this.gameLevel++;
-        Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + this.maxGuankaNum);
-        if (this.gameLevel >= this.maxGuankaNum) {
-            this.gameLevel = 0;
+        Debug.Log("gameLevel=" + LevelData.main.gameLevel + " maxGuankaNum=" + this.maxGuankaNum);
+        LevelData.main.gameLevel++;
+        Debug.Log("gameLevel=" + LevelData.main.gameLevel + " maxGuankaNum=" + this.maxGuankaNum);
+        if (LevelData.main.gameLevel >= this.maxGuankaNum) {
+            LevelData.main.gameLevel = 0;
 
         }
-        GameViewController.main.gameBase.UpdateGuankaLevel(this.gameLevel);
+        GameViewController.main.gameBase.UpdateGuankaLevel(LevelData.main.gameLevel);
 
     }
 
     //return List<object>
     GetGuankaListOfAllPlace() {
         var listRet;// = new List<object>();
-        Debug.Log("GetGuankaListOfAllPlace placeTotal=" + this.placeTotal);
-        for (var i = 0; i < this.placeTotal; i++) {
+        Debug.Log("GetGuankaListOfAllPlace placeTotal=" + LevelData.main.placeTotal);
+        for (var i = 0; i < LevelData.main.placeTotal; i++) {
             this.placeLevel = i;
             //必须在placeLevel设置之后再设置gameLevel
-            this.gameLevel = 0;
+            LevelData.main.gameLevel = 0;
             this.StartParseGuanka(this.objGuanka);
             // if (UIGameBase.listGuanka == null) {
             //     Debug.Log("listGuanka is null");

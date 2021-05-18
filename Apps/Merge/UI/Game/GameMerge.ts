@@ -11,6 +11,7 @@ import { GameLevelParse } from '../../Data/GameLevelParse';
 import { UIMergeItem } from './UIMergeItem';
 import { AppSceneBase } from '../../../../AppBase/Common/AppSceneBase';
 import { UIImage } from '../../../../Common/UIKit/UIImage/UIImage';
+import { UIGameMerge } from './UIGameMerge';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('GameMerge')
@@ -186,7 +187,8 @@ export class GameMerge extends GameBase {
 
     OnRestPlayInternal() {
         // UIGameMerge.main.gameStatus = UIGameMerge.Status.Play;
-        // UIGameMerge.main.game.ShowProp(false);
+        GameData.main.status = GameStatus.Play;
+        UIGameMerge.main.game.ShowProp(false);
     }
     // 改变类型为  string toId
     ChangeItem(toId) {
@@ -228,11 +230,11 @@ export class GameMerge extends GameBase {
     }
 
     // 摧毁所有的同类 string
-    DeleteAllItemsOfId(id) {
+    DeleteAllItemsOfId(id) { 
         for (var i = 0; i < this.listItem.length; i++) {
             var uilist = this.listItem[i];
             if (uilist.id == id) {
-                this.ShowMergeParticle(ui.node.position, ui.id);
+                this.ShowMergeParticle(uilist.node.position, uilist.id);
                 uilist.node.destroy();
             }
         }
