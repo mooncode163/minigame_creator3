@@ -53,7 +53,7 @@ export class UIHomeMerge extends UIHomeBase {
         AdKitCommon.main.ShowAdBanner(true);
 
         //   var AUDIO_Merge = Common.CLOUD_RES_DIR+"/Audio/bg3.ogg";
-        AudioPlay.main.PlayByKey("bg3");
+        // AudioPlay.main.PlayByKey("bg3");
 
     }
 

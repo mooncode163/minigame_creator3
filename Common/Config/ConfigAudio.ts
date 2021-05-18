@@ -26,18 +26,18 @@ export class ConfigAudio extends ConfigBase {
     }
     Init() {
 
-        {
-            var strDir = Common.RES_CONFIG_DATA + "/Audio";
-            var fileName = "ConfigAudioApp.json";
-            { 
-                this.configAudioApp = new ConfigAudioInternal();
-                this.configAudioApp.fileJson = strDir + "/" + fileName;
-                this.listItem.push(this.configAudioApp);
-            }
-        } 
+        // {
+        //     var strDir = Common.RES_CONFIG_DATA + "/Audio";
+        //     var fileName = "ConfigAudioApp.json";
+        //     { 
+        //         this.configAudioApp = new ConfigAudioInternal();
+        //         this.configAudioApp.fileJson = strDir + "/" + fileName;
+        //         this.listItem.push(this.configAudioApp);
+        //     }
+        // } 
         if (!Platform.isCloudRes) {
-            strDir = Common.CLOUD_RES_DIR;
-            fileName = "AudioCloudRes.json";
+            var strDir = Common.CLOUD_RES_DIR;
+            var  fileName = "AudioCloudRes.json";
             {
                 this.configAudioCloudRes = new ConfigAudioInternal();
                 this.configAudioCloudRes.fileJson = strDir + "/" + fileName;

@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Prefab, instantiate } from 'cc';
+import { _decorator, Component, Node, Prefab, instantiate, UITransform } from 'cc';
 import { UIGameBase } from '../../../../AppBase/Game/UIGameBase';
 import { AudioPlay } from '../../../../Common/Audio/AudioPlay';
 import { ConfigPrefab } from '../../../../Common/Config/ConfigPrefab';
@@ -92,10 +92,12 @@ export class UIGameMerge extends UIGameBase {
         }
         var node = instantiate(this.gamePrefab);
         this.game = node.getComponent(GameMerge);
-        this.game.node.parent = this.node;
-        //zorder 让imageBg 显示在最底层，game显示在UI下面
-        // this.imageBg.node.zIndex = -20; 
-        // this.game.node.zIndex = -10;
+        this.game.node.parent = this.node; 
+        //zorder  priority 让imageBg 显示在最底层，game显示在UI下面
+        // 
+        // zIndex priority
+        this.imageBg.node.getComponent(UITransform).priority = -20; 
+        this.game.node.getComponent(UITransform).priority = -10;
         this.isShowGame = true;
         // this.callbackGuankaFinish = null;
       
