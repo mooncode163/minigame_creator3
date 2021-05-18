@@ -132,6 +132,8 @@ export class InitViewController extends NaviViewController {
                     this.OnConfigAudioFinish();
                 },
             });
+
+           
     }
 
     OnConfigAudioFinish() {

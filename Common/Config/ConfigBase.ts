@@ -26,6 +26,13 @@ export class ConfigBase extends CCObject {
        */
     Load(obj: any) {
         this.countLoad = 0;
+        if(this.listItem.length==0)
+        {
+            if (obj.success != null) {
+                obj.success(this);
+            }
+            return;
+        }
         this.listItem.forEach((item) => {
             item.Load(
                 {
