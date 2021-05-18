@@ -48,8 +48,8 @@ export class GameMerge extends GameBase {
         this.LoadPrefab();
         // this.setContentSize(this.node.parent.getContentSize());
         this.imageProp.SetActive(false);
-        PhysicsSystem2D.instance.enable = true;
-        PhysicsSystem2D.instance.debugDrawFlags = EPhysics2DDrawFlags.All;
+        // PhysicsSystem2D.instance.enable = true;
+        // PhysicsSystem2D.instance.debugDrawFlags = EPhysics2DDrawFlags.All;
         this.LayOut();
     }
     start() {
