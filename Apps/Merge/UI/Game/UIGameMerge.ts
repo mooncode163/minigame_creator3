@@ -58,9 +58,12 @@ export class UIGameMerge extends UIGameBase {
         this.LayOut();
  
         // this.ShowGameWinAlert();
+        // this.OnGameFinish(true);
+        // this.LoadUIPopProp();
     }
     LoadUIPopProp() {
         var key = "UIPopProp";
+        key = "UIGameFail"
         PrefabCache.main.LoadByKey(
             {
                 key: key,
@@ -136,29 +139,29 @@ export class UIGameMerge extends UIGameBase {
     }
 
  
-    OnGameFinish(isFail) {
-        var info = GameLevelParse.main.GetLevelItemInfo(LevelData.main.gameLevel);  
+    OnGameFinish(isFail:boolean) {
+        // var info = GameLevelParse.main.GetLevelItemInfo(LevelData.main.gameLevel);  
         var key = "UIGameWin";
         var strPrefab = "";
         //show game win
         if (isFail)
         { 
-            this.ShowAdInsert(UIGameBase.GAME_AD_INSERT_SHOW_STEP);
+            // this.ShowAdInsert(UIGameBase.GAME_AD_INSERT_SHOW_STEP);
             
-            key = "UIGameFail";
-            strPrefab = ConfigPrefab.main.GetPrefab(key);
-
-            PopUpManager.main.Show(
-                {
-                    prefab: strPrefab,
-                    open: (ui: any) => {
-                        AudioPlay.main.PlayByKey("Fail");
-                    },
-                    close: (ui: any) => {
-                    },
-                });
- 
+            key = "UIGameFail"; 
         }
+
+        strPrefab = ConfigPrefab.main.GetPrefab(key);
+
+        PopUpManager.main.Show(
+            {
+                prefab: strPrefab,
+                open: (ui: any) => {
+                    // AudioPlay.main.PlayByKey("Fail");
+                },
+                close: (ui: any) => {
+                },
+            });
     }
 
      ShowProp()

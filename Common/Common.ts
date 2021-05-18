@@ -20,8 +20,11 @@ export class Common extends CCObject {
     public static THUMB_SUFFIX = "_thumb";
     public static TOUCH_MOVE_STEP_MIN = 3.0;//6.0f
 
-
-
+    
+    // return second
+    static   GetCurrentTime() { 
+        return director.getCurrentTime();
+    }
     static get noad() {
         var key = "APP_NO_AD";
         var ret = Common.GetBoolOfKey(key, false);

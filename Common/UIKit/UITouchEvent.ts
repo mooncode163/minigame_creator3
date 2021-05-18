@@ -1,5 +1,6 @@
 
-import { _decorator, Component, Node, Prefab, SystemEventType, EventTouch, UITransform, Vec3 } from 'cc';
+import { _decorator, Component, Node, Prefab, SystemEventType, EventTouch, UITransform, Vec3, director } from 'cc';
+import { Common } from '../Common';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UITouchEvent')
@@ -8,8 +9,16 @@ export class UITouchEvent extends Component {
     public static TOUCH_MOVE = 1;
     public static TOUCH_UP = 2;
     public static STATUS_Click = 3;
-    callBackTouch = null;
+    public static STATUS_LongPress = 4;
+    public Time_LongPress = 2;//s
 
+    tickPress = 0;
+    index = 0;
+    callBackTouch = null;
+    isTouchDown = false;
+
+    @property
+    enableLongPress = false;
 
     onLoad() {
         this.Init();
@@ -36,7 +45,7 @@ export class UITouchEvent extends Component {
         return event.getUILocation();
     }
     //坐标原点在node的锚点
-    GetPositionOnNode(node:Node,event?: EventTouch) {
+    GetPositionOnNode(node: Node, event?: EventTouch) {
         var uiTrans = node.getComponent(UITransform);
         // var pos = this.GetPosition(event);
         var posui = this.GetUIPosition(event);
@@ -53,7 +62,8 @@ export class UITouchEvent extends Component {
         var pos = event.getLocation();//canvas坐标原点在屏幕左下角 
         // var posnode = this.node.convertToNodeSpace(pos);//坐标原点在node左下角
         // var posnodeAR = this.node.getComponent(UITransform).convertToNodeSpaceAR(pos);//坐标原点在node的锚点
-
+        this.isTouchDown = true;
+        this.tickPress = Common.GetCurrentTime();
         if (this.callBackTouch != null) {
             this.callBackTouch(this, UITouchEvent.TOUCH_DOWN, event);
         }
@@ -69,6 +79,25 @@ export class UITouchEvent extends Component {
         if (this.callBackTouch != null) {
             this.callBackTouch(this, UITouchEvent.TOUCH_UP, event);
         }
+        this.tickPress =Common.GetCurrentTime() - this.tickPress;
+        if (this.isTouchDown && this.enableLongPress) {
+
+            if (this.tickPress > this.Time_LongPress) {
+                if (this.callBackTouch != null) {
+                    this.callBackTouch(this, UITouchEvent.STATUS_LongPress, event);
+                }
+                this.tickPress = 0;
+                return;
+            }
+        }
+
+        if (this.isTouchDown) {
+            if (this.callBackTouch != null) {
+                this.callBackTouch(this, UITouchEvent.STATUS_Click, event);
+            }
+        }
+
+        this.isTouchDown = false;
     }
 
     protected _onTouchCancel(event?: EventTouch) {

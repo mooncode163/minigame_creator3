@@ -22,12 +22,22 @@ export class UIViewPop extends UIView {
         this.scheduleOnce(this.ShowInitAnimate, 0.1); 
     }
     update () { 
+        // this.LayOut();
+    }
+
+    OnAnimateFinish() { 
+        var nodePannel =PopUpManager.main.nodePannel;
+        if(nodePannel!=null)
+        {
+            nodePannel.active = true;
+        }
+
         this.LayOut();
     }
 
     ShowInitAnimate () { 
         var nodePop = this.node;
-        this.node.active = true;
+        this.node.active = true; 
         nodePop.scale = new Vec3(0,0,1); 
            //delay延时
         // var time = delayTime(2);
@@ -40,7 +50,7 @@ export class UIViewPop extends UIView {
             .to(duration / 2, { scale: new Vec3(scale1, scale1, 1) })
             .to(duration / 2, { scale: new Vec3(scale2, scale2, 1) })
             .call(() => {
-                this.LayOut();
+                this.OnAnimateFinish();
             })
             .start() 
     }

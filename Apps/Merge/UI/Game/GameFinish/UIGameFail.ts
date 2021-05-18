@@ -1,10 +1,9 @@
 
-import { _decorator, Component, Node, Prefab, Size } from 'cc';
-import { UIView } from '../../../../../Common/UIKit/ViewController/UIView';
-import { UIViewPop } from '../../../../../Common/UIKit/PopUp/UIViewPop';
-import { Language } from '../../../../../Common/Language/Language';
-import { UIText } from '../../../../../Common/UIKit/UIText/UIText';
+import { Component, _decorator } from 'cc'; 
 import { GameManager } from '../../../../../AppBase/Game/GameManager';
+import { LevelData } from '../../../../../AppBase/Game/LevelData';
+import { UIViewPop } from '../../../../../Common/UIKit/PopUp/UIViewPop';
+import { UIText } from '../../../../../Common/UIKit/UIText/UIText';  
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UIGameFail')
@@ -15,8 +14,7 @@ export class UIGameFail extends UIViewPop {
 
     @type(UIText)
     textMsg: UIText | null = null; 
- 
- 
+  
 
     onLoad() {
         super.onLoad();
@@ -32,16 +30,13 @@ export class UIGameFail extends UIViewPop {
 
     LayOut() {
         super.LayOut();
-        var ratio = 0.8;
-        var w = this.GetParent().GetContentSize().width * ratio;
-        var h = this.GetParent().GetContentSize().height * ratio;
-        this.SetContentSize(w, h);
-        super.LayOut();
     }
 
 
     OnClickBtnAgain(event: Event, customEventData: string) {
         this.Close();
+        LevelData.main.gameLevel = 0;
+        LevelData.main.gameLevelFinish = -1;
         GameManager.main.GotoPlayAgain();
     }
 

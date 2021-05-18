@@ -30,6 +30,10 @@ export class AdVideoWeiXin extends AdVideoPlatformWrapper {
             this.videoAd = wx.createRewardedVideoAd({
                 adUnitId: adkey
             })
+  
+            this.videoAd.onError((err) => {
+             
+            })
         }
 
     }

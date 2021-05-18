@@ -48,6 +48,8 @@ export class LayOutSize extends LayOutBase {
     @property
     heightH = 1.0;//高  
  
+      // 必须设置两个@type 才能在editor里修改
+    @type(SideType) 
     _sideType = SideType.LEFT;
     @type(SideType) 
     get sideType() {
@@ -252,7 +254,7 @@ export class LayOutSize extends LayOutBase {
         var h_parent = sizeParent.height;
         w_parent -= (this.offsetMin.x + this.offsetMax.x);
         h_parent -= (this.offsetMin.y + this.offsetMax.y);
-
+        Debug.Log("GetBetweenSideAndTargetSize this.sideType="+this.sideType);
         switch (this.typeY) {
             case SizeType.MATCH_CONTENT:
                 {
@@ -308,7 +310,7 @@ export class LayOutSize extends LayOutBase {
 
             case SizeType.BETWEEN_SIDE_TARGET:
                 {
-
+                   
                     if ((this.sideType == SideType.UP) || (this.sideType == SideType.DOWN)) {
                         h = LayOutUtil.main.GetBetweenSideAndTargetSize(this.target, this.sideType) * this.ratioH;
                     }

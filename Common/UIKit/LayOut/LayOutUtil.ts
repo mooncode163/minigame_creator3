@@ -4,6 +4,7 @@ import { AppSceneBase } from '../../../AppBase/Common/AppSceneBase';
 import { AdKitCommon } from '../../AdKit/AdKitCommon';
 import { UIView } from '../ViewController/UIView';
 import { LayOutElement } from './LayOutElement';
+import { Debug } from '../../Debug';
 const { ccclass, property } = _decorator;
 
 // TypeScript自动引入脚本插件
@@ -251,12 +252,13 @@ export class LayOutUtil {
     //边界和对象之间的宽度或者高度 type SizeType
     GetBetweenSideAndTargetSize(node, type) {
         var v1 = 0, v2 = 0;
-        var size = node.getBoundingBox();
+        var size =UIView.GetNodeBoundingBox(node);// node.getBoundingBox();
         var pos = node.getPosition();
         // var sizeParent = node.parent.getBoundingBox();
         var sizeParent = UIView.GetNodeBoundingBox(node.parent);
         var w_parent = sizeParent.width;
         var h_parent = sizeParent.height;
+        Debug.Log("GetBetweenSideAndTargetSize type="+type);
         switch (type) {
             case SideType.LEFT:
                 {
@@ -277,6 +279,7 @@ export class LayOutUtil {
                     //上边界
                     v1 = h_parent / 2;
                     v2 = pos.y + size.height / 2;
+                    Debug.Log("GetBetweenSideAndTargetSize h_parent="+h_parent+" pos.y="+pos.y+" size.height="+size.height)
                 }
                 break;
             case SideType.DOWN:

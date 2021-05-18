@@ -27,9 +27,9 @@ export class UIToolBar extends UIView {
     start() {
         super.start();
 
-        if (!GameData.main.IsCustom()) {
-            this.btnImageSelect.SetActive(false);
-        }
+        // if (!GameData.main.IsCustom()) {
+        //     this.btnImageSelect.SetActive(false);
+        // }
         this.LayOut();
 
     }
@@ -47,10 +47,13 @@ export class UIToolBar extends UIView {
         var rctranBtn = btn.GetContentSize();
 
         var count = LayOutUtil.main.GetChildCount(this.node, false);
+
+        // count =10;
         h = count * (rctranBtn.height + 24);
+        // h = 512;
         this.SetContentSize(w, h);
 
-        super.LayOut();
+        // super.LayOut();
 
 
         this.imageBg.LayOut();

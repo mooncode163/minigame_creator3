@@ -9,6 +9,8 @@ import { GameLevelParse } from '../../../Data/GameLevelParse';
 import { LevelManager } from '../../../../../AppBase/Game/LevelManager';
 import { LevelData } from '../../../../../AppBase/Game/LevelData';
 import { GameManager } from '../../../../../AppBase/Game/GameManager';
+import { AppScene } from '../../../../../AppBase/AppScene';
+import { AppSceneBase } from '../../../../../AppBase/Common/AppSceneBase';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UIGameWin')
@@ -65,12 +67,7 @@ export class UIGameWin extends UIViewPop {
      
 
     LayOut() {
-        super.LayOut();
-        var ratio = 0.8;
-        var w = this.GetParent().GetContentSize().width * ratio;
-        var h = this.GetParent().GetContentSize().height * ratio;
-        this.SetContentSize(w, h);
-        super.LayOut();
+        super.LayOut(); 
     }
   
  

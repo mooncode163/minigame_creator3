@@ -87,6 +87,11 @@ export class TextureUtil extends CCObject {
             //     // Debug.Log("rctranOrigin rctran.offsetMin=" + rctran.offsetMin + " rctran.offsetMax=" + rctran.offsetMax);
 
             // }
+            if(isUpdateSize)
+            {
+                // this.SetContentSize(tex.width,tex.height);
+                // this.LayOut();
+            }
 
         }
     }

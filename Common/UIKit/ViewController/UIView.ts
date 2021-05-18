@@ -152,7 +152,12 @@ export class UIView extends Component {
     LayOutInternal() {
         //self 
         this.LayOutNode(this.node);
+        //child
+       this.LayOutInternalChild();
+    }
 
+
+    LayOutInternalChild() { 
         //child
         var children = this.node.children;
         for (var i = 0; i < children.length; i++) {
@@ -174,8 +179,8 @@ export class UIView extends Component {
     }
 
     SetContentSize(w, h) {
-        this.node?.getComponent(UITransform)?.setContentSize(new Size(w, h));
-        this.LayOut();
+        this.node?.getComponent(UITransform)?.setContentSize(new Size(w, h)); 
+        this.LayOutInternalChild();
     }
     GetContentSize() {
         return this.node?.getComponent(UITransform)?.contentSize;

@@ -36,7 +36,7 @@ export class PopUpManager extends CCObject {
 
 
 
-    Show(obj:any) {
+    Show(obj: any) {
         this.objPop = obj;
         this.LoadBg();
 
@@ -70,6 +70,7 @@ export class PopUpManager extends CCObject {
                 },
                 fail: () => {
                     Debug.Log("PopUpManager LoadBg fail");
+                    this.LoadBgInternal(null);
                 },
             });
 
@@ -81,21 +82,25 @@ export class PopUpManager extends CCObject {
         // this.nodePannel.addComponent(UIView);
         // var uitran = this.nodePannel.addComponent(UITransform);
         // this.nodePannel.color = new Color(52, 52, 52, 50);
-        var node = instantiate(prefab);
-        // var panel = new Node("Panel");
-        node.setParent(nodeRoot);
-        // node.setContentSize(AppSceneBase.main.sizeCanvas);
-       
-        //拦截点击
-        //  panel.addComponent(BlockInputEvents);
-        this.nodePannel = node;
+        if (prefab != null) {
+            var node = instantiate(prefab);
+            // var panel = new Node("Panel");
+            node.setParent(nodeRoot);
+            // node.setContentSize(AppSceneBase.main.sizeCanvas);
+
+            //拦截点击
+            //  panel.addComponent(BlockInputEvents);
+            this.nodePannel = node;
+            // this.nodePannel.active = false;
+        }
+
         // this.nodePannel.active = false;
         PrefabCache.main.Load(
             {
                 filepath: this.objPop.prefab,
                 success: (p: any, data: any) => {
                     Debug.Log("PopUpManager LoadBgInternal success");
-                    this.OpenPopup(data); 
+                    this.OpenPopup(data);
                 },
                 fail: () => {
                     Debug.Log("PopUpManager LoadBgInternal fail");
@@ -103,7 +108,7 @@ export class PopUpManager extends CCObject {
             });
     }
 
-    OpenPopup(prefab:any) {
+    OpenPopup(prefab: any) {
         Debug.Log("OpenPopup");
         var nodeRoot = AppSceneBase.main.rootNode;
         var nodePop = instantiate(prefab);

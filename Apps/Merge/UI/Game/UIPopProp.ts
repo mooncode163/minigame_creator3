@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Prefab, Enum, EventTouch } from 'cc';
+import { _decorator, Component, Node, Prefab, Enum, EventTouch, Vec3 } from 'cc';
 import { UIView } from '../../../../Common/UIKit/ViewController/UIView';
 import { UIViewPop } from '../../../../Common/UIKit/PopUp/UIViewPop';
 import { UIText } from '../../../../Common/UIKit/UIText/UIText';
@@ -150,17 +150,13 @@ export class UIPopProp extends UIViewPop {
     }
 
     SetSelectImage(ui: UIImage) {
-        this.idChangeTo = ui.id;
-        // this.imageSelect.transform.position = ui.transform.position;
-        // this.imageSelect.transform.localScale = ui.transform.localScale * 1.15f;
+        // this.idChangeTo = ui.id;
+        this.imageSelect.node.setPosition(ui.node.parent.getPosition());
+        var scale =  1.15;
+        this.imageSelect.node.scale = new Vec3(scale, scale, 1); 
     }
     LayOut() {
-        super.LayOut();
-        var ratio = 0.8;
-        // var w = this.GetParent().GetContentSize().width * ratio;
-        // var h = this.GetParent().GetContentSize().height * ratio;
-        // this.SetContentSize(w, h);
-        super.LayOut();
+        super.LayOut(); 
     }
 
 

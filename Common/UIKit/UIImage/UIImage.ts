@@ -22,8 +22,9 @@ export class UIImage extends UIView {
     image: Sprite | null = null;
     isCache: boolean = true;
 
+    // 与纹理大小同步
     @property
-    isFitTexture: boolean = false;
+    isSizeFitTexture: boolean = false;
 
     onLoad() {
         super.onLoad();
@@ -71,6 +72,11 @@ export class UIImage extends UIView {
         TextureUtil.UpdateImageTexture(this.image, tex, true, Vec4.ZERO);
         // RectTransform rctan = this.GetComponent<RectTransform>();
         // rctan.sizeDelta = new Vector2(tex.width, tex.height);
+        if(this.isSizeFitTexture)
+        {
+            this.SetContentSize(tex.width,tex.height);
+            this.LayOut();
+        }
     }
   
     // 绝对路径
@@ -105,6 +111,12 @@ export class UIImage extends UIView {
                 isCloud: isCloud,
                 success: (p: any, tex: Texture2D) => {
                     TextureUtil.UpdateImageTexture(this.image, tex, true, board);
+                    if(this.isSizeFitTexture)
+                    {
+                        this.SetContentSize(tex.width,tex.height);
+                        this.LayOut();
+                    }
+                    
                 },
                 fail: (p: any) => {
 
