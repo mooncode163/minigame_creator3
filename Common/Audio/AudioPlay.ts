@@ -93,15 +93,15 @@ export class AudioPlay extends Component {
             });
     }
     PlayByKey(key: string) {
-        var dir = "";
-        if (Platform.isCloudRes) {
-            // 从CloudRes缓存目录读取
-            dir = CloudRes.main.rootPath;
-        } else {
-            // 在resoureces目录
-            dir = Common.CLOUD_RES_DIR;
-        }
-        var filepath = dir + "/" + ConfigAudio.main.GetAudio(key);
+        // var dir = "";
+        // if (Platform.isCloudRes) {
+        //     // 从CloudRes缓存目录读取
+        //     dir = CloudRes.main.rootPath;
+        // } else {
+        //     // 在resoureces目录
+        //     dir = Common.CLOUD_RES_DIR;
+        // }
+        var filepath = ConfigAudio.main.GetAudio(key);
 
         ResManager.LoadAudio(
             {

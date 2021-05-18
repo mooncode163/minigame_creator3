@@ -1,5 +1,6 @@
 
 import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc'; 
+import { JsonUtil } from '../File/JsonUtil';
 import { ConfigInternalBase } from './ConfigInternalBase';
 
 const { ccclass, property } = _decorator;
@@ -8,7 +9,16 @@ const { ccclass, property } = _decorator;
 
 @ccclass('ConfigAudioInternal')
 export class ConfigAudioInternal extends ConfigInternalBase {
-    
+    ContainsKey(key:string)
+    { 
+        return JsonUtil.ContainsKey(this.rootJson, key);
+    }
+    //同步 synchronization
+   
+    GetAudio(key:string) {
+        return JsonUtil.GetItem(this.rootJson, key, ""); 
+    }
+
   
 }
 

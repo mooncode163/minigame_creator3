@@ -1,6 +1,8 @@
 
 import { _decorator, Component, Node, CCObject, resources, Prefab } from 'cc';
+import { CloudRes } from '../CloundRes/CloudRes';
 import { Common } from '../Common';
+import { Platform } from '../Platform';
 import { ConfigAudioInternal } from './ConfigAudioInternal';
 import { ConfigBase } from './ConfigBase';
 
@@ -11,7 +13,7 @@ const { ccclass, property } = _decorator;
 @ccclass('ConfigAudio')
 export class ConfigAudio extends ConfigBase {
     configAudioApp: ConfigAudioInternal = null;
-
+    configAudioCloudRes: ConfigAudioInternal = null;
     static _main: ConfigAudio;
     //静态方法
     static get main() {
@@ -23,18 +25,56 @@ export class ConfigAudio extends ConfigBase {
     }
     Init() {
 
-        var strDir = Common.RES_CONFIG_DATA + "/Audio";
-        var fileName = "configAudioApp.json";
-        { 
-            this.configAudioApp = new ConfigAudioInternal();
-            this.configAudioApp.fileJson = strDir + "/" + fileName;
-            this.listItem.push(this.configAudioApp);
-        }
-   
+        {
+            var strDir = Common.RES_CONFIG_DATA + "/Audio";
+            var fileName = "ConfigAudioApp.json";
+            { 
+                this.configAudioApp = new ConfigAudioInternal();
+                this.configAudioApp.fileJson = strDir + "/" + fileName;
+                this.listItem.push(this.configAudioApp);
+            }
+        } 
+        if (!Platform.isCloudRes) {
+            strDir = Common.CLOUD_RES_DIR;
+            fileName = "AudioCloudRes.json";
+            {
+                this.configAudioCloudRes = new ConfigAudioInternal();
+                this.configAudioCloudRes.fileJson = strDir + "/" + fileName;
+                this.listItem.push(this.configAudioCloudRes);
+            }
 
+        }
     }
 
     GetAudio(key: string) {
+        var ret = "";
+
+        if (Common.BlankString(key)) {
+            return ret;
+        }
+        this.listItem.forEach((item) => {
+            var p = item as ConfigAudioInternal;
+            if (Common.BlankString(ret)) {
+                if (p != null) {
+                    ret = p.GetAudio(key);
+                    if (p == this.configAudioCloudRes) {
+                        if (Platform.isCloudRes) {
+                            // 从CloudRes缓存目录读取
+                            ret = CloudRes.main.rootPath+"/" + ret;
+                        }else{
+                            // 在resoureces目录
+                            ret = Common.CLOUD_RES_DIR + "/" + ret;
+                        }
+                    }
+
+                }
+            } else {
+                return;
+            }
+        }); 
+
+
+        return ret;
     }
 }
 
