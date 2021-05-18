@@ -6,6 +6,7 @@ import { LoadItemInfo } from "./LoadItemInfo";
 import { Debug } from '../../Common/Debug';
 import { Device } from '../../Common/Device';
 import { AppPreLoad } from '../../Common/AppPreLoad';
+import { AudioPlay } from '../../Common/Audio/AudioPlay';
 
 
 // typescript 提示 Object is possibly ‘null‘ 的N种解决方法
@@ -55,6 +56,10 @@ export class AppSceneBase extends Component {
         setDisplayStats(false);  
         
         this.InitValue();
+
+        //component
+        this.node.addComponent(AudioPlay);
+
         AppPreLoad.main.Load(
             {
                 success: (p: any) => {

@@ -19,6 +19,8 @@ import { AdConfig } from '../../../../Common/AdKit/AdConfig/AdConfig';
 import { Source } from '../../../../Common/Source';
 import { AdType } from '../../../../Common/AdKit/AdConfig/AdInfo';
 import { ImageRes } from '../../../../Common/Config/ImageRes';
+import { AudioPlay } from '../../../../Common/Audio/AudioPlay';
+import { Common } from '../../../../Common/Common';
 
 
 @ccclass('UIHomeMerge')
@@ -28,8 +30,7 @@ export class UIHomeMerge extends UIHomeBase {
 
     onLoad() {
         super.onLoad();
-
-
+ 
         var info = GameLevelParse.main.GetLastItemInfo();
         var pic = GameLevelParse.main.GetImagePath(info.id);
         Debug.Log("UIHomeMerge pic=" + pic);
@@ -50,6 +51,9 @@ export class UIHomeMerge extends UIHomeBase {
         // Debug.Log("AdBannerWeiXin adkey="+adkey);
         AdKitCommon.main.InitAdBanner();
         AdKitCommon.main.ShowAdBanner(true);
+
+        //   var AUDIO_Merge = Common.CLOUD_RES_DIR+"/Audio/bg3.ogg";
+        AudioPlay.main.PlayByKey("bg3");
 
     }
 

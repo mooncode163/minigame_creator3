@@ -12,6 +12,7 @@ import { UIMergeItem } from './UIMergeItem';
 import { AppSceneBase } from '../../../../AppBase/Common/AppSceneBase';
 import { UIImage } from '../../../../Common/UIKit/UIImage/UIImage';
 import { UIGameMerge } from './UIGameMerge';
+import { AudioPlay } from '../../../../Common/Audio/AudioPlay';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('GameMerge')
@@ -51,6 +52,10 @@ export class GameMerge extends GameBase {
         // PhysicsSystem2D.instance.enable = true;
         // PhysicsSystem2D.instance.debugDrawFlags = EPhysics2DDrawFlags.All;
         this.LayOut();
+
+        // var AUDIO_Merge = Common.CLOUD_RES_DIR+"/Audio/bg3.ogg";
+        // AudioPlay.main.PlayFile(AUDIO_Merge);
+
     }
     start() {
         super.start();

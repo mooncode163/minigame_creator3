@@ -143,8 +143,8 @@ export class AdConfigInternal extends ConfigInternalBase {
     GetAdKey(source: string, type: number) {
         var ret = "0";
         var info = this.GetAdInfo(source);
-        Debug.Log("AdConfigInternal GetAdKey info= " + info.source);
         if (info != null) {
+            Debug.Log("AdConfigInternal GetAdKey info= " + info.source);
             switch (type) {
                 case AdType.SPLASH:
                     ret = info.key_splash;

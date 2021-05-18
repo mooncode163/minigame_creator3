@@ -34,6 +34,8 @@ export class ConfigAudio extends ConfigBase {
 
     }
 
+    GetAudio(key: string) {
+    }
 }
 
 /**

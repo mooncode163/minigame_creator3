@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, CCObject, resources, Texture2D, assetManager } from 'cc';
+import { _decorator, Component, Node, CCObject, resources, Texture2D, assetManager, AudioClip } from 'cc';
 import { Debug } from '../Debug';
 import { FileUtil } from '../File/FileUtil';
 import { LoadTexture } from '../File/LoadTexture';
@@ -186,6 +186,83 @@ export class ResManager extends CCObject {
                 // p.nodeBg.getComponent(Sprite).spriteFrame = spriteFrame;
             }
         });
+    }
+
+   
+
+     /*
+      {
+          filepath:"", 
+          success: function (p,clip:AudioClip) {
+          },
+          fail: function (p) {
+          }, 
+      }
+      */
+
+
+      public static LoadAudio(obj: any) {
+        // texture spriteFrame
+        console.log("ResManager LoadAudio obj.filepath="+obj.filepath);
+        var pic = FileUtil.GetFileBeforeExtWithOutDot(obj.filepath);
+        resources.load(pic, AudioClip, (err: any, clip: AudioClip) => {
+            if (clip == null) {
+                // Bundle resources doesn't contain 1
+                console.log("ResManager LoadAudio err:" + err.message || err);
+                if (obj.fail != null) {
+                    obj.fail(this);
+                }
+            } else {
+                console.log("ResManager LoadAudio is not null");
+                if (obj.success != null) {
+                    obj.success(this, clip);
+                }
+            }
+
+        });
+
+        /*
+         assetManager.loadRemote('http://example.com/background.mp3', {
+        audioLoadMode: AudioClip.AudioType.DOM_AUDIO,
+    }, callback);
+
+    */
+
+    }
+
+ /*
+      {
+          url:"", 
+          success: function (p,clip:AudioClip) {
+          },
+          fail: function (p) {
+          }, 
+      }
+      */
+      public static LoadUrlAudio(obj: any) {
+        assetManager.loadRemote(obj.url, function (err: any, clip:AudioClip) {
+            if (clip == null) {
+                console.log("ResManager LoadUrlAudio is null err=", err);
+                if (obj.fail != null) {
+                    obj.fail(this);
+                }
+            } else {
+                console.log("ResManager LoadUrlAudio is not null");
+                if (obj.success != null) {
+                    obj.success(this, clip);
+                }
+               
+            }
+        });
+ 
+
+        /*
+         assetManager.loadRemote('http://example.com/background.mp3', {
+        audioLoadMode: AudioClip.AudioType.DOM_AUDIO,
+    }, callback);
+
+    */
+
     }
 
 
