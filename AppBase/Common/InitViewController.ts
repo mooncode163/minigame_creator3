@@ -67,7 +67,7 @@ export class InitViewController extends NaviViewController {
                     });
             }
         }
-        // isShowClound = true;
+        // isShowClound = false;
         if (isShowClound) {
             this.GotoCloundRes();
         } else {

@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, Prefab } from 'cc'; 
+import { _decorator, Component, Node, Prefab, CCObject } from 'cc'; 
 import { UIView } from '../../Common/UIKit/ViewController/UIView'; 
 import { Common } from '../Common';
 import { Platform } from '../Platform';
@@ -8,7 +8,7 @@ import { FileSystem } from '../File/FileSystem';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('CloudRes')
-export class CloudRes extends UIView {
+export class CloudRes extends CCObject {
 
     source ="";
     tmp_filepath = "";
