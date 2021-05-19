@@ -12,6 +12,7 @@ import { ConfigPrefab } from '../../../../Common/Config/ConfigPrefab';
 import { AdKitCommon } from '../../../../Common/AdKit/AdKitCommon';
 import { UIImage } from '../../../../Common/UIKit/UIImage/UIImage';
 import { Debug } from '../../../../Common/Debug';
+import { LayOutBase } from '../../../../Common/UIKit/LayOut/LayOutBase';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UIToolBar')
@@ -46,10 +47,12 @@ export class UIToolBar extends UIView {
         var btn = this.node.getComponentInChildren(UIButton);
         var rctranBtn = btn.GetContentSize();
 
-        var count = LayOutUtil.main.GetChildCount(this.node, false);
-
+        var count = LayOutUtil.main.GetChildCount(this.node, false)+1;
+        var ly = this.node.getComponentInChildren(LayOutBase);
         // count =10;
-        h = count * (rctranBtn.height + 24);
+        var oft =  ly.space.y;
+        // oft = 32;
+        h = count * (rctranBtn.height +oft);
         // h = 512;
         this.SetContentSize(w, h);
 

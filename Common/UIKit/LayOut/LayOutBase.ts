@@ -35,7 +35,8 @@ export class LayOutBase extends Component {
     @property
     isOnlyForLandscape = false;
 
-    space = Vec2.ZERO;
+    @type(Vec2)
+    space = new Vec2(0,0);
     @type(Align)
     align = Align.LEFT;
 
