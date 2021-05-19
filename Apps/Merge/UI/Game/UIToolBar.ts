@@ -13,6 +13,7 @@ import { AdKitCommon } from '../../../../Common/AdKit/AdKitCommon';
 import { UIImage } from '../../../../Common/UIKit/UIImage/UIImage';
 import { Debug } from '../../../../Common/Debug';
 import { LayOutBase } from '../../../../Common/UIKit/LayOut/LayOutBase';
+import { LayOutVertical } from '../../../../Common/UIKit/LayOut/LayOutVertical';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('UIToolBar')
@@ -47,10 +48,10 @@ export class UIToolBar extends UIView {
         var btn = this.node.getComponentInChildren(UIButton);
         var rctranBtn = btn.GetContentSize();
 
-        var count = LayOutUtil.main.GetChildCount(this.node, false)+1;
-        var ly = this.node.getComponentInChildren(LayOutBase);
+        var count = LayOutUtil.main.GetChildCount(this.node, false);
+        var ly = this.node.getComponent(LayOutVertical);
         // count =10;
-        var oft =  ly.space.y;
+        var oft =  ly.space.y*2;
         // oft = 32;
         h = count * (rctranBtn.height +oft);
         // h = 512;
