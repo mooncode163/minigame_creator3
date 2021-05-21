@@ -118,6 +118,8 @@ export class UIView extends Component {
         this.node.parent = con.objController;
         con.view = this;
 
+        con.ViewDidAppear();
+
         // this.node.setContentSize(Common.appSceneMain.sizeCanvas); 
         // this.node.setPosition(0, 0, 0);
 

@@ -34,14 +34,11 @@ export class NaviViewController extends UIViewController {
         this.LoadPrefab();
     }
     CreateBar() {
-
         //this.listItem = new Array();
         Debug.Log("NaviViewController CreateBar");
         const node = instantiate(this.uiNaviBarPrefab);
         this.uiNaviBar = node.getComponent(UINaviBar);
         this.uiNaviBar.SetController(this);
-
-
     }
 
     CreateContent() {
@@ -53,6 +50,11 @@ export class NaviViewController extends UIViewController {
         var size = AppSceneBase.main.sizeCanvas;//this.objController.getComponent(UITransform).contentSize; 
         uitran.setContentSize(size);
 
+    }
+
+    //  显示了下一个controller ui
+    OnNextUIDidAppear() {
+        this.DestroyControllerInternal();
     }
 
     Push(controller: UIViewController) {
@@ -96,7 +98,7 @@ export class NaviViewController extends UIViewController {
     }
     DestroyController() {
         // 延迟销毁:留上一个ui 不然ui切换时候可能会看到场景的背景
-        AppSceneBase.main.scheduleOnce(this.DestroyControllerInternal.bind(this), 1);
+        // AppSceneBase.main.scheduleOnce(this.DestroyControllerInternal.bind(this), 1);
     }
 
     DestroyControllerInternal() {

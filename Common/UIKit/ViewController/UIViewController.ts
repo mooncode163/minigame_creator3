@@ -81,6 +81,18 @@ export class UIViewController extends CCObject {
     ViewDidUnLoad() {
     }
 
+
+    // 显示ui后调用
+    ViewDidAppear() {
+        if(this.naviController!=null){
+            this.naviController.OnNextUIDidAppear();
+        }
+    }
+
+    // 销毁ui后调用
+    ViewDidUnAppear() {
+    }
+
     //UIView view
     AddView(view: UIView) {
     }
