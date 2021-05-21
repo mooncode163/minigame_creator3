@@ -33,6 +33,7 @@ export class UICloudRes extends UIView {
 
     onLoad() {
         super.onLoad();
+        // this.textTitle.text ="dddd";
         this.textTitle.text = LanguageCloudRes.main.GetString("STR_CLOUDRES_TITLE");
         {
             var pic = ImageResCloudRes.main.GetImage("CloudProgressBg");
