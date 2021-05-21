@@ -39,7 +39,7 @@ export class AdKitCommon extends CCObject {
     public static AdStatus = AdStatus; 
     widthAdBanner=0; 
     heightAdBanner=0; //screen
-    heightCanvasAdBanner=0; //canvas
+    heightCanvasAdBanner=160; //canvas
 
     static _main: AdKitCommon;
     //静态方法

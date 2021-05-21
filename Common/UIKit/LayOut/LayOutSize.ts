@@ -6,6 +6,7 @@ import { Debug } from '../../Debug';
 import { LayOutBase } from './LayOutBase';
 import { LayOutUtil, SideType, SizeType } from './LayOutUtil';
 import { AppSceneBase } from '../../../AppBase/Common/AppSceneBase';
+import { AdKitCommon } from '../../AdKit/AdKitCommon';
 // import { serializable } from 'cc.decorator';
 
 // TypeScript自动引入脚本插件
@@ -324,6 +325,10 @@ export class LayOutSize extends LayOutBase {
                 }
                 break;
         }
+
+        if (this.enableOffsetAdBanner) { 
+            h -= AdKitCommon.main.heightCanvasAdBanner;
+        } 
         Debug.Log("UpdateSizeY w=" + w + " h=" + h);
         this.node?.getComponent(UITransform)?.setContentSize(new Size(w, h));
     }
