@@ -92,7 +92,10 @@ export class AdKitCommon extends CCObject {
                         source: Source.WEIXIN,
                         success: (p: any, w: any, h: any) => {
                             this.widthAdBanner = w;
-                            this.heightAdBanner = h; 
+                            if(this.heightAdBanner<h)
+                            {
+                                this.heightAdBanner = h; 
+                            }
                             this.heightCanvasAdBanner = Common.ScreenToCanvasHeigt(AppSceneBase.main.sizeCanvas,h);
                             Debug.Log("this.heightCanvasAdBanner="+this.heightCanvasAdBanner+ " h="+h);
                             AppSceneBase.main.LayOut();
