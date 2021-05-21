@@ -69,9 +69,13 @@ export class NaviViewController extends UIViewController {
     // 返回上一级
     Pop() {
         if (this.listController.length == 0) {
+            Debug.Log("NaviViewController listController.length =0");
             return;
         }
-
+        if (this.rootControllerPre != null) {
+            Debug.Log("NaviViewController Pop rootControllerPre is not destroyed");
+            return;
+        }
         // while(true)
         // {
         //     if(this.rootControllerPre == null)
@@ -81,7 +85,7 @@ export class NaviViewController extends UIViewController {
         //     }
         //     Debug.Log(" Pop waiting ...");
         // }
-        
+
         this.listController.splice(this.listController.length - 1, 1);
         this.UpdateController();
     }
@@ -92,7 +96,7 @@ export class NaviViewController extends UIViewController {
     }
     DestroyController() {
         // 延迟销毁:留上一个ui 不然ui切换时候可能会看到场景的背景
-        AppSceneBase.main.scheduleOnce(this.DestroyControllerInternal.bind(this),1);  
+        AppSceneBase.main.scheduleOnce(this.DestroyControllerInternal.bind(this), 1);
     }
 
     DestroyControllerInternal() {
