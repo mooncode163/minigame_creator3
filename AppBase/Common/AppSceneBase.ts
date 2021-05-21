@@ -7,6 +7,8 @@ import { Debug } from '../../Common/Debug';
 import { Device } from '../../Common/Device';
 import { AppPreLoad } from '../../Common/AppPreLoad';
 import { AudioPlay } from '../../Common/Audio/AudioPlay';
+import { Config } from '../../Common/Config/Config';
+import { CloudResPreLoad } from '../../Common/CloundRes/CloudResPreLoad';
 
 
 // typescript 提示 Object is possibly ‘null‘ 的N种解决方法
@@ -60,7 +62,19 @@ export class AppSceneBase extends Component {
         //component
         this.node.addComponent(AudioPlay);
 
-        AppPreLoad.main.Load(
+        // AppPreLoad.main.Load(
+        //     {
+        //         success: (p: any) => {
+        //             this.RunApp();
+        //         },
+        //         fail: (p: any) => {
+        //             // this.OnFinish(obj);
+        //             this.RunApp();
+        //         },
+        //     });
+
+
+            CloudResPreLoad.main.Load(
             {
                 success: (p: any) => {
                     this.RunApp();
@@ -70,8 +84,8 @@ export class AppSceneBase extends Component {
                     this.RunApp();
                 },
             });
-
-
+ 
+ 
         // this.RunApp();
     }
     start() {

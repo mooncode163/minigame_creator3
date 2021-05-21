@@ -12,8 +12,8 @@ const { ccclass, property } = _decorator;
 export class ImageResInternal extends ConfigInternalBase {
     public KEY_BOARD: string = "board";
     public KEY_PATH: string = "path";
-    rootJson: any = null;
-
+    rootJson: any = null; 
+    
     // 255,100,200,255 to color return Vector4 47,47,47,255
     //Vector4 (left,right,top,bottom)
     String2Vec4(str: string) {

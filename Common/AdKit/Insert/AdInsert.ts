@@ -26,7 +26,7 @@ export class AdInsert extends CCObject {
     }
 	GetPlatform() {
         var p = null;
-        if (Platform.isWeiXin) {
+        if (Platform.isWeiXin||Platform.isByte)  {
             p = new AdInsertWeiXin();
         }
         return p;

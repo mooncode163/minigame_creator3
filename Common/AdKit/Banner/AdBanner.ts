@@ -27,7 +27,7 @@ export class AdBanner extends CCObject {
 
     GetPlatform () {
         var p = null;
-        if (Platform.isWeiXin) {
+        if (Platform.isWeiXin||Platform.isByte)  {
             p = new AdBannerWeiXin();
         }
         return p;

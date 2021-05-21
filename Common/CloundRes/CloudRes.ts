@@ -24,9 +24,10 @@ export class CloudRes extends CCObject {
 
     get rootPath() {
         var ret = Common.CLOUD_RES_DIR;
-        if (Platform.isWeiXin)  {
+        if (Platform.isWeiXin||Platform.isByte)  {
             ret = FileSystemWeixin.main.GetRootDirPath() + "/" + Common.CLOUD_RES_DIR_NAME;
         }
+ 
         return ret;
     }
 

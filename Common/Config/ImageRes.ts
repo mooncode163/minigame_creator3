@@ -58,13 +58,16 @@ export class ImageRes extends ConfigBase {
         }
 
 
-        if (!Platform.isCloudRes) {
+        // if (!Platform.isCloudRes) 
+        {
 
-            strDir = Common.CLOUD_RES_DIR;
+            // strDir = Common.CLOUD_RES_DIR;
+            strDir = CloudRes.main.rootPath;
             fileName = "ImageResCloudRes.json";
             {
                 this.imageResCloudRes = new ImageResInternal();
                 this.imageResCloudRes.fileJson = strDir + "/" + fileName;
+                this.imageResCloudRes.isCloud = Platform.isCloudRes;
                 this.listItem.push(this.imageResCloudRes);
             }
 
@@ -83,39 +86,39 @@ export class ImageRes extends ConfigBase {
      }
      */
     LoadCloudConfig(obj: any) {
-        if (Platform.isCloudRes) {
-            var strDir = CloudRes.main.rootPath;
-            var fileName = "ImageResCloudRes.json";
-            {
-                this.imageResCloudRes = new ImageResInternal();
-                this.imageResCloudRes.fileJson = strDir + "/" + fileName;
-                this.listItem.push(this.imageResCloudRes);
-                Debug.Log("ImageRes imageResCloudRes.fileJson=" + this.imageResCloudRes.fileJson);
-                this.imageResCloudRes.Load(
-                    {
-                        isCloud: true,
-                        success: (p: any) => {
-                            // this.OnFinish(obj,false);
-                            Debug.Log("ImageRes imageResCloudRes success=");
-                            if (obj.success != null) {
-                                obj.success(this);
-                            }
-                        },
-                        fail: () => {
-                            // this.OnFinish(obj,true);
-                            Debug.Log("ImageRes imageResCloudRes fail=");
-                            if (obj.fail != null) {
-                                obj.fail(this);
-                            }
-                        },
-                    });
-            }
+        // if (Platform.isCloudRes) {
+        //     var strDir = CloudRes.main.rootPath;
+        //     var fileName = "ImageResCloudRes.json";
+        //     {
+        //         this.imageResCloudRes = new ImageResInternal();
+        //         this.imageResCloudRes.fileJson = strDir + "/" + fileName;
+        //         this.listItem.push(this.imageResCloudRes);
+        //         Debug.Log("ImageRes imageResCloudRes.fileJson=" + this.imageResCloudRes.fileJson);
+        //         this.imageResCloudRes.Load(
+        //             {
+        //                 isCloud: true,
+        //                 success: (p: any) => {
+        //                     // this.OnFinish(obj,false);
+        //                     Debug.Log("ImageRes imageResCloudRes success=");
+        //                     if (obj.success != null) {
+        //                         obj.success(this);
+        //                     }
+        //                 },
+        //                 fail: () => {
+        //                     // this.OnFinish(obj,true);
+        //                     Debug.Log("ImageRes imageResCloudRes fail=");
+        //                     if (obj.fail != null) {
+        //                         obj.fail(this);
+        //                     }
+        //                 },
+        //             });
+        //     }
 
-        } else {
-            if (obj.success != null) {
-                obj.success(this);
-            }
-        }
+        // } else {
+        //     if (obj.success != null) {
+        //         obj.success(this);
+        //     }
+        // }
     }
 
     GetImageBoardString(path: string) {

@@ -26,8 +26,8 @@ export class ResManager extends CCObject {
         var key = FileUtil.GetFileBeforeExtWithOutDot(obj.filepath);
         resources.load(key, (err: any, data: any) => {
             if (data == null) {
-                // Bundle resources doesn't contain 1
-                console.log("ResManager Load err:" + err.message || err);
+                // Bundle resources doesn't contain 1 
+                console.log("ResManager Load err:" + err.message || err+" filepath="+obj.filepath);
                 if (obj.fail != null) {
                     obj.fail(this);
                 }
@@ -59,7 +59,8 @@ export class ResManager extends CCObject {
         resources.load(key, (err: any, data: any) => {
             if (data == null) {
                 // Bundle resources doesn't contain 1
-                console.log("ResManager Load err:" + err.message || err);
+                console.log("ResManager Load err:" + err.message || err+" filepath="+obj.filepath);
+
                 if (obj.fail != null) {
                     obj.fail(this);
                 }
@@ -95,8 +96,8 @@ export class ResManager extends CCObject {
         var pic = FileUtil.GetFileBeforeExtWithOutDot(obj.filepath) + "/texture";
         resources.load(pic, Texture2D, (err: any, texture: Texture2D) => {
             if (texture == null) {
-                // Bundle resources doesn't contain 1
-                console.log("ResManager texture err:" + err.message || err);
+                // Bundle resources doesn't contain 1 
+                console.log("ResManager texture err:" + err.message || err+" filepath="+obj.filepath);
                 if (obj.fail != null) {
                     obj.fail(this);
                 }
@@ -157,6 +158,8 @@ export class ResManager extends CCObject {
       success: function (p:any,data:any) {
       },
       fail: function (p) {
+      },
+      finish: function (p) {
       }, 
     
   }
@@ -176,10 +179,17 @@ export class ResManager extends CCObject {
                 if (obj.fail != null) {
                     obj.fail(this);
                 }
+                if (obj.finish != null) {
+                    obj.finish(this);
+                }
+                
             } else {
                 console.log("ResManager LoadUrl is not null");
                 if (obj.success != null) {
                     obj.success(this, data);
+                }
+                if (obj.finish != null) {
+                    obj.finish(this);
                 }
                 // const spriteFrame = new SpriteFrame();
                 // spriteFrame.texture = texture;

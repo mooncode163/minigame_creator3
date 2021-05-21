@@ -35,10 +35,11 @@ export class CloudResViewController extends PopViewController {
 
     LoadPrefab() {
         var key = "UICloudRes";
-
-        PrefabCache.main.LoadByKey(
+        var filepath = "Common/Prefab/CloudRes/UICloudRes.prefab";
+        //  ConfigPrefab 还没下载完成
+        PrefabCache.main.Load(
             {
-                key: key,
+                filepath: filepath,
                 success: (p: any, data: any) => {
                     this.uiPrefab = data;
                     this.CreateUI();

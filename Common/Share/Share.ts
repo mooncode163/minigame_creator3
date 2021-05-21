@@ -26,7 +26,7 @@ export class Share extends CCObject {
 
     GetPlatform() {
         var p = null;
-        if (Platform.isWeiXin) {
+        if (Platform.isWeiXin||Platform.isByte)  {
             //显示分享
             //  wx.showShareMenu();
             p = new ShareWeiXin();

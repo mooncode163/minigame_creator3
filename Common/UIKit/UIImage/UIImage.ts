@@ -29,10 +29,16 @@ export class UIImage extends UIView {
     onLoad() {
         super.onLoad();
         var keyPic = this.keyImage;
+
+       
         if (Device.main.isLandscape) {
             if (!Common.BlankString(this.keyImageH)) {
                 keyPic = this.keyImageH;
             }
+        }
+
+        if (Common.BlankString(keyPic)) {
+            return;
         }
 
         var pic = ImageRes.main.GetImage(keyPic);
@@ -58,6 +64,9 @@ export class UIImage extends UIView {
 
     UpdateImageByKey(key: string) {
         var pic = "";
+        if (Common.BlankString(key)) {
+            return;
+        }
         if (!Common.BlankString(key)) {
             pic = ImageRes.main.GetImage(key);
         }
@@ -102,7 +111,7 @@ export class UIImage extends UIView {
         // Vector2 offsetMax = rctranOrigin.offsetMax;
 
         var isCloud = false;
-        if (Platform.isWeiXin) {
+        if (Platform.isCloudRes) {
             isCloud = true;
         }
         TextureCache.main.Load(

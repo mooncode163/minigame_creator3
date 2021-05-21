@@ -25,6 +25,9 @@ export class FileSystem extends CCObject {
         if (Platform.isWeiXin) {
             p = new FileSystemWeixin();
         }
+        if (Platform.isByte) {
+            p = new FileSystemWeixin();
+        }
         return p;
     }
     Init () { 

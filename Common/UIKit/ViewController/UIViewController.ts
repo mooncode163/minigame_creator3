@@ -30,8 +30,6 @@ export class UIViewController extends CCObject {
 
         if (this.objController == null) {
             this.objController = new Node('Controller');
-
-
         }
         this.ViewDidLoad();
 

@@ -20,7 +20,7 @@ export class NaviViewController extends UIViewController {
 
     uiNaviBar: UINaviBar | null = null;
     rootController: UIViewController | null = null;
-
+    rootControllerPre: UIViewController | null = null;
     listController: UIViewController[] = [];
 
 
@@ -56,7 +56,6 @@ export class NaviViewController extends UIViewController {
     }
 
     Push(controller: UIViewController) {
-
         if (controller == null) {
             return;
         }
@@ -66,10 +65,23 @@ export class NaviViewController extends UIViewController {
         this.UpdateController();
 
     }
+
+    // 返回上一级
     Pop() {
         if (this.listController.length == 0) {
             return;
         }
+
+        // while(true)
+        // {
+        //     if(this.rootControllerPre == null)
+        //     {
+        //         //等待上一个controller销毁,才能返回上一级
+        //         break;
+        //     }
+        //     Debug.Log(" Pop waiting ...");
+        // }
+        
         this.listController.splice(this.listController.length - 1, 1);
         this.UpdateController();
     }
@@ -79,9 +91,14 @@ export class NaviViewController extends UIViewController {
         }
     }
     DestroyController() {
-        if (this.rootController != null) {
-            this.rootController.DestroyObjController();
-            this.rootController = null;
+        // 延迟销毁:留上一个ui 不然ui切换时候可能会看到场景的背景
+        AppSceneBase.main.scheduleOnce(this.DestroyControllerInternal.bind(this),1);  
+    }
+
+    DestroyControllerInternal() {
+        if (this.rootControllerPre != null) {
+            this.rootControllerPre.DestroyObjController();
+            this.rootControllerPre = null;
         }
     }
     UpdateController() {
@@ -89,6 +106,7 @@ export class NaviViewController extends UIViewController {
         if (this.listController.length == 0) {
             return;
         }
+        this.rootControllerPre = this.rootController;
         this.DestroyController();
 
         this.rootController = this.listController[this.listController.length - 1];

@@ -5,65 +5,35 @@ import { Device } from '../Device';
 import { FileUtil } from '../File/FileUtil';
 import { JsonUtil } from '../File/JsonUtil';
 import { ResManager } from '../Res/ResManager';
-import { LayOutGrid } from '../UIKit/LayOut/LayOutGrid';
-import { ConfigInternalBase } from './ConfigInternalBase';
+import { LayOutGrid } from '../UIKit/LayOut/LayOutGrid'; 
+import { ConfigInternalBase } from '../Config/ConfigInternalBase';
 
 const { ccclass, property } = _decorator;
 // 动态加载资源文档
 // https://docs.cocos.com/creator/3.0/manual/en/asset/dynamic-load-resources.html
 
-@ccclass('ConfigInternal')
-export class ConfigInternal extends ConfigInternalBase {
-    GetAppIdOfStore(store: string) {
-        Debug.Log("GetAppIdOfStore store=" + store);
-        var appid = this.rootJson.APPID;
-        var strid = "0";
-        if (appid.store != null) {
-            strid = appid.store;
-        }
-        Debug.Log("GetAppIdOfStore appid= " + strid + "store=" + store);
-        return strid;
-    }
-
-    GetString (key, def) { 
-        return JsonUtil.GetItem(this.rootJson, key, def); 
-    }
-
+@ccclass('ConfigCloudResInternal')
+export class ConfigCloudResInternal extends ConfigInternalBase {
+   
     GetCloudResUrl () { 
         var key = "url";
         if(Device.main.isLandscape)
         {
             key = "url_hd";
         }
-        return JsonUtil.GetItem(this.rootJson.CloudRes, key, ""); 
+        return JsonUtil.GetItem(this.rootJson.zip, key, ""); 
     }
 
     GetCloudResVersionUrl () { 
-        var key = "url_version";
+        var key = "url";
         // if(Device.main.isLandscape)
         // {
         //     key = "url_version_hd";
         // }
-        return JsonUtil.GetItem(this.rootJson.CloudRes, key, ""); 
+        return JsonUtil.GetItem(this.rootJson.version, key, ""); 
     }
 
-
-
-    GetShareUrl () { 
-        var key = "url"; 
-        return JsonUtil.GetItem(this.rootJson.Share, key, ""); 
-    }
-
-    GetShareTitle () { 
-        var key = "title"; 
-        return JsonUtil.GetItem(this.rootJson.Share, key, ""); 
-    }
  
-
-    IsHaveKey(key) {
-        return JsonUtil.ContainsKey(this.rootJson, key); 
-    }
-  
 }
 
 /**

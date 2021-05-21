@@ -5,10 +5,14 @@ import { Debug } from '../Debug';
 import { Platform } from '../Platform';
 import { CloudRes } from './CloudRes';
 import { ResManager } from '../Res/ResManager';
+import { Config } from '../Config/Config';
+import { ConfigCloudRes } from './ConfigCloudRes';
 const { ccclass, property, type } = _decorator;
 
 @ccclass('CloudResVersion')
 export class CloudResVersion {
+
+    versionNet:"1.0.0"; 
     static _main: CloudResVersion;
     //静态方法
     static get main() { 
@@ -18,7 +22,8 @@ export class CloudResVersion {
         return this._main;
     }
     rootJson = null;
-    get version() {
+
+    get versionLocal() {
 
         if (this.rootJson != null) {
             return this.rootJson.version;
@@ -26,6 +31,28 @@ export class CloudResVersion {
         return "0.0.0";
 
     }
+
+    
+    LoadVersion(obj:any) {
+        ResManager.LoadUrl(
+            {
+                url: ConfigCloudRes.main.cloudResVersionUrl,
+                success: (p: any, data: any) => {
+                    this.versionNet = data.json["version"]; 
+                    if (obj.success != null) {
+                        obj.success(this);
+                    }
+                },
+                fail: () => {
+                    if (obj.fail != null) {
+                        obj.fail(this);
+                    }
+                },
+                finish: () => {
+                     this.LoadInternal(obj);
+                }, 
+            });
+    } 
 
     /*
         {  
@@ -37,18 +64,7 @@ export class CloudResVersion {
           },
         }
         */
-    Load(obj:any) {
-        // this.callbackFinish = cbFinish;
-        // if (this.rootJson != null) {
-        //     if (this.callbackFinish != null) {
-        //         this.callbackFinish();
-        //     }
-        //     return;
-        // }
-        // var dirRoot = Common.CLOUD_RES_DIR;
-        // if (Common.main().isWeiXin) {
-        //     dirRoot = FileSystemWeixin.main().GetRootDirPath() + "/" + Common.CLOUD_RES_DIR_NAME;
-        // }
+    LoadInternal(obj:any) { 
         var dirRoot = CloudRes.main.rootPath;
         var filepath = dirRoot + "/version.json";
 
@@ -66,7 +82,7 @@ export class CloudResVersion {
         //     }.bind(this));
         // }
 
-        if (Platform.isWeiXin) {
+        if (Platform.isCloudRes) {
             ResManager.LoadUrl(
                 {
                     url: filepath,

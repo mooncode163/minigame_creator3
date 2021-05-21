@@ -24,9 +24,7 @@ export class Config extends ConfigBase {
         return this.configCommon.GetString("APP_TYPE", "");
     }
 
-    get cloudResUrl() {
-        return this.configCommon.GetCloudResUrl();
-    }
+  
     get shareUrl() {
         return this.configCommon.GetShareUrl();
     }
@@ -144,7 +142,48 @@ export class Config extends ConfigBase {
     InitValue() {
 
     }
+ /*
+     { 
+       success: (p:any) => {
+           
+       }, 
+       fail: (p:any) => {
+           
+       },
+     }
+     */
+     LoadCloudConfig(obj: any) {
+        if (Platform.isCloudRes) { 
+            var strDir = Common.RES_CONFIG_DATA + "/config";
+            var fileName = "config_common.json";
+            { 
+                this.configCommon.fileJson = strDir + "/" + fileName; 
+                this.configCommon.Load(
+                    {
+                        isCloud: false,
+                        success: (p: any) => {
+                            // this.OnFinish(obj,false);
+                            Debug.Log("Config LoadCloudConfig success=");
+                            if (obj.success != null) {
+                                obj.success(this);
+                            }
+                        },
+                        fail: () => {
+                            // this.OnFinish(obj,true);
+                            Debug.Log("Config LoadCloudConfig fail=");
+                            if (obj.fail != null) {
+                                obj.fail(this);
+                            }
+                        },
+                    });
+            }
 
+        } else {
+            if (obj.success != null) {
+                obj.success(this);
+            }
+        }
+    }
     
 
     IsHaveKey(key) {

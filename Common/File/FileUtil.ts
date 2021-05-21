@@ -1,5 +1,6 @@
 
 import { _decorator, CCObject } from 'cc';
+import { Common } from '../Common';
 const { ccclass, property, integer, float, boolean, string, type } = _decorator;
 
 
@@ -16,6 +17,9 @@ export class FileUtil extends CCObject {
         return ret;
     }
     static FileExist(filepath: string) {
+        if (Common.BlankString(filepath)) {
+            return false;
+        }
         var ret = true;
         // if (sys.isNative) {
         //     ret = jsb.fileUtils.isFileExist(filepath);

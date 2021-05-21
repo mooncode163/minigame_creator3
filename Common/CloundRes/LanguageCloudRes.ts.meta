@@ -2,10 +2,8 @@
   "ver": "4.0.22",
   "importer": "typescript",
   "imported": true,
-  "uuid": "0de572b9-4036-4b35-8f36-ec4dc38d134a",
+  "uuid": "110fafac-f2ed-47e4-829b-ab34f4eaf37d",
   "files": [],
   "subMetas": {},
-  "userData": {
-    "simulateGlobals": []
-  }
+  "userData": {}
 }

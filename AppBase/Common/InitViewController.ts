@@ -20,6 +20,7 @@ import { AppScene } from '../AppScene';
 import { AppSceneBase } from './AppSceneBase';
 import { CommonRes } from '../../Common/CommonRes';
 import { ConfigAudio } from '../../Common/Config/ConfigAudio';
+import { AppPreLoad } from '../../Common/AppPreLoad';
 const { ccclass, property } = _decorator;
 
 
@@ -35,10 +36,12 @@ export class InitViewController extends NaviViewController {
         return this._main;
     }
     ViewDidLoad() {
-        super.ViewDidLoad();
+        super.ViewDidLoad(); 
+        this.InitLoad(); 
+    }
 
-        var str = Language.main.GetString("BtnStartGame");
-        Debug.Log("InitViewController ViewDidLoad str=" + str);
+
+    InitLoad() {  
         var isShowClound = false;
         if (Platform.isCloudRes) {
             Debug.Log("InitViewController 1");
@@ -50,13 +53,13 @@ export class InitViewController extends NaviViewController {
             } else {
                 Debug.Log("InitViewController 3")
 
-                CloudResVersion.main.Load(
+                CloudResVersion.main.LoadVersion(
                     {
                         success: (p: any, data: any) => {
-                            var versionNow = Config.main.version;
-                            var versionLocal = CloudResVersion.main.version;
-                            Debug.Log("InitViewController version: versionNow=" + versionNow + " versionLocal=" + versionLocal);
-                            if (versionNow > versionLocal) {
+                            var versionNet = CloudResVersion.main.versionNet;
+                            var versionLocal = CloudResVersion.main.versionLocal;
+                            Debug.Log("InitViewController version: versionNet=" + versionNet + " versionLocal=" + versionLocal);
+                            if (versionNet > versionLocal) {
                                 //需要更新资源 
                                 isShowClound = true;
                             }
@@ -71,7 +74,7 @@ export class InitViewController extends NaviViewController {
         if (isShowClound) {
             this.GotoCloundRes();
         } else {
-            this.StartParsePlace();
+            this.RunGame();
         }
 
         // ImageRes.main.LoadCloudConfig(
@@ -86,7 +89,20 @@ export class InitViewController extends NaviViewController {
 
     }
 
-    StartParsePlace() {
+    RunGame() { 
+        AppPreLoad.main.Load(
+            {
+                success: (p: any) => {
+                    this.StartParsePlace();
+                },
+                fail: (p: any) => {
+                    // this.OnFinish(obj);
+                    this.StartParsePlace();
+                },
+            });
+    }
+
+    StartParsePlace() { 
         Debug.Log("HomeViewController StartParsePlace");
         LevelManager.main.StartParsePlace(
             {
@@ -112,26 +128,28 @@ export class InitViewController extends NaviViewController {
             });
     }
 
-    GotoCloundRes() { 
+    
+
+    GotoCloundRes() {  
         CloudResViewController.main.Show(
             {
                 controller:this, 
                 close: (p: any) => { 
-                    this.StartParsePlace();
+                    this.RunGame();
                 }, 
             });
     }
 
     OnImageResFinish() {
-        ConfigAudio.main.LoadCloudConfig(
-            {
-                success: (p: any) => {
-                    this.OnConfigAudioFinish();
-                },
-                fail: () => {
-                    this.OnConfigAudioFinish();
-                },
-            });
+        // ConfigAudio.main.LoadCloudConfig(
+        //     {
+        //         success: (p: any) => {
+        //             this.OnConfigAudioFinish();
+        //         },
+        //         fail: () => {
+        //             this.OnConfigAudioFinish();
+        //         },
+        //     });
 
            
     }
@@ -141,15 +159,18 @@ export class InitViewController extends NaviViewController {
     }
 
     ParseLevelFinish() {
-        ImageRes.main.LoadCloudConfig(
-            {
-                success: (p: any) => {
-                    this.OnImageResFinish();
-                },
-                fail: () => {
-                    this.OnImageResFinish();
-                },
-            });
+
+        this.GotoGame();
+
+        // ImageRes.main.LoadCloudConfig(
+        //     {
+        //         success: (p: any) => {
+        //             this.OnImageResFinish();
+        //         },
+        //         fail: () => {
+        //             this.OnImageResFinish();
+        //         },
+        //     });
       
     }
 

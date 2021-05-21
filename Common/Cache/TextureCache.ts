@@ -1,6 +1,7 @@
 
 import { _decorator, Component, Node, CCObject, resources, Prefab, Texture2D, SpriteFrame } from 'cc';
 import { Debug } from '../Debug';
+import { Dictionary } from '../Dictionary';
 import { ResManager } from '../Res/ResManager';
 
 const { ccclass, property } = _decorator;
@@ -16,10 +17,15 @@ export class TextureCache extends CCObject {
         console.log("TextureCache Main");
         if (this._main == null) {
             this._main = new TextureCache();
+            this._main.Init();
         }
         return this._main;
     }
+    Init() {
+        this.dicItem = new Dictionary();
+    }
 
+   
     /*
 { 
      filepath:"", 
@@ -33,7 +39,19 @@ export class TextureCache extends CCObject {
 }
 */
     Load(obj: any) {
-        this.LoadNotCache(obj);
+        var key = obj.filepath;
+        if (this.dicItem.Contains(key) == true) {
+            var tex = this.dicItem.Get(key);
+            Debug.Log("TextureCache  load  from cache key="+key);
+            if (obj.success != null) {
+                obj.success(this, tex);
+            }
+        } else 
+        {
+            this.LoadNotCache(obj);
+        }
+
+        
     }
 
     LoadFrame(obj: any) {
@@ -63,6 +81,8 @@ fail: (p:any) => {
             {
                 filepath: obj.filepath,
                 success: (p: any, tex: any) => {
+                    var key = obj.filepath;
+                     this.dicItem.Add(key, tex);
                     if (obj.success != null) {
                         obj.success(this, tex);
                     }
@@ -99,6 +119,8 @@ fail: (p:any) => {
                 {
                     url: obj.filepath,
                     success: (p: any, tex: any) => {
+                        var key = obj.filepath;
+                        this.dicItem.Add(key, tex);
                         if (obj.success != null) {
                             obj.success(this, tex);
                         }
@@ -115,6 +137,8 @@ fail: (p:any) => {
                 {
                     filepath: obj.filepath,
                     success: (p: any, tex: any) => {
+                        var key = obj.filepath;
+                        this.dicItem.Add(key, tex);
                         if (obj.success != null) {
                             obj.success(this, tex);
                         }

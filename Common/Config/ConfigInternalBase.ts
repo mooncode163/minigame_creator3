@@ -14,6 +14,7 @@ const { ccclass, property } = _decorator;
 export class ConfigInternalBase extends CCObject {
     rootJson: any = null;
     fileJson = "";
+    isCloud:boolean = false;
 
     /*
       { 
@@ -27,7 +28,7 @@ export class ConfigInternalBase extends CCObject {
       }
       */
     Load(obj: any) {
-        if (obj.isCloud) {
+        if (this.isCloud) {
             ResManager.LoadUrl(
                 {
                     url: this.fileJson,

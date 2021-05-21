@@ -11,6 +11,9 @@ import { CommonRes } from '../CommonRes';
 import { Debug } from '../Debug';
 import { Config } from '../Config/Config';
 import { PopViewController } from '../UIKit/ViewController/PopViewController';
+import { ConfigCloudRes } from './ConfigCloudRes';
+import { LanguageCloudRes } from './LanguageCloudRes';
+import { ImageResCloudRes } from './ImageResCloudRes';
 
 const { ccclass, property, type } = _decorator;
 // 动态加载资源文档
@@ -30,14 +33,20 @@ export class UICloudRes extends UIView {
 
     onLoad() {
         super.onLoad();
-        // this.node.setContentSize(this.node.parent.getContentSize());
-        this.textTitle.text = Language.main.GetString("STR_CLOUDRES_TITLE");
-        // this.progressBar.totalLength = this.node.getContentSize().width-32;
+        this.textTitle.text = LanguageCloudRes.main.GetString("STR_CLOUDRES_TITLE");
+        {
+            var pic = ImageResCloudRes.main.GetImage("CloudProgressBg");
+            this.uiProgress.imageBg.UpdateImage(pic);
+        }
+        {
+            var pic = ImageResCloudRes.main.GetImage("CloudProgressFt");
+            this.uiProgress.imageFt.UpdateImage(pic);
+        }
         this.UpdateProgress(0);
 
         CloudRes.main.StartDownload(
             {
-                url: Config.main.cloudResUrl,
+                url: ConfigCloudRes.main.cloudResUrl,
                 progress: (res: any) => {
                     this.UpdateProgress(res.progress / 100.0);
                 },
@@ -61,8 +70,9 @@ export class UICloudRes extends UIView {
         // progress = 0.5;
         this.uiProgress.UpdateProgress(progress);
         //下载进度:xxx%
-        var str = Language.main.GetString("STR_CLOUDRES_STATUS");
+        var str = LanguageCloudRes.main.GetString("STR_CLOUDRES_STATUS");
         str = str.replace("xxx", percent.toString());
+        // var str = percent.toString();
         this.textStatus.text = str;
     }
     OnCloudResDidFinish() {

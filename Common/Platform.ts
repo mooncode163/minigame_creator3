@@ -25,12 +25,16 @@ export class Platform extends CCObject {
         return (sys.platform == sys.FB_PLAYABLE_ADS) ? true : false;
     }
 
-    public static get isByteDance(): boolean {
+    public static get isByte(): boolean {
         return (sys.platform == sys.BYTEDANCE_MINI_GAME) ? true : false;
     }
 
     public static get isCloudRes(): boolean {
-        return (sys.platform == sys.WECHAT_GAME) ? true : false;
+        if(this.isWeiXin||this.isByte)
+        {
+            return true;
+        }
+        return false;
     }
 
 }

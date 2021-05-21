@@ -63,7 +63,7 @@ export class UIView extends Component {
 
 
     private _controller: UIViewController | null = null;
-    @type(UIViewController)
+    // @type(UIViewController)
     //get 的用法
     get controller(): UIViewController {           // 函数后(): string 这个的意思是 要求函数返回的类型必须是 string
         if (this._controller == null) {

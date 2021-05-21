@@ -35,12 +35,15 @@ export class ConfigAudio extends ConfigBase {
         //         this.listItem.push(this.configAudioApp);
         //     }
         // } 
-        if (!Platform.isCloudRes) {
-            var strDir = Common.CLOUD_RES_DIR;
+        // if (!Platform.isCloudRes) 
+        {
+            // var strDir = Common.CLOUD_RES_DIR;
+            var strDir = CloudRes.main.rootPath;
             var  fileName = "AudioCloudRes.json";
             {
                 this.configAudioCloudRes = new ConfigAudioInternal();
                 this.configAudioCloudRes.fileJson = strDir + "/" + fileName;
+                this.configAudioCloudRes.isCloud =  Platform.isCloudRes;
                 this.listItem.push(this.configAudioCloudRes);
             }
 
@@ -89,39 +92,39 @@ export class ConfigAudio extends ConfigBase {
      }
      */
      LoadCloudConfig(obj: any) {
-        if (Platform.isCloudRes) {
-            var strDir = CloudRes.main.rootPath;
-            var fileName = "AudioCloudRes.json";
-            {
-                this.configAudioCloudRes = new ConfigAudioInternal();
-                this.configAudioCloudRes.fileJson = strDir + "/" + fileName;
-                this.listItem.push(this.configAudioCloudRes);
-                Debug.Log("ImageRes AudioCloudRes .fileJson=" + this.configAudioCloudRes.fileJson);
-                this.configAudioCloudRes.Load(
-                    {
-                        isCloud: true,
-                        success: (p: any) => {
-                            // this.OnFinish(obj,false);
-                            Debug.Log("ImageRes AudioCloudRes success=");
-                            if (obj.success != null) {
-                                obj.success(this);
-                            }
-                        },
-                        fail: () => {
-                            // this.OnFinish(obj,true);
-                            Debug.Log("ImageRes AudioCloudRes fail=");
-                            if (obj.fail != null) {
-                                obj.fail(this);
-                            }
-                        },
-                    });
-            }
+        // if (Platform.isCloudRes) {
+        //     var strDir = CloudRes.main.rootPath;
+        //     var fileName = "AudioCloudRes.json";
+        //     {
+        //         this.configAudioCloudRes = new ConfigAudioInternal();
+        //         this.configAudioCloudRes.fileJson = strDir + "/" + fileName;
+        //         this.listItem.push(this.configAudioCloudRes);
+        //         Debug.Log("ImageRes AudioCloudRes .fileJson=" + this.configAudioCloudRes.fileJson);
+        //         this.configAudioCloudRes.Load(
+        //             {
+        //                 isCloud: true,
+        //                 success: (p: any) => {
+        //                     // this.OnFinish(obj,false);
+        //                     Debug.Log("ImageRes AudioCloudRes success=");
+        //                     if (obj.success != null) {
+        //                         obj.success(this);
+        //                     }
+        //                 },
+        //                 fail: () => {
+        //                     // this.OnFinish(obj,true);
+        //                     Debug.Log("ImageRes AudioCloudRes fail=");
+        //                     if (obj.fail != null) {
+        //                         obj.fail(this);
+        //                     }
+        //                 },
+        //             });
+        //     }
 
-        } else {
-            if (obj.success != null) {
-                obj.success(this);
-            }
-        }
+        // } else {
+        //     if (obj.success != null) {
+        //         obj.success(this);
+        //     }
+        // }
     }
 }
 
