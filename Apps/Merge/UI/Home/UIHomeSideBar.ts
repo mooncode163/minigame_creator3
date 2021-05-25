@@ -12,9 +12,7 @@ export class UIHomeSideBar extends UIView {
         super.onLoad(); 
         // this.LayOut();
     }
-    start() {
-        
-        // [3] super.LayOut();
+    start() { 
         super.start();
         this.LayOut();
     }

@@ -102,7 +102,7 @@ export class AudioPlay extends Component {
         //     dir = Common.CLOUD_RES_DIR;
         // }
         var filepath = ConfigAudio.main.GetAudio(key);
-
+        Debug.Log("AudioPlay PlayByKey filepath="+filepath+" key="+key);
         ResManager.LoadAudio(
             {
                 filepath: filepath,

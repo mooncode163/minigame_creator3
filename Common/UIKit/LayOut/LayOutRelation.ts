@@ -111,7 +111,18 @@ export class LayOutRelation extends LayOutBase {
                         x = - w_parent / 2 + w / 2 + this.offset.x;
                         y = - h_parent / 2 + h / 2 + this.offset.y;
                     }
-
+                    if (this.align == Align.DOWN_RIGHT) {
+                        x = w_parent / 2 - w / 2 - this.offset.x;
+                        y = - h_parent / 2 + h / 2 + this.offset.y;
+                    }
+                    if (this.align == Align.UP_LEFT) {
+                        x = - w_parent / 2 + w / 2 + this.offset.x;
+                        y = h_parent / 2 - h / 2 - this.offset.y;
+                    }
+                    if (this.align == Align.UP_RIGHT) {
+                        x = w_parent / 2 - w / 2 - this.offset.x;
+                        y = h_parent / 2 - h / 2 - this.offset.y;
+                    }
                 }
                 break;
             case RelationType.TARGET:
@@ -149,7 +160,7 @@ export class LayOutRelation extends LayOutBase {
 
         }
 
-        if (this.enableOffsetAdBanner) { 
+        if (this.enableOffsetAdBanner) {
             y += AdKitCommon.main.heightCanvasAdBanner;
         }
         this.node.setPosition(x, y);

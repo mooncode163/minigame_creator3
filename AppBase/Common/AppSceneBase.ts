@@ -9,6 +9,7 @@ import { AppPreLoad } from '../../Common/AppPreLoad';
 import { AudioPlay } from '../../Common/Audio/AudioPlay';
 import { Config } from '../../Common/Config/Config';
 import { CloudResPreLoad } from '../../Common/CloundRes/CloudResPreLoad';
+import { MusicBgPlay } from '../../Common/Audio/MusicBgPlay';
 
 
 // typescript 提示 Object is possibly ‘null‘ 的N种解决方法
@@ -61,7 +62,7 @@ export class AppSceneBase extends Component {
 
         //component
         this.node.addComponent(AudioPlay);
-
+        this.node.addComponent(MusicBgPlay);
         // AppPreLoad.main.Load(
         //     {
         //         success: (p: any) => {

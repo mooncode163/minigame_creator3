@@ -21,6 +21,7 @@ import { AppSceneBase } from './AppSceneBase';
 import { CommonRes } from '../../Common/CommonRes';
 import { ConfigAudio } from '../../Common/Config/ConfigAudio';
 import { AppPreLoad } from '../../Common/AppPreLoad';
+import { MusicBgPlay } from '../../Common/Audio/MusicBgPlay';
 const { ccclass, property } = _decorator;
 
 
@@ -179,6 +180,14 @@ export class InitViewController extends NaviViewController {
         // this.Push(MainViewController.main); 
 
         AppSceneBase.main.SetRootViewController(p);
+
+
+        var ret = Common.GetBoolOfKey(MusicBgPlay.main.STR_KEY_BACKGROUND_MUSIC,false);
+        Debug.Log("MusicBgPlay Start");
+        // if (ret)
+        {
+            MusicBgPlay.main.PlayBgMusic();
+        }
 
     }
 
