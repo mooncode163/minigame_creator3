@@ -1,5 +1,5 @@
 
-import { _decorator, ScrollView, Prefab, Enum, EventHandler, instantiate } from 'cc';
+import { _decorator, ScrollView, Prefab, Enum, EventHandler, instantiate, NodePool, Size, EventTouch, Vec2, Rect } from 'cc';
 import { Debug } from '../../Debug';
 import { UIView } from '../ViewController/UIView';
 
@@ -44,9 +44,58 @@ Enum(ViewType);
 // https://blog.csdn.net/u011004567/article/details/78507236
 // VS Code的插件-TypeScript Importer
 
+
+function pSub(t, e) {
+    return new Vec2(t.x - e.x, t.y - e.y)
+}
+
+function quickSort(arr, cb) {
+    //如果数组<=1,则直接返回
+    if (arr.length <= 1) { return arr; }
+    var pivotIndex = Math.floor(arr.length / 2);
+    //找基准
+    var pivot = arr[pivotIndex];
+    //定义左右数组
+    var left = [];
+    var right = [];
+
+    //比基准小的放在left，比基准大的放在right
+    for (var i = 0; i < arr.length; i++) {
+        if (i !== pivotIndex) {
+            if (cb) {
+                if (cb(arr[i], pivot)) {
+                    left.push(arr[i]);
+                } else {
+                    right.push(arr[i]);
+                }
+            } else {
+                if (arr[i] <= pivot) {
+                    left.push(arr[i]);
+                } else {
+                    right.push(arr[i]);
+                }
+            }
+        }
+    }
+    //递归
+    return quickSort(left, cb).concat([pivot], quickSort(right, cb));
+}
+
+function getChildByCellIndex(parent, index) {
+    for (let i = 0, c = parent.children, n = c.length; i < n; i++) {
+        if (c[i]._cellIndex === index) {
+            return c[i];
+        }
+    }
+    return null;
+}
+
 @ccclass('TableView')
 export class TableView extends ScrollView {
-    static _cellPoolCache: any[] = [];
+    _cellPoolCache: any[] = [];
+   
+    _cellSize: Size | null = null;
+    _lastOffset = 0;
 
     // 缓存的数据
     _data = null;
@@ -117,7 +166,7 @@ export class TableView extends ScrollView {
         }
     }
     //初始化cell
-    _initCell(cell, reload) {
+    _initCell(cell, reload=false) {
         if ((this.ScrollModel === ScrollModel.Horizontal && this.Direction === Direction.TOP_TO_BOTTOM__LEFT_TO_RIGHT) || (this.ScrollModel === ScrollModel.Vertical && this.Direction === Direction.LEFT_TO_RIGHT__TOP_TO_BOTTOM)) {
             var tag = cell._cellIndex * cell.childrenCount;
             for (var index = 0; index < cell.childrenCount; ++index) {
@@ -228,14 +277,12 @@ export class TableView extends ScrollView {
                         cell = instantiate(this.cell);
                     }
 
-                    cell.parent = node;
-
-
+                    cell.parent = node; 
                     //@moon
                     var w_item, h_item;
                     w_item = node.width;
-                    h_item = Math.floor(this.content.height / childrenCount);
-                    cell.setContentSize(w_item, h_item);
+                    h_item = Math.floor(this.content.height / childrenCount); 
+                    UIView.SetNodeContentSize(cell,w_item, h_item)
                     Debug.Log("w_item=" + w_item + " h_item" + h_item);
                   
                     //@moon
@@ -266,7 +313,7 @@ export class TableView extends ScrollView {
 
                 for (var index = 0; index < childrenCount; ++index) {
                     if (!cell) {
-                        cell = cc.instantiate(this.cell);
+                        cell = instantiate(this.cell);
                     }
 
                     cell.parent = node;
@@ -274,13 +321,13 @@ export class TableView extends ScrollView {
                     //@moon
                     var w_item, h_item;
                     w_item = Math.floor(this.content.width / childrenCount);
-                    h_item = node.height;
-                    cell.setContentSize(w_item, h_item);
+                    h_item = node.height; 
+                    UIView.SetNodeContentSize(cell,w_item, h_item);
                     Debug.Log("w_item=" + w_item + " h_item" + h_item);
-                    var rctran = cell.getComponent(cc.RectTransform);
-                    if (rctran != null) {
-                        rctran.LayOut();
-                    }
+                    // var rctran = cell.getComponent(cc.RectTransform);
+                    // if (rctran != null) {
+                    //     rctran.LayOut();
+                    // }
 
                     cell.y = (cell.anchorY - 0.5) * cell.height;
                     cell.x = -node.width / 2 + cell.width * cell.anchorX + length;
@@ -341,10 +388,10 @@ export class TableView extends ScrollView {
         }
 
         var name = this._getCellPoolCacheName();
-        if (!tableView._cellPoolCache[name]) {
-            tableView._cellPoolCache[name] = new cc.NodePool('viewCell');
+        if (!this._cellPoolCache[name]) {
+            this._cellPoolCache[name] = new NodePool('viewCell');
         }
-        this._cellPool = tableView._cellPoolCache[name];
+        this._cellPool = this._cellPoolCache[name];
 
         this._cellSize = this._getCellSize();
         this._groupCellCount = this._getGroupCellCount();
@@ -463,9 +510,9 @@ export class TableView extends ScrollView {
         this.horizontalScrollBar && this.horizontalScrollBar.node.on('size-changed', function () {
             this._updateScrollBar(this._getHowMuchOutOfBoundary());
         } this);
-        if (this.node.getComponent(cc.Widget)) {
-            this.node.getComponent(cc.Widget).updateAlignment();
-        }
+        // if (this.node.getComponent(cc.Widget)) {
+        //     this.node.getComponent(cc.Widget).updateAlignment();
+        // }
 
 
         //@moon
@@ -476,9 +523,10 @@ export class TableView extends ScrollView {
 
     }
     //*************************************************重写ScrollView方法*************************************************//
-    // touch event handler
-    _onTouchBegan(event, captureListeners) {
-        this._super(event, captureListeners);
+    // touch event handler 
+   
+      _onTouchBegan(event, captureListeners) {
+        super._onTouchBegan(event, captureListeners);
         this._touchstart(event);
     }
 
@@ -500,13 +548,12 @@ export class TableView extends ScrollView {
         if (deltaMove.mag() > 7) {
             if (!this._touchMoved && event.target !== this.node) {
                 // Simulate touch cancel for target node
-                let cancelEvent = new cc.Event.EventTouch(event.getTouches(), event.bubbles);
-                cancelEvent.type = cc.Node.EventType.TOUCH_CANCEL;
-                cancelEvent.touch = event.touch;
-                cancelEvent.simulate = true;
-                // event.target.dispatchEvent(cancelEvent);
-                event.target.emit(cc.Node.EventType.TOUCH_CANCEL, cancelEvent);
-                this._touchMoved = true;
+                // let cancelEvent = new cc.Event.EventTouch(event.getTouches(), event.bubbles);
+                // cancelEvent.type = cc.Node.EventType.TOUCH_CANCEL;
+                // cancelEvent.touch = event.touch;
+                // cancelEvent.simulate = true; 
+                // event.target.emit(cc.Node.EventType.TOUCH_CANCEL, cancelEvent);
+                // this._touchMoved = true;
             }
         }
         this._stopPropagationIfTargetIsMe(event);
@@ -514,33 +561,34 @@ export class TableView extends ScrollView {
         this._touchmove(event);
     }
 
-    _onTouchEnded(event, captureListeners) {
-        this._super(event, captureListeners);
+    _onTouchEnded(event, captureListeners) { 
+        super._onTouchEnded(event, captureListeners);
         this._touchend(event);
     }
-    _onTouchCancelled(event, captureListeners) {
-        this._super(event, captureListeners);
+    _onTouchCancelled(event, captureListeners) { 
+        super._onTouchEnded(event, captureListeners);
         this._touchend(event);
     }
     stopAutoScroll() {
         this._scrollDirection = ScrollDirection.None;
-        this._super();
+        super.stopAutoScroll();
     }
     scrollToBottom(timeInSecond, attenuated) {
         this._scrollDirection = ScrollDirection.Up;
-        this._super(timeInSecond, attenuated);
+        super.scrollToBottom(timeInSecond, attenuated);
+        
     }
     scrollToTop(timeInSecond, attenuated) {
         this._scrollDirection = ScrollDirection.Down;
-        this._super(timeInSecond, attenuated);
+        super.scrollToTop(timeInSecond, attenuated);
     }
     scrollToLeft(timeInSecond, attenuated) {
         this._scrollDirection = ScrollDirection.Rigth;
-        this._super(timeInSecond, attenuated);
+        super.scrollToLeft(timeInSecond, attenuated);
     }
     scrollToRight(timeInSecond, attenuated) {
         this._scrollDirection = ScrollDirection.Left;
-        this._super(timeInSecond, attenuated);
+        super.scrollToRight(timeInSecond, attenuated);
     }
     scrollToOffset(offset, timeInSecond, attenuated) {
         var nowoffset = this.getScrollOffset();
@@ -559,16 +607,16 @@ export class TableView extends ScrollView {
             }
         }
 
-        this._super(offset, timeInSecond, attenuated);
+        super.scrollToOffset(offset, timeInSecond, attenuated);
     }
     //*******************************************************END*********************************************************//
 
     addScrollEvent(target, component, handler) {
-        var eventHandler = new cc.Component.EventHandler();
-        eventHandler.target = target;
-        eventHandler.component = component;
-        eventHandler.handler = handler;
-        this.scrollEvents.push(eventHandler);
+        // var eventHandler = new cc.Component.EventHandler();
+        // eventHandler.target = target;
+        // eventHandler.component = component;
+        // eventHandler.handler = handler;
+        // this.scrollEvents.push(eventHandler);
     }
     removeScrollEvent(target) {
         for (var key in this.scrollEvents) {
@@ -583,11 +631,11 @@ export class TableView extends ScrollView {
         this.scrollEvents = [];
     }
     addPageEvent(target, component, handler) {
-        var eventHandler = new Component.EventHandler();
-        eventHandler.target = target;
-        eventHandler.component = component;
-        eventHandler.handler = handler;
-        this.pageChangeEvents.push(eventHandler);
+        // var eventHandler = new Component.EventHandler();
+        // eventHandler.target = target;
+        // eventHandler.component = component;
+        // eventHandler.handler = handler;
+        // this.pageChangeEvents.push(eventHandler);
     }
     removePageEvent(target) {
         for (var key = 0; key < this.pageChangeEvents.length; key++) {
@@ -796,8 +844,8 @@ export class TableView extends ScrollView {
         }
     }
     _getBoundingBoxToWorld(node) {
-        var p = node.convertToWorldSpace(cc.Vec2(0, 0));//p
-        return cc.rect(p.x, p.y, node.width, node.height);
+        var p = node.convertToWorldSpace(new Vec2(0, 0));//p
+        return new Rect(p.x, p.y, node.width, node.height);
     }
     _updateCells() {
         if (this.ScrollModel === ScrollModel.Horizontal) {
@@ -915,9 +963,8 @@ export class TableView extends ScrollView {
         }
     }
 
-    // called every frame, uncomment this function to activate update callback
-    update(dt) {
-        this._super(dt);
+   update (deltaTime: number) { 
+        // this._super(dt);
 
         if (this._cellCount === this._showCellCount || this._pageTotal === 1) {
             return;
@@ -928,31 +975,31 @@ export class TableView extends ScrollView {
 
     //@moon
     UpdateSize(size) {
-        this.node.setContentSize(size);
-        this.content.setContentSize(size);
-        this.viewNode.setContentSize(size);
+        UIView.SetNodeContentSize(this.node,size.width,size.height); 
+        UIView.SetNodeContentSize(this.content,size.width,size.height); 
+        UIView.SetNodeContentSize(this.viewNode,size.width,size.height);  
     }
 
-    reload() {
-        for (var key in tableView._tableView) {
-            tableView._tableView[key].reload();
-        }
-    }
-    clear() {
-        for (var key in tableView._tableView) {
-            tableView._tableView[key].clear();
-        }
-    }
+    // reload() {
+    //     for (var key in tableView._tableView) {
+    //         tableView._tableView[key].reload();
+    //     }
+    // }
+    // clear() {
+    //     for (var key in tableView._tableView) {
+    //         tableView._tableView[key].clear();
+    //     }
+    // }
 
     start() {
         // @moon 
         this.viewNode = this.content.parent;
 
-        var rctran = this.node.getComponent(cc.RectTransform);
-        if (rctran != null) {
-            var size = cc.size(rctran.width, rctran.height);
-            this.UpdateSize(size);
-        }
+        // var rctran = this.node.getComponent(cc.RectTransform);
+        // if (rctran != null) {
+        //     var size = cc.size(rctran.width, rctran.height);
+        //     this.UpdateSize(size);
+        // }
 
     }
     //@moon

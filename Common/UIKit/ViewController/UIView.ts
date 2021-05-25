@@ -105,6 +105,10 @@ export class UIView extends Component {
         return node.getComponent(UITransform)?.getBoundingBox();
     }
 
+    static SetNodeContentSize(node,w, h) {
+        node?.getComponent(UITransform)?.setContentSize(new Size(w, h)); 
+    }
+     
     onLoad() {
     }
 
