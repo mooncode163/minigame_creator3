@@ -4,11 +4,12 @@ import { UIImage } from '../../Common/UIKit/UIImage/UIImage';
 import { UIView } from '../../Common/UIKit/ViewController/UIView';
 import { UIText } from '../../Common/UIKit/UIText/UIText';   
 import { Debug } from '../../Common/Debug';
+import { UICellItemBase } from '../../Common/UIKit/UITableView/UICellItemBase';
 const { ccclass, property, type } = _decorator;
 
 
 @ccclass('UISettingCellItem')
-export class UISettingCellItem extends UIView {
+export class UISettingCellItem extends UICellItemBase {
     @type(UIText)
     textTitle: UIText = null;
 
