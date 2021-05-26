@@ -5,6 +5,7 @@ import { LayOutBase } from './LayOutBase';
 import { LayOutElement } from './LayOutElement';
 import { Align, Direction, LayOutUtil } from './LayOutUtil';
 import { UIView } from '../ViewController/UIView';
+import { UIViewUtil } from '../ViewController/UIViewUtil';
 const { ccclass, property } = _decorator;
 
 // TypeScript自动引入脚本插件
@@ -94,12 +95,12 @@ export class HorizontalOrVerticalLayoutBase extends LayOutBase {
     GetItemPostion (nodeItem:Node, r:Number, c:Number) {
         var x, y, w, h; 
 
-        var rctran = UIView.GetNodeBoundingBox(this.node); 
+        var rctran = UIViewUtil.GetNodeBoundingBox(this.node); 
         w = rctran.width;
         h = rctran.height;
         var item_w = 0, item_h = 0, x_left = 0, y_bottom = 0, w_total = 0, h_total = 0;
 
-        var rctranItem =UIView.GetNodeBoundingBox(nodeItem); 
+        var rctranItem =UIViewUtil.GetNodeBoundingBox(nodeItem); 
 
         if (this.childControlWidth) {
             item_w = (w - (this.space.x * (this.col - 1))) / this.col;

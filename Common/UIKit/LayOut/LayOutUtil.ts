@@ -5,6 +5,7 @@ import { AdKitCommon } from '../../AdKit/AdKitCommon';
 import { UIView } from '../ViewController/UIView';
 import { LayOutElement } from './LayOutElement';
 import { Debug } from '../../Debug';
+import { UIViewUtil } from '../ViewController/UIViewUtil';
 const { ccclass, property } = _decorator;
 
 // TypeScript自动引入脚本插件
@@ -227,13 +228,13 @@ export class LayOutUtil {
             objUp = node1;
         }
         var pos = objDown.getPosition();
-        var size =UIView.GetNodeBoundingBox(objDown); //objDown.getBoundingBox();
+        var size =UIViewUtil.GetNodeBoundingBox(objDown); //objDown.getBoundingBox();
         var y1 = pos.y + size.height / 2;
         var x1 = pos.x + size.width / 2;
 
         // objUp
         pos = objUp.getPosition();
-        size = UIView.GetNodeBoundingBox(objUp);
+        size = UIViewUtil.GetNodeBoundingBox(objUp);
         var y2 = pos.y - size.height / 2;
         var x2 = pos.x - size.width / 2;
 
@@ -252,10 +253,10 @@ export class LayOutUtil {
     //边界和对象之间的宽度或者高度 type SizeType
     GetBetweenSideAndTargetSize(node, type) {
         var v1 = 0, v2 = 0;
-        var size =UIView.GetNodeBoundingBox(node);// node.getBoundingBox();
+        var size =UIViewUtil.GetNodeBoundingBox(node);// node.getBoundingBox();
         var pos = node.getPosition();
         // var sizeParent = node.parent.getBoundingBox();
-        var sizeParent = UIView.GetNodeBoundingBox(node.parent);
+        var sizeParent = UIViewUtil.GetNodeBoundingBox(node.parent);
         var w_parent = sizeParent.width;
         var h_parent = sizeParent.height;
         Debug.Log("GetBetweenSideAndTargetSize type="+type);

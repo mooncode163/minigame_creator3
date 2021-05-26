@@ -28,6 +28,7 @@ strict设置false状态
 // VS Code的插件-TypeScript Importer
 
 import { UIViewController } from "./UIViewController";
+import { UIViewUtil } from './UIViewUtil';
 
 @ccclass('UIView')
 export class UIView extends Component {
@@ -100,10 +101,7 @@ export class UIView extends Component {
     set controller(value: UIViewController) {
         this._controller = value;
     }
-
-    static GetNodeBoundingBox(node: Node) {
-        return node.getComponent(UITransform)?.getBoundingBox();
-    }
+ 
 
     static SetNodeContentSize(node,w, h) {
         node?.getComponent(UITransform)?.setContentSize(new Size(w, h)); 
@@ -193,7 +191,7 @@ export class UIView extends Component {
     }
 
     GetBoundingBox() {
-        return UIView.GetNodeBoundingBox(this.node);
+        return UIViewUtil.GetNodeBoundingBox(this.node);
     }
 
     // UIView parent
