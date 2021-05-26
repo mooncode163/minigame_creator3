@@ -1,6 +1,7 @@
 
 import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject } from 'cc';
 import { UIView } from '../ViewController/UIView';
+import { TableView } from './TableView';
 
 const { ccclass, property, type, string } = _decorator;
 
@@ -10,7 +11,8 @@ const { ccclass, property, type, string } = _decorator;
 
 @ccclass('UITableView')
 export class UITableView extends UIView {
-    
+    @type(TableView)
+    tableView: TableView | null = null;
  
 }
 

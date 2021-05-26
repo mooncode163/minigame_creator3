@@ -1,8 +1,10 @@
 
 import { _decorator, Component, Node } from 'cc';  
 import { Config } from '../../../../Common/Config/Config';
+import { Debug } from '../../../../Common/Debug';
 import { Share } from '../../../../Common/Share/Share';
 import { UIView } from '../../../../Common/UIKit/ViewController/UIView';
+import { SettingViewController } from '../../../../AppBase/Setting/SettingViewController';
 const { ccclass, property,type } = _decorator;
  
 
@@ -24,7 +26,10 @@ export class UIHomeSideBar extends UIView {
         Share.main.ShareImageText("", Config.main.shareTitle, Config.main.shareUrl, "");
     }
     OnBtnClickSetting(event: Event, customEventData: string) {
-   
+        if (this.controller != null) {
+            var navi = this.controller.naviController; 
+            navi.Push(SettingViewController.main);
+        } 
     }
 }
 

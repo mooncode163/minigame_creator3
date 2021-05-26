@@ -123,9 +123,11 @@ export class TableView extends ScrollView {
     viewNode: Node | null = null;
 
     _page = 0;//当前处于那一页
-    _pageTotal = 0;//总共有多少页
+    _pageTotal = 0;//总共有多少页 
+    
+    @type(Prefab)
+    cell: Prefab | null = null;
 
-    cell: Prefab = null;
     ScrollModel: ScrollModel = null;
     ViewType: ViewType = null;
     Direction: Direction = null;
