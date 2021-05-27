@@ -6,16 +6,20 @@ import { UIText } from '../../Common/UIKit/UIText/UIText';
 import { Debug } from '../../Common/Debug';
 import { UICellItemBase } from '../../Common/UIKit/UITableView/UICellItemBase';
 import { UIButton } from '../../Common/UIKit/UIButton/UIButton';
-import { UISetting } from './UISetting';
+import { SettingType, UISetting } from './UISetting';
 import { Common } from '../../Common/Common';
 import { CommonRes } from '../../Common/CommonRes';
 import { MusicBgPlay } from '../../Common/Audio/MusicBgPlay';
 import { ItemInfo } from '../../Common/ItemInfo';
+import { LanguageViewController } from './Language/LanguageViewController';
 const { ccclass, property, type } = _decorator;
 
 
 @ccclass('UISettingCellItem')
-export class UISettingCellItem extends UICellItemBase {
+export class UISettingCellItem extends UICellItemBase { 
+
+    listImage: string[] = ["IMAGE_CELL_BG_BLUE", "IMAGE_CELL_BG_ORINGE", "IMAGE_CELL_BG_YELLOW"];
+
     @type(UIText)
     textTitle: UIText = null;
 
@@ -24,7 +28,7 @@ export class UISettingCellItem extends UICellItemBase {
     @type(UIButton)
     btnSwitch: UIButton = null;
 
-    info:ItemInfo;
+    info: ItemInfo;
 
     onLoad() {
         super.onLoad();
@@ -46,63 +50,62 @@ export class UISettingCellItem extends UICellItemBase {
     }
     OnClickItem() {
         var uiViewParent = this.GetUIViewParent();//  
-        // Debug.Log("tag = " + this.info.tag);
-        // switch (this.info.tag) {
-        //     case UISetting.TAG_SETTING_COMMENT:
-        //         {
+        Debug.Log("OnClickItem tag = " + this.info.tag);
+        switch (this.info.tag) {
+            case SettingType.COMMENT:
+                {
 
-        //         }
-        //         break;
-        //     case UISetting.TAG_SETTING_VERSION:
-        //         {
+                }
+                break;
+            case SettingType.VERSION:
+                {
 
-        //         }
-        //         break;
-        //     case UISetting.TAG_SETTING_LANGUAGE:
-        //         {
-        //             this.GotoController(LanguageViewController.main());
-        //         }
-        //         break;
-        //     case UISetting.TAG_SETTING_BACKGROUND_MUSIC:
-        //         {
+                }
+                break;
+            case SettingType.LANGUAGE:
+                {
+                    this.GotoController(LanguageViewController.main);
+                }
+                break;
+            case SettingType.BACKGROUND_MUSIC:
+                {
 
-        //         }
-        //         break;
-        //     case UISetting.TAG_SETTING_NOAD:
-        //         {
+                }
+                break;
+            case SettingType.NOAD:
+                {
 
-        //         }
-        //         break;
-        //     case UISetting.TAG_SETTING_RESTORE_IAP:
-        //         {
+                }
+                break;
+            case SettingType.RESTORE_IAP:
+                {
 
-        //         }
-        //         break;
+                }
+                break;
 
-        // }
+        }
     }
 
 
     UpdateItem(info) {
         Debug.Log("UISettingCellItem UpdateItem info.title=" + info.title);
         this.textTitle.text = info.title;
-        // this.btnSwitch.node.active = false;
-        // if (info.tag == UISetting.TAG_SETTING_BACKGROUND_MUSIC) {
-        //     this.btnSwitch.node.active = true;
-        //     var ret = Common.GetBoolOfKey(CommonRes.KEY_BACKGROUND_MUSIC, false);
-        //     this.UpdateBtnSwitch(ret);
-        // }
+        this.btnSwitch.node.active = false;
+        if (info.tag == SettingType.BACKGROUND_MUSIC) {
+            this.btnSwitch.node.active = true;
+            var ret = Common.GetBoolOfKey(CommonRes.KEY_BACKGROUND_MUSIC, false);
+            this.UpdateBtnSwitch(ret);
+        }
 
-        // if (info.tag == UISetting.TAG_SETTING_BTN_SOUND) {
-        //     this.btnSwitch.node.active = true;
-        //     var ret = Common.GetBoolOfKey(CommonRes.KEY_BTN_SOUND, false);
-        //     this.UpdateBtnSwitch(ret);
-        // }
+        if (info.tag == SettingType.BTN_SOUND) {
+            this.btnSwitch.node.active = true;
+            var ret = Common.GetBoolOfKey(CommonRes.KEY_BTN_SOUND, false);
+            this.UpdateBtnSwitch(ret);
+        }
 
-        // this.UpdateImageBg(UISetting.listImage[this.index % 3]);
+        this.UpdateImageBg(this.listImage[this.index % 3]);
     }
     UpdateBtnSwitch(isSel) {
-
         this.btnSwitch.UpdateSwitch(isSel);
 
     }
@@ -110,10 +113,8 @@ export class UISettingCellItem extends UICellItemBase {
     UpdateImageBg(pic) {
         // this.imageBg.UpdateImageKey(pic);
     }
-
-    OnClickBtnSwitch(event, customEventData) {
-        /*
-        if (this.info.tag == UISetting.TAG_SETTING_BACKGROUND_MUSIC) {
+    OnClickBtnSwitch(event: Event, customEventData: string) {
+        if (this.info.tag == SettingType.BACKGROUND_MUSIC) {
             var ret = Common.GetBoolOfKey(CommonRes.KEY_BACKGROUND_MUSIC, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
             Debug.Log("UpdateBtnSwitch read ret=" + ret);
             var v = !ret;
@@ -137,13 +138,13 @@ export class UISettingCellItem extends UICellItemBase {
             }
         }
 
-        if (this.info.tag == UISetting.TAG_SETTING_BTN_SOUND) {
+        if (this.info.tag == SettingType.BTN_SOUND) {
             var ret = Common.GetBoolOfKey(CommonRes.KEY_BTN_SOUND, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
             var v = !ret;
             Common.SetBoolOfKey(CommonRes.KEY_BTN_SOUND, v);
             this.UpdateBtnSwitch(v);
         }
-*/
+
 
     }
 

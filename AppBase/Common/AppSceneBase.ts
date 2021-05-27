@@ -197,6 +197,11 @@ export class AppSceneBase extends Component {
 
     }
 
+    
+    UpdateLanguage() {
+    }
+
+
     LayOut() {
         if (this.rootViewController != null) {
             this.rootViewController.LayOut();

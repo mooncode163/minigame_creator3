@@ -16,9 +16,7 @@ const { ccclass, property, type, string } = _decorator;
 // VS Code的插件-TypeScript Importer
 
 @ccclass('AudioPlay')
-export class AudioPlay extends Component {
-    STR_KEY_BACKGROUND_MUSIC = "KEY_BACKGROUND_MUSIC";
-    KEY_ENABLE_PLAYSOUND = "KEY_ENABLE_PLAYSOUND";
+export class AudioPlay extends Component {  
     @type(AudioSource)
     audioSource: AudioSource = null;
     static _main: AudioPlay;

@@ -11,12 +11,13 @@ const { ccclass, property, type, string } = _decorator;
 // https://blog.csdn.net/u011004567/article/details/78507236
 // VS Code的插件-TypeScript Importer
 
-enum ButtonType {
-    IMAGE = 0,// 
+enum ButtonType { 
+    IMAGE = 0,//一张背景  
     IMAGE_TEXT,
-    IMAGE_ICON,
-    IMAGE_SWITCH,
-    IMAGE_ICON_SWITCH,
+    IMAGE_ICON,//一张背景 一张Icon 叠加
+
+    IMAGE_SWITCH,//一张背景
+    IMAGE_ICON_SWITCH,//一张背景 一张Icon 叠加
 }
 //必须Enum设置才能在编辑器里设置enum的值
 Enum(ButtonType);

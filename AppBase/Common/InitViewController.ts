@@ -182,9 +182,9 @@ export class InitViewController extends NaviViewController {
         AppSceneBase.main.SetRootViewController(p);
 
 
-        var ret = Common.GetBoolOfKey(MusicBgPlay.main.STR_KEY_BACKGROUND_MUSIC,false);
+        var ret = Common.GetBoolOfKey(CommonRes.KEY_BACKGROUND_MUSIC,false);
         Debug.Log("MusicBgPlay Start");
-        // if (ret)
+        if (ret)
         {
             MusicBgPlay.main.PlayBgMusic();
         }

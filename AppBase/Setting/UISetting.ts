@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, instantiate, Layout, sys } from 'cc';
+import { _decorator, Component, Node, instantiate, Layout, sys, Enum } from 'cc';
 import { UIImage } from '../../Common/UIKit/UIImage/UIImage';
 import { UIView } from '../../Common/UIKit/ViewController/UIView';
 import { UIText } from '../../Common/UIKit/UIText/UIText';
@@ -11,23 +11,21 @@ import { Config } from '../../Common/Config/Config';
 import { Platform } from '../../Common/Platform';
 import { Common } from '../../Common/Common';
 const { ccclass, property, type } = _decorator;
-
+export enum SettingType {
+    COMMENT =0,//0
+    VERSION,//1
+    LANGUAGE,//2
+    BACKGROUND_MUSIC,//3
+    BTN_SOUND,
+    NOAD,
+    RESTORE_IAP,
+    LAST,
+}
+//必须Enum设置才能在编辑器里设置enum的值
+Enum(SettingType);
 
 @ccclass('UISetting')
-export class UISetting extends UIView {
-
-    TAG_SETTING_COMMENT = 0;
-    TAG_SETTING_VERSION = 1;
-    TAG_SETTING_LANGUAGE = 2;
-    TAG_SETTING_BACKGROUND_MUSIC = 3;
-    TAG_SETTING_BTN_SOUND = 4;
-    TAG_SETTING_NOAD = 5;
-    TAG_SETTING_RESTORE_IAP = 6;
-    TAG_SETTING_LAST = 7;
-
-    listImage: string[] = ["IMAGE_CELL_BG_BLUE", "IMAGE_CELL_BG_ORINGE", "IMAGE_CELL_BG_YELLOW"];
-
-
+export class UISetting extends UIView { 
     oneCellNum = 1;
     heightCell = 160;
     listItem: ItemInfo[] = [];
@@ -56,7 +54,7 @@ export class UISetting extends UIView {
         if (sys.isNative) {
             var info = new ItemInfo();
             info.title = Language.main.GetString("STR_SETTING_COMMENT");
-            info.tag = this.TAG_SETTING_COMMENT;
+            info.tag = SettingType.COMMENT;
             this.listItem.push(info);
         }
         //if (AppVersion.main().appCheckHasFinished)
@@ -65,14 +63,14 @@ export class UISetting extends UIView {
             var strversin = Common.GetAppVersion();
             var str = Language.main.GetString("STR_SETTING_VERSION") + "(" + strversin + ")";
             info.title = str;
-            info.tag = this.TAG_SETTING_VERSION;
+            info.tag = SettingType.VERSION;
             this.listItem.push(info);
         }
 
         {
             var info = new ItemInfo();
             info.title = Language.main.GetString("STR_SETTING_LANGUAGE");
-            info.tag = this.TAG_SETTING_LANGUAGE;
+            info.tag = SettingType.LANGUAGE;
             this.listItem.push(info);
         }
 
@@ -83,14 +81,14 @@ export class UISetting extends UIView {
         if (isHasBgMusic) {
             var info = new ItemInfo();
             info.title = Language.main.GetString("STR_SETTING_BACKGROUND_MUSIC");
-            info.tag = this.TAG_SETTING_BACKGROUND_MUSIC;
+            info.tag = SettingType.BACKGROUND_MUSIC;
             this.listItem.push(info);
         }
 
         {
             var info = new ItemInfo();
             info.title = Language.main.GetString("STR_SETTING_BTN_SOUND");
-            info.tag = this.TAG_SETTING_BTN_SOUND;
+            info.tag = SettingType.BTN_SOUND;
             this.listItem.push(info);
             this.listItem.push(info);
             this.listItem.push(info);
@@ -109,13 +107,13 @@ export class UISetting extends UIView {
             if (Config.main.isHaveRemoveAd) {
                 var info = new ItemInfo();
                 info.title = Language.main.GetString("STR_BTN_NOAD");
-                info.tag = this.TAG_SETTING_NOAD;
+                info.tag = SettingType.NOAD;
                 this.listItem.push(info);
             }
             if (Platform.isiOS && Config.main.isHaveRemoveAd) {
                 var info = new ItemInfo();
                 info.title = Language.main.GetString("STR_BTN_RESTORE_NOAD");
-                info.tag = this.TAG_SETTING_RESTORE_IAP;
+                info.tag = SettingType.RESTORE_IAP;
                 this.listItem.push(info);
             }
         }
