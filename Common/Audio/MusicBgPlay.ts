@@ -22,7 +22,7 @@ export class MusicBgPlay extends AudioPlay {
     //静态方法
     static get main() {
         if (this._main == null) {
-            this._main = new MusicBgPlay();
+            // this._main = new MusicBgPlay();
             // this._main.Init();
         }
         return this._main;
@@ -42,7 +42,7 @@ export class MusicBgPlay extends AudioPlay {
         this.PlayByKey("Bg");
     }
     StopBgMusic() {
-
+        this.Stop();
     }
 }
 

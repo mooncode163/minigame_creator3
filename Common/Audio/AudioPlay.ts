@@ -23,7 +23,7 @@ export class AudioPlay extends Component {
     //静态方法
     static get main() {
         if (this._main == null) {
-            this._main = new AudioPlay();
+            // this._main = new AudioPlay();
             // this._main.Init();
         }
         return this._main;
@@ -42,10 +42,10 @@ export class AudioPlay extends Component {
         // super.start();
     }
     PlayAudioClip(clip: AudioClip) {
-        var ret = Common.GetBoolOfKey(this.KEY_ENABLE_PLAYSOUND, false);
-        // if (!ret) {
-        //     return;
-        // }
+        // var ret = Common.GetBoolOfKey(this.KEY_ENABLE_PLAYSOUND, false);
+        // // if (!ret) {
+        // //     return;
+        // // }
         if (clip == null) {
             return;
         }
@@ -111,12 +111,11 @@ export class AudioPlay extends Component {
                     this.PlayUrl(filepath);
                 },
             });
-    }
-    PlayBgMusic() {
-
-    }
-    StopBgMusic() {
-
+    } 
+    Stop() {
+        Debug.Log("AudioPlay Stop");
+        // this.audioSource.pause();        
+        this.audioSource.stop();
     }
 }
 
