@@ -87,12 +87,21 @@ export class UISetting extends UIView {
             this.listItem.push(info);
         }
 
-        // {
-        //     var info = new ItemInfo();
-        //     info.title = Language.main.GetString("STR_SETTING_BTN_SOUND");
-        //     info.tag = this.TAG_SETTING_BTN_SOUND;
-        //     this.listItem.push(info);
-        // }
+        {
+            var info = new ItemInfo();
+            info.title = Language.main.GetString("STR_SETTING_BTN_SOUND");
+            info.tag = this.TAG_SETTING_BTN_SOUND;
+            this.listItem.push(info);
+            this.listItem.push(info);
+            this.listItem.push(info);
+            this.listItem.push(info);
+            this.listItem.push(info);
+            this.listItem.push(info);
+            this.listItem.push(info);
+            this.listItem.push(info);
+
+            this.listItem.push(info);
+        }
 
         if (sys.isNative) {
 
