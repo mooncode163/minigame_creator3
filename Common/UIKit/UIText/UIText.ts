@@ -78,7 +78,13 @@ export class UIText extends UIView {
     LayOut() {
         super.LayOut();
     }
-
+    UpdateLanguage() {
+        super.UpdateLanguage();
+        if (!Common.BlankString(this.keyText)) {
+            this.text = this.GetKeyText();
+        }
+        this.LayOut();
+    }
     // update (deltaTime: number) {
     //     // [4]
     // }

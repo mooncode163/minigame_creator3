@@ -105,10 +105,10 @@ export class UIViewController extends CCObject {
             return;
         }
         //child
-        var children = this.objController._children;
+        var children = this.objController.children;
         for (var i = 0; i < children.length; i++) {
             var child = children[i];
-            var viewchild = child.getComponent(cc.UIView);
+            var viewchild = child.getComponent(UIView);
             if (viewchild != null) {
                 viewchild.UpdateLanguage();
             }

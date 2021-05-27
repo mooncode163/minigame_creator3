@@ -101,12 +101,12 @@ export class UIView extends Component {
     set controller(value: UIViewController) {
         this._controller = value;
     }
- 
 
-    static SetNodeContentSize(node,w, h) {
-        node?.getComponent(UITransform)?.setContentSize(new Size(w, h)); 
+
+    static SetNodeContentSize(node, w, h) {
+        node?.getComponent(UITransform)?.setContentSize(new Size(w, h));
     }
-     
+
     onLoad() {
     }
 
@@ -157,11 +157,11 @@ export class UIView extends Component {
         //self 
         this.LayOutNode(this.node);
         //child
-       this.LayOutInternalChild();
+        this.LayOutInternalChild();
     }
 
 
-    LayOutInternalChild() { 
+    LayOutInternalChild() {
         //child
         var children = this.node.children;
         for (var i = 0; i < children.length; i++) {
@@ -183,7 +183,7 @@ export class UIView extends Component {
     }
 
     SetContentSize(w, h) {
-        this.node?.getComponent(UITransform)?.setContentSize(new Size(w, h)); 
+        this.node?.getComponent(UITransform)?.setContentSize(new Size(w, h));
         this.LayOutInternalChild();
     }
     GetContentSize() {
@@ -206,9 +206,9 @@ export class UIView extends Component {
     SetActive(active: boolean) {
         this.node.active = active;
     }
-    
+
     OnUIDidFinish() {
-         
+
     }
     //js 默认参数方法： https://www.cnblogs.com/luotingliang/p/7250990.html
     GetKeyColor(def: Color) {
@@ -251,6 +251,16 @@ export class UIView extends Component {
 
     UpdateLanguage() {
 
+        var list = this.node.getComponentsInChildren(UIView);
+        list.forEach((ui) => {
+            if (ui != null) {
+                var node = ui.node;
+                if (this.node != node) {
+                    ui.UpdateLanguage();
+                }
+            }
+
+        });
     }
 
 

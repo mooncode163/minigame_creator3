@@ -10,6 +10,7 @@ import { AudioPlay } from '../../Common/Audio/AudioPlay';
 import { Config } from '../../Common/Config/Config';
 import { CloudResPreLoad } from '../../Common/CloundRes/CloudResPreLoad';
 import { MusicBgPlay } from '../../Common/Audio/MusicBgPlay';
+import { PopUpManager } from '../../Common/UIKit/PopUp/PopUpManager';
 
 
 // typescript 提示 Object is possibly ‘null‘ 的N种解决方法
@@ -199,6 +200,18 @@ export class AppSceneBase extends Component {
 
     
     UpdateLanguage() {
+        if (this.rootViewController != null) {
+            this.rootViewController.UpdateLanguage();
+        }
+
+        var listPopup = PopUpManager.main.listItem;
+        if (listPopup != null) {
+            var len = listPopup.length;
+            for (var i = 0; i < len; i++) {
+                var ui = listPopup[i];
+                ui.UpdateLanguage();
+            }
+        }
     }
 
 
