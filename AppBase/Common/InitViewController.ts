@@ -114,7 +114,8 @@ export class InitViewController extends NaviViewController {
             Common.SetBoolOfKey(CommonRes.KEY_BTN_SOUND, true);
             Common.SetBoolOfKey(CommonRes.KEY_BACKGROUND_MUSIC, true);
 
-            var lan = sys.LANGUAGE_CHINESE; 
+            //languageCode
+            var lan = sys.language; 
             Common.SetItemOfKey(CommonRes.KEY_LANGUAGE, lan);  
             Language.main.SetLanguage(lan);
         }

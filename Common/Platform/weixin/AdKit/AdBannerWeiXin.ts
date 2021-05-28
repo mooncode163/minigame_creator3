@@ -1,13 +1,13 @@
 
 
 import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject } from 'cc';
+import { AdConfig } from '../../../AdKit/AdConfig/AdConfig';
+import { AdType } from '../../../AdKit/AdConfig/AdInfo';
+import { AdBannerPlatformWrapper } from '../../../AdKit/Banner/AdBannerPlatformWrapper';
+import { Debug } from '../../../Debug';
+import { Source } from '../../../Source';
 const { ccclass, property, type, string } = _decorator;
-import { Platform } from '../../Platform';
-import { AdBannerPlatformWrapper } from './AdBannerPlatformWrapper';
-import { AdConfig } from '../AdConfig/AdConfig';
-import { Source } from '../../Source'; 
-import { AdType } from '../AdConfig/AdInfo';
-import { Debug } from '../../Debug';
+ 
 // TypeScript自动引入脚本插件
 // https=//blog.csdn.net/u011004567/article/details/78507236
 // VS Code的插件-TypeScript Importer 

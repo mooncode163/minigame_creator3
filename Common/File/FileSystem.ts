@@ -3,8 +3,9 @@ import { _decorator, Component, Node, Prefab, CCObject } from 'cc';
 import { UIView } from '../../Common/UIKit/ViewController/UIView'; 
 import { Common } from '../Common';
 import { Platform } from '../Platform';
+import { FileSystemWeixin } from '../Platform/weixin/File/FileSystemWeixin';
 import { FileSystemPlatformWrapper } from './FileSystemPlatformWrapper';
-import { FileSystemWeixin } from './FileSystemWeixin';
+ 
 const { ccclass, property, type } = _decorator;
 
 @ccclass('FileSystem')

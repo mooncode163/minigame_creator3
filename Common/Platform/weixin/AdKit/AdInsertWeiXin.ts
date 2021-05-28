@@ -1,10 +1,11 @@
 
 import { _decorator, Component, Node, Sprite, Label, Button, EventHandler, tween, Vec3, CCObject } from 'cc';
-import { Debug } from '../../Debug';
-import { Source } from '../../Source';
-import { AdConfig } from '../AdConfig/AdConfig';
-import {AdType } from '../AdConfig/AdInfo';
-import { AdInsertPlatformWrapper } from './AdInsertPlatformWrapper';
+import { AdConfig } from '../../../AdKit/AdConfig/AdConfig';
+import { AdType } from '../../../AdKit/AdConfig/AdInfo';
+import { AdInsertPlatformWrapper } from '../../../AdKit/Insert/AdInsertPlatformWrapper';
+import { Debug } from '../../../Debug';
+import { Source } from '../../../Source';
+ 
  
 
 const { ccclass, property, type, string } = _decorator;

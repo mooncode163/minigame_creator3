@@ -23,9 +23,7 @@ export class UILanguageCellItem extends UICellItemBase {
     textTitle: UIText = null;
 
     @type(UIImage)
-    imageBg: UIImage = null;
-    @type(UIButton)
-    btnSwitch: UIButton = null;
+    imageBg: UIImage = null; 
 
     info: ItemInfo;
 
@@ -60,15 +58,10 @@ export class UILanguageCellItem extends UICellItemBase {
     }
     UpdateItem(info) {
         Debug.Log("UISettingCellItem UpdateItem info.title=" + info.title);
-        this.textTitle.text = info.title;
-        this.btnSwitch.node.active = false;
+        this.textTitle.text = info.title; 
 
     }
-
-
-    UpdateImageBg(pic) {
-        // this.imageBg.UpdateImageKey(pic);
-    }
+ 
 
 
 }

@@ -2,9 +2,8 @@
 import { _decorator, Component, Node, Prefab, CCObject } from 'cc'; 
 import { UIView } from '../../Common/UIKit/ViewController/UIView'; 
 import { Common } from '../Common';
-import { Platform } from '../Platform';
-import { FileSystemWeixin } from '../File/FileSystemWeixin';
-import { FileSystem } from '../File/FileSystem';
+import { Platform } from '../Platform'; 
+import { FileSystem } from '../File/FileSystem'; 
 const { ccclass, property, type } = _decorator;
 
 @ccclass('CloudRes')
@@ -25,7 +24,7 @@ export class CloudRes extends CCObject {
     get rootPath() {
         var ret = Common.CLOUD_RES_DIR;
         if (Platform.isWeiXin||Platform.isByte)  {
-            ret = FileSystemWeixin.main.GetRootDirPath() + "/" + Common.CLOUD_RES_DIR_NAME;
+            ret = FileSystem.main.GetRootDirPath() + "/" + Common.CLOUD_RES_DIR_NAME;
         }
  
         return ret;
