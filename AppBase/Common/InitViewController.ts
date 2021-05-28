@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, director, instantiate, Prefab, resources, SpriteFrame } from 'cc';
+import { _decorator, Component, Node, director, instantiate, Prefab, resources, SpriteFrame, sys } from 'cc';
 import { TextureCache } from '../../Common/Cache/TextureCache';
 import { UIViewController } from '../../Common/UIKit/ViewController/UIViewController';
 import { NaviViewController } from '../../Common/UIKit/NaviBar/NaviViewController';
@@ -94,13 +94,39 @@ export class InitViewController extends NaviViewController {
         AppPreLoad.main.Load(
             {
                 success: (p: any) => {
-                    this.StartParsePlace();
+                    this.OnAppPreLoadFinish();
                 },
-                fail: (p: any) => {
-                    // this.OnFinish(obj);
-                    this.StartParsePlace();
+                fail: (p: any) => { 
+                    this.OnAppPreLoadFinish();
                 },
             });
+    }
+
+    OnAppPreLoadFinish()
+    {
+        var isFirstRun = !Common.GetBoolOfKey(CommonRes.STR_KEY_NOT_FIRST_RUN,false); 
+        if (isFirstRun)
+        {
+            // Common.gold = AppRes.GOLD_INIT_VALUE;
+            //第一次安装
+            Common.SetBoolOfKey(CommonRes.STR_KEY_NOT_FIRST_RUN, true);
+
+            Common.SetBoolOfKey(CommonRes.KEY_BTN_SOUND, true);
+            Common.SetBoolOfKey(CommonRes.KEY_BACKGROUND_MUSIC, true);
+
+            var lan = sys.LANGUAGE_CHINESE; 
+            Common.SetItemOfKey(CommonRes.KEY_LANGUAGE, lan);  
+            Language.main.SetLanguage(lan);
+        }
+        else
+        {
+
+            var lan = Common.GetItemOfKey(CommonRes.KEY_LANGUAGE,sys.LANGUAGE_CHINESE); 
+            Language.main.SetLanguage(lan);
+
+        }
+
+        this.StartParsePlace();
     }
 
     StartParsePlace() { 

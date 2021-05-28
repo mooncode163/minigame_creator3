@@ -7,7 +7,7 @@ const { ccclass, property } = _decorator;
 
 @ccclass('CommonRes')
 export class CommonRes extends CCObject {
-
+    public static STR_KEY_NOT_FIRST_RUN: string = "STR_KEY_NOT_FIRST_RUN"; 
     public static KEY_BACKGROUND_MUSIC: string = "KEY_BACKGROUND_MUSIC"; 
     public static KEY_BTN_SOUND: string = "KEY_BTN_SOUND";
     public static KEY_LANGUAGE: string = "KEY_LANGUAGE";
