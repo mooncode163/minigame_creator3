@@ -114,7 +114,8 @@ export class AudioPlay extends Component {
     } 
     Stop() {
         Debug.Log("AudioPlay Stop");
-        // this.audioSource.pause();        
+        // this.audioSource.pause();      
+        // this.audioSource.volume = 0;  
         this.audioSource.stop();
     }
 }

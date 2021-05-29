@@ -67,7 +67,7 @@ export class AnimateButton extends Button {
         var ret = Common.GetBoolOfKey(CommonRes.KEY_BTN_SOUND, false);
         if (ret) {
             //play sound click
-            AudioPlay.main.PlayCloudAudio("BtnClick.mp3");
+            AudioPlay.main.PlayByKey("BtnClick");
         }
     }
 

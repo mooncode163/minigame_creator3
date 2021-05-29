@@ -20,6 +20,7 @@ import { FrendBoard } from '../../Common/SNS/FrendBoard';
 import { GameManager } from './GameManager';
 import { ViewAlertManager } from '../../Common/UIKit/UIViewAlert/ViewAlertManager';
 import { LevelData } from './LevelData';
+import { MusicBgPlay } from '../../Common/Audio/MusicBgPlay';
 const { ccclass, property, type } = _decorator;
 
 
@@ -95,10 +96,10 @@ export class UIGameBase extends UIView {
         Common.SetBoolOfKey(CommonRes.KEY_BACKGROUND_MUSIC, v);
         this.UpdateBtnMusic();
         if (v) {
-            AudioPlay.main.PlayBgMusic();
+            MusicBgPlay.main.PlayBgMusic();
         }
         else {
-            AudioPlay.main.StopBgMusic();
+            MusicBgPlay.main.StopBgMusic();
         }
     }
     OnClickBtnShare(event, customEventData) {

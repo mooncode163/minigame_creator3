@@ -89,14 +89,14 @@ export class UISetting extends UIView {
             var info = new ItemInfo();
             info.title = Language.main.GetString("STR_SETTING_BTN_SOUND");
             info.tag = SettingType.BTN_SOUND;
-            this.listItem.push(info);
-            this.listItem.push(info);
-            this.listItem.push(info);
-            this.listItem.push(info);
-            this.listItem.push(info);
-            this.listItem.push(info);
-            this.listItem.push(info);
-            this.listItem.push(info);
+            // this.listItem.push(info);
+            // this.listItem.push(info);
+            // this.listItem.push(info);
+            // this.listItem.push(info);
+            // this.listItem.push(info);
+            // this.listItem.push(info);
+            // this.listItem.push(info);
+            // this.listItem.push(info);
 
             this.listItem.push(info);
         }
